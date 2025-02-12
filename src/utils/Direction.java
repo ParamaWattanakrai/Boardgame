@@ -1,4 +1,6 @@
-enum Direction {
+package utils;
+
+public enum Direction {
     NORTH {
         @Override
         public Tuple getOffset() {

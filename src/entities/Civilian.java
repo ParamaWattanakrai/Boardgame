@@ -1,3 +1,8 @@
+package entities;
+
+import utils.*;
+import map.*;
+
 public class Civilian {
     protected Block block;
     protected Vitality vitality = Vitality.ALIVE;
@@ -6,6 +11,17 @@ public class Civilian {
 
     Civilian(Block block) {
         this.block = block;
+        block.addPerson(this);
+    }
+
+    public boolean move(Direction direction) {
+        Block neighborBlock = block.getNeighborBlock(direction);
+        if (neighborBlock != block) {
+            block = neighborBlock;
+            neighborBlock.addPerson(this);
+            return true;
+        }
+        return false;
     }
 
     public void infect() {
