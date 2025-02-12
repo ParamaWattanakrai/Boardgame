@@ -1,6 +1,4 @@
 package entities;
-
-import utils.*;
 import map.*;
 
 public class Medic extends Civilian {
@@ -12,7 +10,7 @@ public class Medic extends Civilian {
     }
 
     public boolean cure() {
-        for (Civilian person : block.getPopulation()) {
+        for (Civilian person : block.getEveryone()) {
             if (person.getVitality() == Vitality.COMA) {
                 person.disinfect();
                 return true;

@@ -18,7 +18,7 @@ public class Civilian {
     public boolean move(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
         if (neighborBlock != block &&
-        block.checkPath(direction) && neighborBlock.checkPath(direction)) {
+        block.getPath(direction).doesExist() && neighborBlock.getPath(direction).doesExist()) {
             block.removePerson(this);
             block = neighborBlock;
             neighborBlock.addPerson(this);

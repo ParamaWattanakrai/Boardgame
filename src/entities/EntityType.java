@@ -1,5 +1,5 @@
 package entities;
 
 public enum EntityType {
-    COMMANDER, SOLDIER, MEDIC, ENGINEER, CIVILIAN;
+    COMMANDER, SOLDIER, MEDIC, MECHANIC, CIVILIAN;
 }

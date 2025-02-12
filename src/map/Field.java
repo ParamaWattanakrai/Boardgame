@@ -1,7 +1,6 @@
 package map;
 
 import utils.*;
-import entities.*;
 
 public class Field {
     PathType[] allPathTypes = PathType.values();
@@ -38,7 +37,7 @@ public class Field {
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getPopulation().size());
+                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getPopulation());
             }
             System.out.println();
         }

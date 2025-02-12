@@ -4,6 +4,7 @@ import utils.*;
 import entities.*;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 public class Block {
     private Field field;
@@ -19,10 +20,16 @@ public class Block {
     private String blockTypeString;
     private String pathString;
 
-    private ArrayList<Civilian> population = new ArrayList<>();
+    private EnumMap<EntityType, ArrayList<Civilian>> population = new EnumMap<>(EntityType.class);
+
     private int gunAmount = 0;
 
     public Block(Field field, int x, int y, BlockType blockType, PathType pathType, int orientation) {
+        population.put(EntityType.CIVILIAN, new ArrayList<>());
+        population.put(EntityType.SOLDIER, new ArrayList<>());
+        population.put(EntityType.MEDIC, new ArrayList<>());
+        population.put(EntityType.MECHANIC, new ArrayList<>());
+
         this.field = field;
         coordinate = new Tuple(x, y);
 
@@ -32,7 +39,7 @@ public class Block {
                 blockTypeString = "■";
                 break;
             case STORE:
-                blockTypeString = "🏬";
+                blockTypeString = "⌂";
                 break;
             case HOSPITAL:
                 blockTypeString = "✚";
@@ -47,6 +54,7 @@ public class Block {
                 break;
         }
 
+        this.pathType = pathType;
         this.orientation = orientation;
 
         northPath.build();
@@ -118,11 +126,11 @@ public class Block {
     }
 
     public void addPerson(Civilian person) {
-        population.add(person);
+        population.get(person.getEntityType()).add(person);
     }
 
     public void removePerson(Civilian person) {
-        population.remove(person);
+        population.get(person.getEntityType()).remove(person);
     }
 
     public void addGun() {
@@ -138,29 +146,57 @@ public class Block {
     }
 
     public Tuple getFirePower() {
-        return new Tuple(gunAmount, gunAmount);
+        int secondaryTroop = 0;
+        for (Civilian civilian : population.get(EntityType.CIVILIAN)) {
+            if (civilian.isArmed()) {
+                secondaryTroop++;
+            }
+        }
+        return new Tuple(population.get(EntityType.SOLDIER).size(), secondaryTroop);
     }
 
-    public boolean checkPath(Direction direction) {
+    public Path getPath(Direction direction) {
         switch (direction) {
             case NORTH:
-                return northPath.doesExist();
+                return northPath;
             case EAST:
-                return eastPath.doesExist();
+                return eastPath;
             case SOUTH:
-                return southPath.doesExist();
+                return southPath;
             case WEST:
-                return westPath.doesExist();
+                return westPath;
         }
-        return false;
+        return new Path();
     }
 
     public Tuple getCoordinate() {
         return coordinate;
     }
 
-    public ArrayList<Civilian> getPopulation() {
-        return population;
+    public ArrayList<Civilian> getEveryone() {
+        ArrayList<Civilian> everyone = new ArrayList<>();
+        for (ArrayList<Civilian> group : population.values()) {
+            for (Civilian civilian : group) {
+                everyone.add(civilian);
+            }
+        }
+        return everyone;
+    }
+
+    public int getPopulation() {
+        return getEveryone().size();
+    }
+
+    public BlockType getBlockType() {
+        return blockType;
+    }
+
+    public PathType getPathType() {
+        return pathType;
+    }
+
+    public int getOrientation() {
+        return orientation;
     }
 
     public int getGunAmount() {

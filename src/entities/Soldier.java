@@ -1,9 +1,10 @@
 package entities;
 
-import utils.*;
 import map.*;
 
 public class Soldier extends Civilian {
+    protected EntityType entityType = EntityType.SOLDIER;
+
     public Soldier(Block block) {
         super(block);
         contacted = true;
