@@ -1,0 +1,3 @@
+enum PathType {
+    STRAIGHT, CURVED, THREEWAY, FOURWAY;
+}

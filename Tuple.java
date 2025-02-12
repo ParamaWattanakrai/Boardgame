@@ -7,11 +7,11 @@ public class Tuple {
         this.b = b;
     }
 
-    public int geta() {
+    public int getA() {
         return a;
     }
 
-    public int getb() {
+    public int getB() {
         return b;
     }
 
