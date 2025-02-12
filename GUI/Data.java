@@ -1,0 +1,83 @@
+package GUI;
+
+public class Data {
+    private int panal;
+    private int soldier;
+    private int civilian;
+    private int medic;
+    private int engineer;
+    private boolean seize;
+
+    public Data(int panal) {
+        this.panal = panal;
+        this.soldier = 1;
+        this.civilian = 1;
+        this.medic = 1;
+        this.engineer = 1;
+        this.seize = true;
+    }
+
+    public Data(int panal,int soldier, int civilian, int medic, int engineer, boolean seize) {
+        this.panal = panal;
+        this.soldier = soldier;
+        this.civilian = civilian;
+        this.medic = medic;
+        this.engineer = engineer;
+        this.seize = seize;
+    }
+
+    public int getEngineer() {
+        return engineer;
+    }
+
+    public int setEngineer(int engineer) {
+        return this.engineer = engineer;
+    }
+
+    public void setPanal(int panal) {
+        this.panal = panal;
+    }
+
+
+    public void setSoldier(int soldier) {
+        this.soldier = soldier;
+    }
+
+
+    public void setCivilian(int civilian) {
+        this.civilian = civilian;
+    }
+
+
+    public void setMedic(int medic) {
+        this.medic = medic;
+    }
+
+
+    public int getPanal() {
+        return panal;
+    }
+
+
+    public int getSoldier() {
+        return soldier;
+    }
+
+
+    public int getCivilian() {
+        return civilian;
+    }
+
+
+    public int getMedic() {
+        return medic;
+    }
+
+    public boolean getSeize() {
+        return seize;
+    }
+
+    public void setSeize(boolean seize) {
+        this.seize = seize;
+    }
+}
