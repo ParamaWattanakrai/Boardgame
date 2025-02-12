@@ -9,6 +9,7 @@ import java.util.EnumMap;
 public class Block {
     private Field field;
     private Tuple coordinate;
+
     private BlockType blockType;
     private PathType pathType;
     private int orientation;
@@ -17,6 +18,8 @@ public class Block {
     private Path westPath = new Path();
     private Path southPath = new Path();
 
+    private int occupationLevel;
+
     private String blockTypeString;
     private String pathString;
 
@@ -24,31 +27,37 @@ public class Block {
 
     private int gunAmount = 0;
 
-    public Block(Field field, int x, int y, BlockType blockType, PathType pathType, int orientation) {
+    public Block(Field field, int x, int y, BlockType blockType, PathType pathType, int orientation, int occupationLevel) {
+
+        this.field = field;
+        coordinate = new Tuple(x, y);
+
+        this.occupationLevel = occupationLevel;
+
         population.put(EntityType.CIVILIAN, new ArrayList<>());
         population.put(EntityType.SOLDIER, new ArrayList<>());
         population.put(EntityType.MEDIC, new ArrayList<>());
         population.put(EntityType.MECHANIC, new ArrayList<>());
 
-        this.field = field;
-        coordinate = new Tuple(x, y);
-
         this.blockType = blockType;
         switch (blockType) {
             case DEFAULT:
-                blockTypeString = "■";
+                blockTypeString = "D";
+                break;
+            case SPAWN:
+                blockTypeString = "S";
                 break;
             case STORE:
-                blockTypeString = "⌂";
+                blockTypeString = "F";
                 break;
             case HOSPITAL:
-                blockTypeString = "✚";
+                blockTypeString = "H";
                 break;
             case POLICESTATION:
-                blockTypeString = "🛡";
+                blockTypeString = "P";
                 break;
             case POWERPLANT:
-                blockTypeString = "☢";
+                blockTypeString = "N";
                 break;
             default:
                 break;
@@ -119,6 +128,31 @@ public class Block {
                     break;
             }
         }
+    }
+
+    public boolean contact() {
+        boolean contactFlag = false;
+        if (population.get(EntityType.SOLDIER).size() > 0 && getPopulation() > 0) {
+            for (Civilian person : getEveryone()) {
+                if (!person.isContacted()) {
+                    contactFlag = true;
+                }
+            }
+        }
+        return contactFlag;
+    }
+
+    public boolean occupy() {
+        if (getPopulation() > 0) {
+            if (occupationLevel < 2) {
+                occupationLevel--;
+            }
+            return true;
+        }
+        if (occupationLevel > 0) {
+            occupationLevel--;
+        }
+        return false;
     }
 
     public Block getNeighborBlock(Direction direction) {
