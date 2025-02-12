@@ -6,22 +6,46 @@ import entities.*;
 import java.util.ArrayList;
 
 public class Block {
-    protected Field field;
-    protected Tuple coordinate;
-    protected PathType pathType;
-    protected int orientation;
-    protected Path northPath = new Path();
-    protected Path eastPath = new Path();
-    protected Path westPath = new Path();
-    protected Path southPath = new Path();
+    private Field field;
+    private Tuple coordinate;
+    private BlockType blockType;
+    private PathType pathType;
+    private int orientation;
+    private Path northPath = new Path();
+    private Path eastPath = new Path();
+    private Path westPath = new Path();
+    private Path southPath = new Path();
 
-    protected String pathString;
+    private String blockTypeString;
+    private String pathString;
 
-    protected ArrayList<Civilian> population = new ArrayList<>();
-    protected int gunAmount = 0;
+    private ArrayList<Civilian> population = new ArrayList<>();
+    private int gunAmount = 0;
 
-    public Block(int x, int y, PathType pathType, int orientation) {
+    public Block(Field field, int x, int y, BlockType blockType, PathType pathType, int orientation) {
+        this.field = field;
         coordinate = new Tuple(x, y);
+
+        this.blockType = blockType;
+        switch (blockType) {
+            case DEFAULT:
+                blockTypeString = "■";
+                break;
+            case STORE:
+                blockTypeString = "🏬";
+                break;
+            case HOSPITAL:
+                blockTypeString = "✚";
+                break;
+            case POLICESTATION:
+                blockTypeString = "🛡";
+                break;
+            case POWERPLANT:
+                blockTypeString = "☢";
+                break;
+            default:
+                break;
+        }
 
         this.orientation = orientation;
 
@@ -97,6 +121,10 @@ public class Block {
         population.add(person);
     }
 
+    public void removePerson(Civilian person) {
+        population.remove(person);
+    }
+
     public void addGun() {
         gunAmount++;
     }
@@ -113,6 +141,20 @@ public class Block {
         return new Tuple(gunAmount, gunAmount);
     }
 
+    public boolean checkPath(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return northPath.doesExist();
+            case EAST:
+                return eastPath.doesExist();
+            case SOUTH:
+                return southPath.doesExist();
+            case WEST:
+                return westPath.doesExist();
+        }
+        return false;
+    }
+
     public Tuple getCoordinate() {
         return coordinate;
     }
@@ -125,6 +167,9 @@ public class Block {
         return gunAmount;
     }
 
+    public String getBlockTypeString() {
+        return blockTypeString;
+    }
     public String getPathString() {
         return pathString;
     }

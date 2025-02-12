@@ -19,7 +19,7 @@ public class Path {
         return true;
     }
 
-    public boolean doesbuild() {
+    public boolean doesExist() {
         return exist;
     }
 

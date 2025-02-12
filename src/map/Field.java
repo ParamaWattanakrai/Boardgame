@@ -4,22 +4,27 @@ import utils.*;
 import entities.*;
 
 public class Field {
-    PathType[] pathTypes = PathType.values();
-    private Block[][] Field = new Block[5][5];
+    PathType[] allPathTypes = PathType.values();
+    private Block[][] field = new Block[5][5];
 
-    public Field() {
-        for (int i = 0; i < Field.length; i++) {
-            for (int j = 0; j < Field[0].length; j++) {
-                Field[i][j] = new Block(j, i, pathTypes[(int) (Math.random() * pathTypes.length)], (int) (Math.random() * 4));
+    public Field(int width, int height) {
+        field = new Block[height][width];
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                field[i][j] = getRandomBlock(j, i, allPathTypes);
             }
         }
+    }
+
+    public Block getRandomBlock(int x, int y, PathType[] possiblePathTypes) {
+        return new Block(this, x, y, BlockType.DEFAULT, possiblePathTypes[(int) (Math.random() * possiblePathTypes.length)], (int) (Math.random() * 4));
     }
 
     public Block getNextBlock(Block block, Direction direction) {
         int blockX = block.getCoordinate().getA();
         int blockY = block.getCoordinate().getB();
         try {
-            return Field[blockX + direction.getOffset().getB()][blockY + direction.getOffset().getA()];
+            return field[blockX + direction.getOffset().getB()][blockY + direction.getOffset().getA()];
         } catch (Exception e) {
             System.out.println(String.format("There is no further block %sward", direction.toString().toLowerCase()));
         }
@@ -27,15 +32,19 @@ public class Field {
     }
 
     public Block getBlock(Tuple coordinate) {
-        return Field[coordinate.getA()][coordinate.getB()];
+        return field[coordinate.getA()][coordinate.getB()];
     }
 
     public void printField() {
-        for (int i = 0; i < Field.length; i++) {
-            for (int j = 0; j < Field[0].length; j++) {
-                System.out.print(Field[j][i].getPathString());
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getPopulation().size());
             }
             System.out.println();
         }
+        for (int j = 0; j < field[0].length * 2; j++) {
+            System.out.print("-");
+        }
+        System.out.println();
     }
 }

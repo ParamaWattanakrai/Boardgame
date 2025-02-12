@@ -4,19 +4,22 @@ import utils.*;
 import map.*;
 
 public class Civilian {
+    protected EntityType entityType = EntityType.CIVILIAN;
     protected Block block;
     protected Vitality vitality = Vitality.ALIVE;
     protected boolean contacted = false;
     protected boolean armed = false;
 
-    Civilian(Block block) {
+    public Civilian(Block block) {
         this.block = block;
         block.addPerson(this);
     }
 
     public boolean move(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
-        if (neighborBlock != block) {
+        if (neighborBlock != block &&
+        block.checkPath(direction) && neighborBlock.checkPath(direction)) {
+            block.removePerson(this);
             block = neighborBlock;
             neighborBlock.addPerson(this);
             return true;
@@ -27,6 +30,10 @@ public class Civilian {
     public void infect() {
         vitality = Vitality.COMA;
         disarm();
+    }
+
+    public void disinfect() {
+        vitality = Vitality.ALIVE;
     }
 
     public void contact() {
@@ -44,6 +51,10 @@ public class Civilian {
         if (armed) {
             block.addGun();
         }
+    }
+
+    public EntityType getEntityType() {
+        return entityType;
     }
 
     public Vitality getVitality() {
