@@ -1,8 +1,7 @@
 package GUI.utils;
 
-import java.awt.*;
-import javax.swing.*;
-
+import java.awt.Image;
+import javax.swing.ImageIcon;
 public class ImageLoader {
     public static Image loadImage(String imagePath) {
         return new ImageIcon(ImageLoader.class.getResource("../"+imagePath)).getImage();

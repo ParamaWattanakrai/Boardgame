@@ -1,5 +1,6 @@
-package GUI;
+package GUI.utils;
 
+import GUI.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ public class GridMouseListener implements MouseListener{
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        Frame.textPanel.setText(num);
     }
 
     @Override
@@ -25,7 +26,10 @@ public class GridMouseListener implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        Frame.gameData.get(num).setCivilian(Frame.gameData.get(num).getCivilian()+1);
+        Frame.textPanel.setText(num);
+        panel.revalidate();
+        panel.repaint();
     }
 
     @Override
