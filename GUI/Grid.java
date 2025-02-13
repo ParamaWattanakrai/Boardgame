@@ -11,7 +11,6 @@ public class Grid {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.setBounds(0, 0, 560, 560);
         for (int i = 0; i < 25; i++) {
-            Frame.gameData.add(new Data(i));
             panel.add(new GridPanel(i).getPanel());
         }
     }

@@ -1,11 +1,13 @@
 package GUI;
 
+import GUI.utils.GameData;
 import java.util.ArrayList;
-import javax.swing.*;
-
+import javax.swing.JFrame;
 public class Frame {
     private final JFrame frame = new JFrame();
-    public static ArrayList<Data> gameData = new ArrayList<>();
+    public static ArrayList<GameData> gameData = new ArrayList<>();
+    public static TextPanel text = new TextPanel();
+    public static Grid grid = new Grid();
 
     public Frame() {
         frame.setTitle("Game");
@@ -14,14 +16,10 @@ public class Frame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null); 
-        for (int i = 0; i < 25; i++) gameData.add(new Data(i));
+        for (int i = 0; i < 25; i++) gameData.add(new GameData(i));
 
-        Text text = new Text();
         frame.add(text.getPanel());
-
-        Grid grid = new Grid();
         frame.add(grid.getPanel());
-
 
         frame.setVisible(true);
     }

@@ -1,6 +1,6 @@
-package GUI;
+package GUI.utils;
 
-public class Data {
+public class GameData {
     private int panal;
     private int soldier;
     private int civilian;
@@ -8,16 +8,16 @@ public class Data {
     private int engineer;
     private boolean seize;
 
-    public Data(int panal) {
+    public GameData(int panal) {
         this.panal = panal;
         this.soldier = 1;
         this.civilian = 1;
         this.medic = 1;
         this.engineer = 1;
-        this.seize = true;
+        this.seize = false;
     }
 
-    public Data(int panal,int soldier, int civilian, int medic, int engineer, boolean seize) {
+    public GameData(int panal,int soldier, int civilian, int medic, int engineer, boolean seize) {
         this.panal = panal;
         this.soldier = soldier;
         this.civilian = civilian;
@@ -71,6 +71,18 @@ public class Data {
 
     public int getMedic() {
         return medic;
+    }
+
+    @Override
+    public String toString() {
+        return "panal=" + panal + ", soldier=" + soldier + ", civilian=" + civilian + ", medic=" + medic
+                + ", engineer=" + engineer + ", seize=" + seize;
+    }
+
+
+    public String toHTML(){
+        return "<HTML>panal=" + panal + "<br> soldier=" + soldier + "<br> civilian=" + civilian + "<br> medic=" + medic
+                + "<br> engineer=" + engineer + "<br> seize=" + seize + "</HTML>";
     }
 
     public boolean getSeize() {
