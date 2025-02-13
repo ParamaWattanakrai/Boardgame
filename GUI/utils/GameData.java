@@ -9,12 +9,7 @@ public class GameData {
     private boolean seize;
 
     public GameData(int panal) {
-        this.panal = panal;
-        this.soldier = 1;
-        this.civilian = 1;
-        this.medic = 1;
-        this.engineer = 1;
-        this.seize = false;
+        this(panal,1,1,1,1,false);
     }
 
     public GameData(int panal,int soldier, int civilian, int medic, int engineer, boolean seize) {

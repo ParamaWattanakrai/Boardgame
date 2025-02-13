@@ -1,23 +1,16 @@
 package GUI;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class TextPanel {
-    private final JPanel panel = new JPanel();
+public class TextPanel extends JPanel{
     private final JLabel label = new JLabel("<html>" + "Game ???" + "</html>");
 
     public TextPanel() {
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.setBounds(560, 0, 200, 560);
-        panel.add(label);
-    }
-
-    public JPanel getPanel() {
-        return panel;
-    }
-
-    public JLabel getLabel() {
-        return label;
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setBounds(560, 0, 200, 560);
+        add(label);
     }
     
     public void setText(int num) {
