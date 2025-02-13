@@ -8,8 +8,6 @@ public class Grid extends JPanel {
     public Grid() {
         setLayout(new GridLayout(5, 5));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        setBounds(0, 0, 560, 560);
-        
         for (int i = 0; i < 25; i++) {
             add(new GridPanel(i));
         }
