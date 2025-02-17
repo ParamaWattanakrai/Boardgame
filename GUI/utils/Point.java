@@ -1,4 +1,4 @@
-package GUI.utils;
+package gui.utils;
 
 public class Point {
     private int x;

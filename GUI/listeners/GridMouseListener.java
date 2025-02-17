@@ -1,10 +1,11 @@
-package GUI.listeners;
+package gui.listeners;
 
-import GUI.Game;
-import GUI.RightPanel;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
+
+import gui.Game;
+import gui.RightPanel;
 
 public class GridMouseListener implements MouseListener {
     private final JPanel panel;

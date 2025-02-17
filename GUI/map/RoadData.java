@@ -1,4 +1,4 @@
-package GUI.map;
+package gui.map;
 
 import java.util.Random;
 

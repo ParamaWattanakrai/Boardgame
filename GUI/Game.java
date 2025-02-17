@@ -1,11 +1,10 @@
-package GUI;
+package gui;
 
+import gui.map.Map;
+import gui.map.RoadData;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
-
-import GUI.map.Map;
-import GUI.map.RoadData;
 
 public class Game extends JFrame {
     private static ArrayList<RoadData> roadData = new ArrayList<>();
@@ -23,7 +22,6 @@ public class Game extends JFrame {
 
         for (int i = 0; i < 25; i++) roadData.add(new RoadData(i));
 
-         // To do -> make this shit to OOP and จัดแม้งใหม่ 
         GridBagConstraints gbc = new GridBagConstraints();
         
         gbc.gridy = 0;
@@ -32,17 +30,17 @@ public class Game extends JFrame {
     
         gbc.gridx = 0;
         gbc.weightx = 0.2;
-        leftPanel.setBackground(Color.black);
+        // leftPanel.setBackground(Color.black);
         add(leftPanel, gbc);
     
         gbc.gridx = 1;
         gbc.weightx = 0.8;
-        map.setBackground(Color.black);
+        // map.setBackground(Color.black);
         add(map, gbc);
     
         gbc.gridx = 2;
         gbc.weightx = 0.2;
-        rightPanel.setBackground(Color.black);
+        // rightPanel.setBackground(Color.black);
         add(rightPanel, gbc);
         setVisible(true);
     }

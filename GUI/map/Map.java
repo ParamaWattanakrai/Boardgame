@@ -1,4 +1,4 @@
-package GUI.map;
+package gui.map;
 
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;

@@ -1,9 +1,10 @@
-package GUI.utils;
+package gui.utils;
 
-import GUI.Game;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Random;
+
+import gui.Game;
 
 public class ImageDrawer {
     private static final int SIZE = 15;

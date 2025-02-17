@@ -1,10 +1,10 @@
-package GUI.map;
-
-import GUI.listeners.GridMouseListener;
-import GUI.utils.ImageDrawer;
+package gui.map;
 
 import java.awt.Graphics;
 import javax.swing.JPanel;
+
+import gui.listeners.GridMouseListener;
+import gui.utils.ImageDrawer;
 
 public class Road extends JPanel {
     private final int num;

@@ -1,9 +1,9 @@
-package GUI;
+package gui;
 
 import java.awt.*;
 import javax.swing.*;
 
-import GUI.components.GamePanel;
+import gui.components.GamePanel;
 
 public class RightPanel extends JPanel {
     private static GamePanel data = new GamePanel();;

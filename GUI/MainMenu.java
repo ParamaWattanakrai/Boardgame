@@ -1,8 +1,7 @@
-package GUI;
+package gui;
 
-import GUI.components.MainButton;
-import GUI.utils.ImageLoader;
-
+import gui.components.MainButton;
+import gui.utils.ImageLoader;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -37,7 +36,7 @@ public class MainMenu extends JFrame {
         MainButton resumeButton = new MainButton("Resume");
         resumeButton.setBounds(850, 670, 220, 50);
         resumeButton.addActionListener((_) -> {
-            System.exit(0);
+            
         }); 
 
         MainButton quitButton = new MainButton("Quit");
@@ -50,7 +49,7 @@ public class MainMenu extends JFrame {
         ruleButton.setBounds(110, 905, 220, 50);
         ruleButton.setFont(new Font("Arial", Font.BOLD, 65));
         ruleButton.addActionListener((_) -> {
-            System.exit(0);
+            
         });
 
         panel.add(newGameButton);

@@ -1,9 +1,9 @@
-package GUI;
+package gui;
 
 import java.awt.*;
 import javax.swing.*;
 
-import GUI.components.GamePanel;
+import gui.components.GamePanel;
 
 public class LeftPanel extends JPanel {
     private GamePanel night = new GamePanel();

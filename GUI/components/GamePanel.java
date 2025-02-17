@@ -1,8 +1,7 @@
-package GUI.components;
+package gui.components;
 
-import GUI.Game;
+import gui.Game;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
