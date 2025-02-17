@@ -1,11 +1,10 @@
 package gui.listeners;
 
+import gui.Game;
+import gui.MainMenu;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
-
-import gui.Game;
-import gui.RightPanel;
 
 public class GridMouseListener implements MouseListener {
     private final JPanel panel;
@@ -14,15 +13,11 @@ public class GridMouseListener implements MouseListener {
     public GridMouseListener(JPanel panel, int num) {
         this.panel = panel;
         this.num = num;
-        Game.getLeftPanel().getStat().setText("Stat");
-        Game.getLeftPanel().getNight().setText("Night");
-        Game.getLeftPanel().getTask().setText("Task");
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        Game.getLeftPanel();
-        RightPanel.getData().setText(num);
+        Game.getData().setData(num);
     }
 
     @Override
@@ -32,9 +27,8 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Game.getRoadData().get(num).setCivilian(Game.getRoadData().get(num).getCivilian()+1);
-        Game.getLeftPanel();
-        RightPanel.getData().setText(num);
+        MainMenu.getRoadData().get(num).setCivilian(MainMenu.getRoadData().get(num).getCivilian()+1);
+        Game.getData().setData(num);
         panel.revalidate();
         panel.repaint();
     }

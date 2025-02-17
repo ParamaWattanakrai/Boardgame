@@ -1,10 +1,11 @@
 package gui.utils;
 
+import gui.MainMenu;
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.Random;
-
-import gui.Game;
 
 public class ImageDrawer {
     private static final int SIZE = 15;
@@ -19,7 +20,7 @@ public class ImageDrawer {
     private static final Image treeMap = ImageLoader.loadImage("img/map/3.png");
 
     private static void drawMap(Graphics g, int width, int height, int num) {
-        switch (Game.getRoadData().get(num).getRoad()){
+        switch (MainMenu.getRoadData().get(num).getRoad()){
             case 0 -> g.drawImage(oneMap, 0, 0, width,height, null);
             case 1 -> g.drawImage(twoMap, 0, 0, width,height, null);
             case 2 -> g.drawImage(treeMap, 0, 0,width,height,null);
@@ -27,11 +28,13 @@ public class ImageDrawer {
     }
 
     public static void drawImages(Graphics g, int num, int width, int height) {
-        drawMap(g, width, height, num);
-        drawUnits(g, Game.getRoadData().get(num).getCivilian(), civilianImage, width, height);
-        drawUnits(g, Game.getRoadData().get(num).getMedic(), medicImage, width, height);
-        drawUnits(g, Game.getRoadData().get(num).getSoldier(), soldierImage, width, height);
-        drawUnits(g, Game.getRoadData().get(num).getEngineer(), engineerImage, width, height);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+        drawMap(g2d, width, height, num);
+        drawUnits(g, MainMenu.getRoadData().get(num).getCivilian(), civilianImage, width, height);
+        drawUnits(g, MainMenu.getRoadData().get(num).getMedic(), medicImage, width, height);
+        drawUnits(g, MainMenu.getRoadData().get(num).getSoldier(), soldierImage, width, height);
+        drawUnits(g, MainMenu.getRoadData().get(num).getEngineer(), engineerImage, width, height);
     }
 
     private static void drawUnits(Graphics g, int unitCount, Image unitImage, int width, int height) {
@@ -44,6 +47,7 @@ public class ImageDrawer {
     private static void drawRandomImage(Graphics g, Image image, Random rand, int width, int height) {
         int x = rand.nextInt(width - SIZE);
         int y = rand.nextInt(height - SIZE);
+
         g.drawImage(image, x, y, SIZE, SIZE, null);
     }
 }

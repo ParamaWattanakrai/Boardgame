@@ -1,15 +1,21 @@
 package gui;
 
 import gui.components.MainButton;
+import gui.data.GameData;
+import gui.data.RoadData;
 import gui.utils.ImageLoader;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainMenu extends JFrame {
-    
+
+    private static ArrayList<RoadData> roadData = new ArrayList<>();
+    private static GameData gamaData = new GameData();
+
     public MainMenu() {
         super("Out Bark");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -59,5 +65,22 @@ public class MainMenu extends JFrame {
 
         add(panel);
         setVisible(true);
+    }
+
+    public static ArrayList<RoadData> getRoadData() {
+        return roadData;
+    }
+
+    public static void setRoadData(ArrayList<RoadData> roadData) {
+        MainMenu.roadData = roadData;
+    }
+
+    
+    public static GameData getGamaData() {
+        return gamaData;
+    }
+
+    public static void setGamaData(GameData gamaData) {
+        MainMenu.gamaData = gamaData;
     }
 }

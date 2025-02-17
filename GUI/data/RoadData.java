@@ -1,4 +1,4 @@
-package gui.map;
+package gui.data;
 
 import java.util.Random;
 
@@ -114,7 +114,7 @@ public class RoadData {
 
     @Override
     public String toString() {
-        return "panal=" + panal + ", commander=" + commander + ", soldier=" + soldier + ", civilian="
+        return "Block=" + panal + ", commander=" + commander + ", soldier=" + soldier + ", civilian="
                 + civilian + ", medic=" + medic + ", engineer=" + engineer + ", road=" + road + ", dog=" + dog
                 + ", landmark=" + landmark + ", capture=" + capture;
     }

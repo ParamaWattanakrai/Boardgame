@@ -1,15 +1,18 @@
 package gui;
 
+import gui.components.GamePanel;
+import gui.data.RoadData;
 import gui.map.Map;
-import gui.map.RoadData;
+import gui.utils.ImageLoader;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
 
 public class Game extends JFrame {
-    private static ArrayList<RoadData> roadData = new ArrayList<>();
-    private static RightPanel rightPanel = new RightPanel();
-    private static LeftPanel leftPanel = new LeftPanel();
+    private static GamePanel night = new GamePanel("Night");
+    private static GamePanel stat = new GamePanel("Stat");
+    private static GamePanel task = new GamePanel("Task");
+    private static GamePanel data = new GamePanel("Data");
     private static Map map = new Map();
 
     public Game() {
@@ -17,56 +20,50 @@ public class Game extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Color.black);
-        setLayout(new GridBagLayout());
 
-        for (int i = 0; i < 25; i++) roadData.add(new RoadData(i));
+        // new game
+        for (int i = 0; i < 25; i++) MainMenu.getRoadData().add(new RoadData(i));
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Image backgroundImage = ImageLoader.loadImage("img/GameBg.png");
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+
+        panel.setLayout(null);
         
-        gbc.gridy = 0;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-    
-        gbc.gridx = 0;
-        gbc.weightx = 0.2;
-        // leftPanel.setBackground(Color.black);
-        add(leftPanel, gbc);
-    
-        gbc.gridx = 1;
-        gbc.weightx = 0.8;
-        // map.setBackground(Color.black);
-        add(map, gbc);
-    
-        gbc.gridx = 2;
-        gbc.weightx = 0.2;
-        // rightPanel.setBackground(Color.black);
-        add(rightPanel, gbc);
+        night.setBounds(60, 40, 220, 200);
+        night.setText("Stat\n" + MainMenu.getGamaData().getNight());
+
+        stat.setBounds(60, 220, 220, 200);
+
+        task.setBounds(60, 650, 220, 200);
+        task.setText("Task\n" + Arrays.toString(MainMenu.getGamaData().getTask()));
+
+        map.setBounds(482, 54, 959, 900);
+        
+        data.setBounds(1600, 450, 220, 500);
+        data.setFont(new Font("Arial", Font.BOLD,30));
+        
+        panel.add(night);
+        panel.add(stat);
+        panel.add(task);
+        panel.add(map);
+        panel.add(data);
+
+        add(panel);
         setVisible(true);
     }
 
-    public static ArrayList<RoadData> getRoadData() {
-        return roadData;
+    public static GamePanel getData() {
+        return data;
     }
 
-    public static void setRoadData(ArrayList<RoadData> roadData) {
-        Game.roadData = roadData;
-    }
-
-    public static RightPanel getRightPanel() {
-        return rightPanel;
-    }
-
-    public static void setRightPanel(RightPanel rightPanel) {
-        Game.rightPanel = rightPanel;
-    }
-
-    public static LeftPanel getLeftPanel() {
-        return leftPanel;
-    }
-
-    public static void setLeftPanel(LeftPanel leftPanel) {
-        Game.leftPanel = leftPanel;
+    public static void setData(GamePanel data) {
+        Game.data = data;
     }
 
     public static Map getMap() {
@@ -75,5 +72,29 @@ public class Game extends JFrame {
 
     public static void setMap(Map map) {
         Game.map = map;
+    }
+
+    public static GamePanel getNight() {
+        return night;
+    }
+
+    public static void setNight(GamePanel night) {
+        Game.night = night;
+    }
+
+    public static GamePanel getStat() {
+        return stat;
+    }
+
+    public static void setStat(GamePanel stat) {
+        Game.stat = stat;
+    }
+
+    public static GamePanel getTask() {
+        return task;
+    }
+
+    public static void setTask(GamePanel task) {
+        Game.task = task;
     }
 }
