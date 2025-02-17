@@ -1,6 +1,8 @@
-package GUI;
+package GUI.utils;
 
+import GUI.Frame;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -9,26 +11,40 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class TextPanel extends JPanel {
-    private final JTextArea textArea = new JTextArea("-------------");
+    private final JTextArea textArea;
 
     public TextPanel() {
+        textArea = new JTextArea();
+        settingText();
+    }
+
+    public TextPanel(String str) {
+        textArea = new JTextArea(str);
+        settingText();
+    }
+
+    private void settingText(){
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setLayout(new BorderLayout());
-
+        textArea.setBackground(Color.BLUE);
         textArea.setWrapStyleWord(true);  
         textArea.setLineWrap(true);     
         textArea.setEditable(false);    
         textArea.setFocusable(false);     
         textArea.setPreferredSize(new Dimension(200, 50));
-        textArea.setFont(new Font("Arial", Font.PLAIN,70));
+        textArea.setFont(new Font("Arial", Font.PLAIN,50));
         textArea.setOpaque(false);  
         textArea.setBorder(null); 
-        add(new JScrollPane(textArea), BorderLayout.CENTER);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setOpaque(false);
+        scrollPane.setBorder(null);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public void setText(int num) {
-        
-        this.textArea.setText(Frame.gameData.get(num).toString().replace(", ", "\n"));
+        this.textArea.setText(Frame.getGridData().get(num).toString().replace(", ", "\n"));
+
     }
 
     public void setText(String str) {

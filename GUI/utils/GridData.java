@@ -2,7 +2,7 @@ package GUI.utils;
 
 import java.util.Random;
 
-public class GameData {
+public class GridData {
     private int panal;
     private int commander;
     private int soldier;
@@ -14,12 +14,11 @@ public class GameData {
     private int landmark;
     private boolean capture;
 
-    public GameData(int panal) {
+    public GridData(int panal) {
         this(panal,1,1,1,1,1, new Random().nextInt(3),1,0,false);
     }
 
-
-    public GameData(int panal, int commander, int soldier, int civilian, int medic, int engineer, int road, int dog, int landmark, boolean capture) {
+    public GridData(int panal, int commander, int soldier, int civilian, int medic, int engineer, int road, int dog, int landmark, boolean capture) {
         this.panal = panal;
         this.commander = commander;
         this.soldier = soldier;

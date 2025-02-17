@@ -17,8 +17,14 @@ public class ImageDrawer {
     private static final Image twoMap = ImageLoader.loadImage("img/map/2.png");
     private static final Image treeMap = ImageLoader.loadImage("img/map/3.png");
     
+    private static final Image main = ImageLoader.loadImage("img/mainBackground.png");
+
+    public static void drawMain(Graphics g, int width, int height) {
+        g.drawImage(main, 0, 0, width, height, null);
+    }
+
     private static void drawMap(Graphics g, int width, int height, int num) {
-        switch (Frame.gameData.get(num).getRoad()){
+        switch (Frame.getGridData().get(num).getRoad()){
             case 0 -> g.drawImage(oneMap, 0, 0, width,height, null);
             case 1 -> g.drawImage(twoMap, 0, 0, width,height, null);
             case 2 -> g.drawImage(treeMap, 0, 0,width,height,null);
@@ -27,10 +33,10 @@ public class ImageDrawer {
 
     public static void drawImages(Graphics g, int num, int width, int height) {
         drawMap(g, width, height, num);
-        drawUnits(g, Frame.gameData.get(num).getCivilian(), civilianImage, width, height);
-        drawUnits(g, Frame.gameData.get(num).getMedic(), medicImage, width, height);
-        drawUnits(g, Frame.gameData.get(num).getSoldier(), soldierImage, width, height);
-        drawUnits(g, Frame.gameData.get(num).getEngineer(), engineerImage, width, height);
+        drawUnits(g, Frame.getGridData().get(num).getCivilian(), civilianImage, width, height);
+        drawUnits(g, Frame.getGridData().get(num).getMedic(), medicImage, width, height);
+        drawUnits(g, Frame.getGridData().get(num).getSoldier(), soldierImage, width, height);
+        drawUnits(g, Frame.getGridData().get(num).getEngineer(), engineerImage, width, height);
     }
 
     private static void drawUnits(Graphics g, int unitCount, Image unitImage, int width, int height) {
