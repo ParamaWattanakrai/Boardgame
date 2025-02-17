@@ -1,8 +1,8 @@
-package GUI.utils;
+package GUI.map;
 
 import java.util.Random;
 
-public class GridData {
+public class RoadData {
     private int panal;
     private int commander;
     private int soldier;
@@ -14,11 +14,11 @@ public class GridData {
     private int landmark;
     private boolean capture;
 
-    public GridData(int panal) {
+    public RoadData(int panal) {
         this(panal,1,1,1,1,1, new Random().nextInt(3),1,0,false);
     }
 
-    public GridData(int panal, int commander, int soldier, int civilian, int medic, int engineer, int road, int dog, int landmark, boolean capture) {
+    public RoadData(int panal, int commander, int soldier, int civilian, int medic, int engineer, int road, int dog, int landmark, boolean capture) {
         this.panal = panal;
         this.commander = commander;
         this.soldier = soldier;

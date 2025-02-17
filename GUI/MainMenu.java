@@ -1,9 +1,13 @@
 package GUI;
 
+import GUI.components.MainButton;
 import GUI.utils.ImageLoader;
-import GUI.utils.MainButton;
-import java.awt.*;
-import javax.swing.*;
+
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class MainMenu extends JFrame {
     
@@ -17,7 +21,7 @@ public class MainMenu extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Image backgroundImage = ImageLoader.loadImage("img/mainBackground.png");
+                Image backgroundImage = ImageLoader.loadImage("img/MainBg.png");
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -27,7 +31,7 @@ public class MainMenu extends JFrame {
         MainButton newGameButton = new MainButton("New Game");
         newGameButton.setBounds(850, 500, 220, 50);
         newGameButton.addActionListener((_) -> {
-            new Frame();
+            new Game();
         });
 
         MainButton resumeButton = new MainButton("Resume");

@@ -1,17 +1,16 @@
-package GUI;
+package GUI.map;
 
-import GUI.utils.GridMouseListener;
+import GUI.listeners.GridMouseListener;
 import GUI.utils.ImageDrawer;
-import java.awt.Color;
+
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-public class GridPanel extends JPanel {
+public class Road extends JPanel {
     private final int num;
 
-    public GridPanel(int num) {
+    public Road(int num) {
         this.num = num;
-        setBackground(Color.LIGHT_GRAY);
         addMouseListener(new GridMouseListener(this, num));
     }
 

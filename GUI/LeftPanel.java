@@ -1,18 +1,18 @@
 package GUI;
 
-import GUI.utils.TextPanel;
 import java.awt.*;
 import javax.swing.*;
 
+import GUI.components.GamePanel;
+
 public class LeftPanel extends JPanel {
-    private TextPanel night = new TextPanel();
-    private TextPanel stat = new TextPanel();
-    private TextPanel task = new TextPanel();
+    private GamePanel night = new GamePanel();
+    private GamePanel stat = new GamePanel();
+    private GamePanel task = new GamePanel();
 
     public LeftPanel() {
         setLayout(new GridBagLayout());
-        setBackground(Color.black);
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
@@ -32,27 +32,27 @@ public class LeftPanel extends JPanel {
         add(task, gbc);
     }
 
-    public TextPanel getNight() {
+    public GamePanel getNight() {
         return night;
     }
 
-    public void setNight(TextPanel night) {
+    public void setNight(GamePanel night) {
         this.night = night;
     }
 
-    public TextPanel getStat() {
+    public GamePanel getStat() {
         return stat;
     }
 
-    public void setStat(TextPanel stat) {
+    public void setStat(GamePanel stat) {
         this.stat = stat;
     }
 
-    public TextPanel getTask() {
+    public GamePanel getTask() {
         return task;
     }
 
-    public void setTask(TextPanel task) {
+    public void setTask(GamePanel task) {
         this.task = task;
     }
 

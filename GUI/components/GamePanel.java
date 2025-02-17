@@ -1,6 +1,6 @@
-package GUI.utils;
+package GUI.components;
 
-import GUI.Frame;
+import GUI.Game;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,15 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class TextPanel extends JPanel {
+public class GamePanel extends JPanel {
     private final JTextArea textArea;
 
-    public TextPanel() {
+    public GamePanel() {
         textArea = new JTextArea();
         settingText();
     }
 
-    public TextPanel(String str) {
+    public GamePanel(String str) {
         textArea = new JTextArea(str);
         settingText();
     }
@@ -26,7 +26,6 @@ public class TextPanel extends JPanel {
     private void settingText(){
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setLayout(new BorderLayout());
-        textArea.setBackground(Color.BLUE);
         textArea.setWrapStyleWord(true);  
         textArea.setLineWrap(true);     
         textArea.setEditable(false);    
@@ -43,7 +42,7 @@ public class TextPanel extends JPanel {
     }
 
     public void setText(int num) {
-        this.textArea.setText(Frame.getGridData().get(num).toString().replace(", ", "\n"));
+        this.textArea.setText(Game.getRoadData().get(num).toString().replace(", ", "\n"));
 
     }
 

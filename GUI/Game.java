@@ -1,17 +1,19 @@
 package GUI;
 
-import GUI.utils.GridData;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Frame extends JFrame {
-    private static ArrayList<GridData> gridData = new ArrayList<>();
+import GUI.map.Map;
+import GUI.map.RoadData;
+
+public class Game extends JFrame {
+    private static ArrayList<RoadData> roadData = new ArrayList<>();
     private static RightPanel rightPanel = new RightPanel();
     private static LeftPanel leftPanel = new LeftPanel();
-    private static Grid grid = new Grid();
+    private static Map map = new Map();
 
-    public Frame() {
+    public Game() {
         super("Out Bark");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,8 +21,9 @@ public class Frame extends JFrame {
         getContentPane().setBackground(Color.black);
         setLayout(new GridBagLayout());
 
-        for (int i = 0; i < 25; i++) gridData.add(new GridData(i));
-    
+        for (int i = 0; i < 25; i++) roadData.add(new RoadData(i));
+
+         // To do -> make this shit to OOP and จัดแม้งใหม่ 
         GridBagConstraints gbc = new GridBagConstraints();
         
         gbc.gridy = 0;
@@ -34,8 +37,8 @@ public class Frame extends JFrame {
     
         gbc.gridx = 1;
         gbc.weightx = 0.8;
-        grid.setBackground(Color.black);
-        add(grid, gbc);
+        map.setBackground(Color.black);
+        add(map, gbc);
     
         gbc.gridx = 2;
         gbc.weightx = 0.2;
@@ -43,36 +46,36 @@ public class Frame extends JFrame {
         add(rightPanel, gbc);
         setVisible(true);
     }
-    
-    public static LeftPanel getLeftPanel() {
-        return leftPanel;
+
+    public static ArrayList<RoadData> getRoadData() {
+        return roadData;
     }
-    
+
+    public static void setRoadData(ArrayList<RoadData> roadData) {
+        Game.roadData = roadData;
+    }
+
     public static RightPanel getRightPanel() {
         return rightPanel;
     }
 
-    public static Grid getGrid() {
-        return grid;
-    }
-
-    public static void setGrid(Grid grid) {
-        Frame.grid = grid;
-    }
-
     public static void setRightPanel(RightPanel rightPanel) {
-        Frame.rightPanel = rightPanel;
+        Game.rightPanel = rightPanel;
+    }
+
+    public static LeftPanel getLeftPanel() {
+        return leftPanel;
     }
 
     public static void setLeftPanel(LeftPanel leftPanel) {
-        Frame.leftPanel = leftPanel;
+        Game.leftPanel = leftPanel;
     }
 
-    public static ArrayList<GridData> getGridData() {
-        return gridData;
+    public static Map getMap() {
+        return map;
     }
 
-    public static void setGridData(ArrayList<GridData> gridData) {
-        Frame.gridData = gridData;
+    public static void setMap(Map map) {
+        Game.map = map;
     }
 }

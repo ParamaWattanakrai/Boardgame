@@ -1,15 +1,15 @@
-package GUI;
+package GUI.map;
 
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class Grid extends JPanel {
-    public Grid() {
+public class Map extends JPanel {
+    public Map() {
         setLayout(new GridLayout(5, 5));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         for (int i = 0; i < 25; i++) {
-            add(new GridPanel(i));
+            add(new Road(i));
         }
     }
 }

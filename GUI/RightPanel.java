@@ -1,24 +1,25 @@
 package GUI;
 
-import GUI.utils.TextPanel;
 import java.awt.*;
 import javax.swing.*;
 
+import GUI.components.GamePanel;
+
 public class RightPanel extends JPanel {
-    private static TextPanel data = new TextPanel();;
+    private static GamePanel data = new GamePanel();;
 
     public RightPanel() {
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         setPreferredSize(new Dimension(200, 50));
         add(data);
     }
     
-    public static TextPanel getData() {
+    public static GamePanel getData() {
         return data;
     }
 
-    public static void setData(TextPanel data) {
+    public static void setData(GamePanel data) {
         RightPanel.data = data;
     }
 }
