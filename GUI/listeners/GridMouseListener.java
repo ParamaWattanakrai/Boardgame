@@ -1,7 +1,7 @@
 package gui.listeners;
 
 import gui.Game;
-import gui.MainMenu;
+import gui.MainFrame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
@@ -27,7 +27,7 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        MainMenu.getRoadData().get(num).setCivilian(MainMenu.getRoadData().get(num).getCivilian()+1);
+        MainFrame.getRoadData().get(num).setCivilian(MainFrame.getRoadData().get(num).getCivilian()+1);
         Game.getData().setData(num);
         panel.revalidate();
         panel.repaint();

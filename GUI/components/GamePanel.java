@@ -1,6 +1,6 @@
 package gui.components;
 
-import gui.MainMenu;
+import gui.MainFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,7 +26,7 @@ public class GamePanel extends JTextArea {
     }
 
     public void setData(int num) {
-        this.setText(MainMenu.getRoadData().get(num).toString().replace(", ", "\n"));
+        this.setText(MainFrame.getRoadData().get(num).toString().replace(", ", "\n"));
     }
 
 

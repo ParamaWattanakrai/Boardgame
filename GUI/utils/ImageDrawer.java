@@ -1,6 +1,6 @@
 package gui.utils;
 
-import gui.MainMenu;
+import gui.MainFrame;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,7 +20,7 @@ public class ImageDrawer {
     private static final Image treeMap = ImageLoader.loadImage("img/map/3.png");
 
     private static void drawMap(Graphics g, int width, int height, int num) {
-        switch (MainMenu.getRoadData().get(num).getRoad()){
+        switch (MainFrame.getRoadData().get(num).getRoad()){
             case 0 -> g.drawImage(oneMap, 0, 0, width,height, null);
             case 1 -> g.drawImage(twoMap, 0, 0, width,height, null);
             case 2 -> g.drawImage(treeMap, 0, 0,width,height,null);
@@ -31,10 +31,10 @@ public class ImageDrawer {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
         drawMap(g2d, width, height, num);
-        drawUnits(g, MainMenu.getRoadData().get(num).getCivilian(), civilianImage, width, height);
-        drawUnits(g, MainMenu.getRoadData().get(num).getMedic(), medicImage, width, height);
-        drawUnits(g, MainMenu.getRoadData().get(num).getSoldier(), soldierImage, width, height);
-        drawUnits(g, MainMenu.getRoadData().get(num).getEngineer(), engineerImage, width, height);
+        drawUnits(g, MainFrame.getRoadData().get(num).getCivilian(), civilianImage, width, height);
+        drawUnits(g, MainFrame.getRoadData().get(num).getMedic(), medicImage, width, height);
+        drawUnits(g, MainFrame.getRoadData().get(num).getSoldier(), soldierImage, width, height);
+        drawUnits(g, MainFrame.getRoadData().get(num).getEngineer(), engineerImage, width, height);
     }
 
     private static void drawUnits(Graphics g, int unitCount, Image unitImage, int width, int height) {
