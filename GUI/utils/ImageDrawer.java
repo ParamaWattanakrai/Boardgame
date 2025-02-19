@@ -46,10 +46,10 @@ public class ImageDrawer {
     
         private static void drawLandmark(Graphics g, int num, int width, int height) {
             switch (MainFrame.getRoadData().get(num).getLandmark()){
-                case 0 -> drawRandomImage(g, oneLandmark, Landmark_SIZE, width, height);
-                case 1 -> drawRandomImage(g, twoLandmark, Landmark_SIZE, width, height);
-                case 2 -> drawRandomImage(g, treeLandmark, Landmark_SIZE, width, height);
-                case 3 -> drawRandomImage(g, fourLandmark, Landmark_SIZE, width, height);
+                case 1 -> drawRandomImage(g, oneLandmark, Landmark_SIZE, width, height);
+                case 2 -> drawRandomImage(g, twoLandmark, Landmark_SIZE, width, height);
+                case 3 -> drawRandomImage(g, treeLandmark, Landmark_SIZE, width, height);
+                case 4 -> drawRandomImage(g, fourLandmark, Landmark_SIZE, width, height);
         }
     }
 

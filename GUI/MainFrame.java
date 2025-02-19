@@ -2,6 +2,7 @@ package gui;
 
 import gui.data.GameData;
 import gui.data.RoadData;
+import gui.utils.ImageLoader;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(ArrayList<RoadData> roadData,  GameData gamaData) {
         setTitle("Out Bark");
+        setIconImage(ImageLoader.loadImage("logo.png"));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

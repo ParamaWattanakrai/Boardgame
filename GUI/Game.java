@@ -3,6 +3,7 @@ package gui;
 import gui.components.GamePanel;
 import gui.components.MainButton;
 import gui.map.Map;
+import gui.utils.FontLoader;
 import gui.utils.ImageLoader;
 import java.awt.*;
 import java.util.Arrays;
@@ -16,12 +17,13 @@ public class Game extends JPanel {
     private static MainButton setting = new MainButton("");
 
     private static Map map = new Map();
+    private Font customFont = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
 
     public Game(MainFrame mainFrame) {
         setLayout(null);
         
         night.setBounds(60, 40, 220, 200);
-        night.setText("Stat\n" + MainFrame.getGamaData().getNight());
+        night.setText("Night\n" + MainFrame.getGamaData().getNight());
 
         stat.setBounds(60, 220, 220, 200);
 
@@ -31,7 +33,7 @@ public class Game extends JPanel {
         map.setBounds(482, 54, 959, 900);
         
         data.setBounds(1600, 450, 220, 500);
-        data.setFont(new Font("Arial", Font.BOLD,30));
+        data.setFont(customFont.deriveFont(25f));
 
         setting.setBounds(1820, 20, 80, 80);
         Image settingimg = ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
