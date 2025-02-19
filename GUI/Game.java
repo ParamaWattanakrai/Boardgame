@@ -34,7 +34,7 @@ public class Game extends JPanel {
         data.setFont(new Font("Arial", Font.BOLD,30));
 
         setting.setBounds(1820, 20, 80, 80);
-        Image settingimg = ImageLoader.loadImage("img/settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image settingimg = ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         setting.setIcon(new ImageIcon(settingimg));
         setting.addActionListener((_) -> {
             mainFrame.showMainMenu();
@@ -52,7 +52,7 @@ public class Game extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image backgroundImage = ImageLoader.loadImage("img/GameBg.png");
+        Image backgroundImage = ImageLoader.loadImage("GameBg.png");
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
     }
 

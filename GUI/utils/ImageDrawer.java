@@ -10,14 +10,14 @@ import java.util.Random;
 public class ImageDrawer {
     private static final int SIZE = 15;
 
-    private static final Image civilianImage = ImageLoader.loadImage("img/entities/civilian.jpg");
-    private static final Image medicImage = ImageLoader.loadImage("img/entities/medic.jpg");
-    private static final Image soldierImage = ImageLoader.loadImage("img/entities/soldier.jpg");
-    private static final Image engineerImage = ImageLoader.loadImage("img/entities/engineer.jpg");
+    private static final Image civilianImage = ImageLoader.loadImage("entities/civilian.jpg");
+    private static final Image medicImage = ImageLoader.loadImage("entities/medic.jpg");
+    private static final Image soldierImage = ImageLoader.loadImage("entities/soldier.jpg");
+    private static final Image engineerImage = ImageLoader.loadImage("entities/engineer.jpg");
 
-    private static final Image oneMap = ImageLoader.loadImage("img/map/1.png");
-    private static final Image twoMap = ImageLoader.loadImage("img/map/2.png");
-    private static final Image treeMap = ImageLoader.loadImage("img/map/3.png");
+    private static final Image oneMap = ImageLoader.loadImage("map/1.png");
+    private static final Image twoMap = ImageLoader.loadImage("map/2.png");
+    private static final Image treeMap = ImageLoader.loadImage("map/3.png");
 
     private static void drawMap(Graphics g, int width, int height, int num) {
         switch (MainFrame.getRoadData().get(num).getRoad()){

@@ -3,6 +3,7 @@ package gui;
 import gui.components.MainButton;
 import gui.data.RoadData;
 import gui.utils.ImageLoader;
+import gui.utils.SoundPlayer;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -48,12 +49,13 @@ public class MainMenu extends JPanel {
         add(quitButton);
         add(ruleButton);
         setVisible(true);
+        SoundPlayer.loopSound("MainManu.wav");
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image backgroundImage = ImageLoader.loadImage("img/MainBg.png");
+        Image backgroundImage = ImageLoader.loadImage("MainBg.png");
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
     }
 }

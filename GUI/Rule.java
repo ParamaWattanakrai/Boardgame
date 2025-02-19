@@ -13,7 +13,7 @@ public class Rule extends JPanel{
     public Rule(MainFrame mainFrame) {
         setLayout(null);
         setting.setBounds(1820, 20, 80, 80);
-        Image settingimg = ImageLoader.loadImage("img/settingRule.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image settingimg = ImageLoader.loadImage("settingRule.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         setting.setIcon(new ImageIcon(settingimg));
         setting.addActionListener((_) -> {
             mainFrame.showMainMenu();
@@ -26,7 +26,7 @@ public class Rule extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image backgroundImage = ImageLoader.loadImage("img/RuleBg.png");
+        Image backgroundImage = ImageLoader.loadImage("RuleBg.png");
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
     }
 }

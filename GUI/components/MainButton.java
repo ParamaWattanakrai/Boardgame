@@ -1,5 +1,6 @@
 package gui.components;
 
+import gui.utils.SoundPlayer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -22,6 +23,7 @@ public class MainButton extends JButton{
                 if (!"Rule".equals(text)) {
                     setFont(new Font("Arial", Font.BOLD, 35));
                 }
+                SoundPlayer.playSound("Select.wav");
             }
 
             @Override
