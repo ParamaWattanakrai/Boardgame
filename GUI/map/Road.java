@@ -18,5 +18,6 @@ public class Road extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         ImageDrawer.drawImages(g, num, getWidth(), getHeight());
+        
     }
 }

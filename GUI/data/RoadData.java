@@ -15,7 +15,7 @@ public class RoadData {
     private boolean capture;
 
     public RoadData(int panal) {
-        this(panal,1,1,1,1,1, new Random().nextInt(3),1,0,false);
+        this(panal,1,1,1,1,1, new Random().nextInt(3),1,new Random().nextInt(4),false);
     }
 
     public RoadData(int panal, int commander, int soldier, int civilian, int medic, int engineer, int road, int dog, int landmark, boolean capture) {
