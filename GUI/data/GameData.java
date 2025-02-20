@@ -3,7 +3,7 @@ package gui.data;
 public class GameData {
     private int day;
     private int night;
-    private int[] task = new int[]{0,0,0,0};
+    private int[] task = new int[]{0,0,0,0,0};
 
     public GameData() {
         this.day = 1;

@@ -3,50 +3,59 @@ package gui;
 import gui.components.GamePanel;
 import gui.components.MainButton;
 import gui.map.Map;
-import gui.utils.FontLoader;
 import gui.utils.ImageLoader;
 import java.awt.*;
-import java.util.Arrays;
 import javax.swing.*;
 
 public class Game extends JPanel {
-    private static GamePanel night = new GamePanel("Night");
-    private static GamePanel stat = new GamePanel("Stat");
-    private static GamePanel task = new GamePanel("Task");
-    private static GamePanel data = new GamePanel("Data");
-    private static MainButton setting = new MainButton("");
+    private final GamePanel nightTitel = new GamePanel("Night", 70f);
+    private final GamePanel statTitel = new GamePanel("Stat", 70f);
+    private final GamePanel taskTitel = new GamePanel("Task", 70f);
+    private final GamePanel dataTitel = new GamePanel("Data", 70f);
 
+    private static GamePanel night = new GamePanel("", 60f);
+    private static GamePanel stat = new GamePanel("wow", 50f);
+    private static GamePanel task = new GamePanel("", 30f);
+    private static GamePanel data = new GamePanel("", 25f);
+    private static MainButton setting = new MainButton("");
     private static Map map = new Map();
-    private Font customFont = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
 
     public Game(MainFrame mainFrame) {
         setLayout(null);
-        
-        night.setBounds(60, 40, 220, 200);
-        night.setText("Night\n" + MainFrame.getGamaData().getNight());
+        nightTitel.setBounds(60, 25, 220, 200);
+        night.setBounds(60,95, 220, 200);
 
-        stat.setBounds(60, 220, 220, 200);
+        statTitel.setBounds(60, 210, 220, 200);
+        stat.setBounds(60, 280, 220, 200);
 
-        task.setBounds(60, 650, 220, 200);
-        task.setText("Task\n" + Arrays.toString(MainFrame.getGamaData().getTask()));
+        taskTitel.setBounds(60, 640, 220, 200);
+        task.setBounds(60, 720, 250, 200);
 
         map.setBounds(482, 54, 959, 900);
-        
-        data.setBounds(1600, 450, 220, 500);
-        data.setFont(customFont.deriveFont(25f));
+
+        dataTitel.setBounds(1600, 430, 220, 500);
+        data.setBounds(1600, 520, 220, 500);
 
         setting.setBounds(1820, 20, 80, 80);
-        Image settingimg = ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        setting.setIcon(new ImageIcon(settingimg));
+        setting.setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
         setting.addActionListener((_) -> {
             mainFrame.showMainMenu();
         });
 
+        add(nightTitel);
         add(night);
+
+        add(statTitel);
         add(stat);
+
+        add(taskTitel);
         add(task);
+        
         add(map);
+
+        add(dataTitel);
         add(data);
+
         add(setting);
         setVisible(true);
     }

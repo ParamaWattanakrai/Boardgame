@@ -72,5 +72,7 @@ public class MainFrame extends JFrame {
 
     public static void reSetGamaData() {
         MainFrame.gamaData = new GameData();
+        Game.getNight().setText("" + MainFrame.getGamaData().getNight() + "/15");
+        Game.getTask().setText("Police station\nNuclear plant\nHospital\nStore");
     }
 }
