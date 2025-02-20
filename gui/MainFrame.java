@@ -6,7 +6,6 @@ import src.map.Field;
 import src.map.MetaSettings;
 
 import java.awt.*;
-import java.util.ArrayList;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {

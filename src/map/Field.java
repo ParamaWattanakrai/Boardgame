@@ -133,13 +133,17 @@ public class Field {
     }
 
     public Block getBlock(Tuple coordinate) {
-        return field[coordinate.getA()][coordinate.getB()];
+        return field[coordinate.getB()][coordinate.getA()];
+    }
+
+    public ArrayList<Tuple> getSpawnCoords() {
+        return spawnCoords;
     }
 
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getPopulation());
+                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getPopulation().size());
             }
             System.out.println();
         }

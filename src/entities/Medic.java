@@ -6,11 +6,12 @@ public class Medic extends Civilian {
 
     public Medic(Block block) {
         super(block);
+        entityType = EntityType.MEDIC;
         contacted = true;
     }
 
     public boolean cure() {
-        for (Civilian person : block.getEveryone()) {
+        for (Civilian person : block.getPopulation()) {
             if (person.getVitality() == Vitality.COMA) {
                 person.disinfect();
                 return true;

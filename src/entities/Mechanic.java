@@ -6,6 +6,7 @@ public class Mechanic extends Civilian {
     protected EntityType entityType = EntityType.MECHANIC;
     public Mechanic(Block block) {
         super(block);
+        entityType = EntityType.MECHANIC;
     }
 
     public boolean buildBarricade(Direction direction) {

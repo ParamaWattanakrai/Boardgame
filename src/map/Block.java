@@ -131,8 +131,8 @@ public class Block {
 
     public boolean contact() {
         boolean contactFlag = false;
-        if (soldiers.size() > 0 && getPopulation() > 0) {
-            for (Civilian person : getEveryone()) {
+        if (soldiers.size() > 0 && getPopulation().size() > 0) {
+            for (Civilian person : getPopulation()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
                 }
@@ -142,7 +142,7 @@ public class Block {
     }
 
     public boolean occupy() {
-        if (getPopulation() > 0) {
+        if (getPopulation().size() > 0) {
             if (occupationLevel < 2) {
                 occupationLevel--;
             }
@@ -159,55 +159,28 @@ public class Block {
     }
 
     public void addPerson(Civilian person) {
-        switch (person.getEntityType()) {
-            case CIVILIAN:
-                civilians.add(person);
-                break;
-            case COMMANDER:
-                population.add(person);
-                soldiers.add((Soldier) person);
-                break;
-            case SOLDIER:
-                population.add(person);
-                soldiers.add((Soldier) person);
-                break;
-            case MEDIC:
-                population.add(person);
-                medics.add((Medic) person);
-                break;
-            case MECHANIC:
-                population.add(person);
-                mechanics.add((Mechanic) person);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown entity type: " + person.getEntityType());
+        population.add(person);
+        if (person instanceof Soldier) {
+            soldiers.add((Soldier) person);
+        } else if (person instanceof Medic) {
+            medics.add((Medic) person);
+        } else if (person instanceof Mechanic) {
+            mechanics.add((Mechanic) person);
+        } else {
+            civilians.add(person);
         }
     }
 
     public void removePerson(Civilian person) {
-        switch (person.getEntityType()) {
-            case CIVILIAN:
-                population.remove(person);
-                civilians.remove(person);
-                break;
-            case COMMANDER:
-                population.remove(person);
-                soldiers.remove((Soldier) person);
-                break;
-            case SOLDIER:
-                population.remove(person);
-                soldiers.remove((Soldier) person);
-                break;
-            case MEDIC:
-                population.remove(person);
-                medics.remove((Medic) person);
-                break;
-            case MECHANIC:
-                population.remove(person);
-                mechanics.remove((Mechanic) person);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown entity type: " + person.getEntityType());
+        population.remove(person);
+        if (person instanceof Soldier) {
+            soldiers.remove(person);
+        } else if (person instanceof Medic) {
+            medics.remove(person);
+        } else if (person instanceof Mechanic) {
+            mechanics.remove(person);
+        } else {
+            civilians.remove(person);
         }
     }
 
@@ -267,12 +240,8 @@ public class Block {
         return mechanics;
     }
 
-    public ArrayList<Civilian> getEveryone() {
+    public ArrayList<Civilian> getPopulation() {
         return population;
-    }
-
-    public int getPopulation() {
-        return getEveryone().size();
     }
 
     public BlockType getBlockType() {

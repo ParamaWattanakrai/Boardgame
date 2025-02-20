@@ -3,10 +3,10 @@ package src.entities;
 import src.map.*;
 
 public class Soldier extends Civilian {
-    protected EntityType entityType = EntityType.SOLDIER;
 
     public Soldier(Block block) {
         super(block);
+        entityType = EntityType.SOLDIER;
         contacted = true;
         armed = true;
     }
