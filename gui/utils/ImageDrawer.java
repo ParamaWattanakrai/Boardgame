@@ -47,14 +47,14 @@ public class ImageDrawer {
     
         private static void drawLandmark(Graphics g, int x, int y, int width, int height) {
             int Landmark_SIZE = 60;
-            switch (MainFrame.getField().getBlock(new Tuple(x, y)).getBlockType()){
-                            case STORE -> drawRandomImage(g, store, Landmark_SIZE, width, height);
-                            case HOSPITAL -> drawRandomImage(g, hospital, Landmark_SIZE, width, height);
-                            case POLICESTATION -> drawRandomImage(g, policeStation, Landmark_SIZE, width, height);
-                            case POWERPLANT -> drawRandomImage(g, nuclearPlant, Landmark_SIZE, width, height);
-                            case DEFAULT -> System.out.println("");
-                            case SPAWN -> System.out.println("");
-                            default -> throw new IllegalArgumentException("Unexpected value: " + MainFrame.getField().getBlock(new Tuple(x, y)).getBlockType());
+            switch (MainFrame.getField().getBlock(new Tuple(x, y)).getBlockType()) {
+                case STORE -> drawRandomImage(g, store, Landmark_SIZE, width, height);
+                case HOSPITAL -> drawRandomImage(g, hospital, Landmark_SIZE, width, height);
+                case POLICESTATION -> drawRandomImage(g, policeStation, Landmark_SIZE, width, height);
+                case POWERPLANT -> drawRandomImage(g, nuclearPlant, Landmark_SIZE, width, height);
+                case DEFAULT -> System.out.println("");
+                case SPAWN -> System.out.println("");
+                default -> throw new IllegalArgumentException("Unexpected value: " + MainFrame.getField().getBlock(new Tuple(x, y)).getBlockType());
         }
     }
 
