@@ -1,5 +1,5 @@
 package src.map;
 
-enum PathType {
+public enum PathType {
     STRAIGHT, CURVED, THREEWAY, FOURWAY;
 }

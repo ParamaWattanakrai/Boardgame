@@ -1,8 +1,10 @@
 package gui;
 
 import gui.data.GameData;
-import gui.data.RoadData;
 import gui.utils.ImageLoader;
+import src.map.Field;
+import src.map.MetaSettings;
+
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -13,17 +15,17 @@ public class MainFrame extends JFrame {
     private final MainMenu mainMenu;
     private final Game game;
     private final Rule rule;
-    private static ArrayList<RoadData> roadData;
+    private static Field field;
     private static GameData gamaData;
 
-    public MainFrame(ArrayList<RoadData> roadData,  GameData gamaData) {
+    public MainFrame(Field field,  GameData gamaData) {
         setTitle("Out Bark");
         setIconImage(ImageLoader.loadImage("logo.png"));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        MainFrame.roadData = roadData;
+        MainFrame.field = field;
         MainFrame.gamaData = gamaData;
 
         mainMenu = new MainMenu(this);
@@ -50,12 +52,8 @@ public class MainFrame extends JFrame {
         cardLayout.show(mainPanel, "Rule");
     }
         
-    public static ArrayList<RoadData> getRoadData() {
-        return roadData;
-    }
-
-    public static void setRoadData(ArrayList<RoadData> roadData) {
-        MainFrame.roadData = roadData;
+    public static Field getField() {
+        return field;
     }
 
     public static GameData getGamaData() {
@@ -66,11 +64,12 @@ public class MainFrame extends JFrame {
         MainFrame.gamaData = gamaData;
     }
 
-    public static void reSetRoadData() {
-        MainFrame.roadData = new ArrayList<>();
+    public static void resetGame(MetaSettings metaSettings) {
+        MainFrame.field = new Field(metaSettings);
+        field.printField();
     }
 
-    public static void reSetGamaData() {
+    public static void resetGamaData() {
         MainFrame.gamaData = new GameData();
         Game.getNight().setText("" + MainFrame.getGamaData().getNight() + "/15");
         Game.getTask().setText("Police station\nNuclear plant\nHospital\nStore");

@@ -6,18 +6,20 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Road extends JPanel {
-    private final int num;
+    private final int x;
+    private final int y;
 
-    public Road(int num) {
-        this.num = num;
-        addMouseListener(new GridMouseListener(this, num));
+    public Road(int x, int y) {
+        this.x = x;
+        this.y = y;
+        addMouseListener(new GridMouseListener(this, x, y));
         setOpaque(false);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageDrawer.drawImages(g, num, getWidth(), getHeight());
+        ImageDrawer.drawImages(g, x, y, getWidth(), getHeight());
         
     }
 }

@@ -1,11 +1,14 @@
 import gui.MainFrame;
 import gui.data.GameData;
-import java.util.ArrayList;
+
 import src.map.Field;
+import src.map.MetaSettings;
 
 public class Main {
     public static void main(String[] args) {
-        
-        new MainFrame(new ArrayList<>(), new GameData());
+        MetaSettings metaSettings = new MetaSettings(30, 5, 5, 1, 2, 1, 1, 5, 3, 2, 12);
+        Field field = new Field(metaSettings);
+        field.printField();
+        new MainFrame(field, new GameData());
     }
 }

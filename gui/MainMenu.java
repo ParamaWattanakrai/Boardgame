@@ -1,10 +1,11 @@
 package gui;
 
 import gui.components.MainButton;
-import gui.data.RoadData;
 import gui.utils.FontLoader;
 import gui.utils.ImageLoader;
 import gui.utils.SoundPlayer;
+import src.map.MetaSettings;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,21 +15,22 @@ public class MainMenu extends JPanel {
     private Font customFont = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
 
     public MainMenu(MainFrame mainFrame) {
+        MetaSettings metaSettings = new MetaSettings(30, 5, 5, 1, 2, 1, 1, 5, 3, 2, 12);
         setLayout(null);
 
         MainButton newGameButton = new MainButton("New Game");
         newGameButton.setBounds(715, 490, 500, 70);
         newGameButton.addActionListener((_) -> {
-            MainFrame.reSetGamaData();
-            MainFrame.reSetRoadData();
-            for (int i = 0; i < 25; i++) MainFrame.getRoadData().add(new RoadData(i));
+            MainFrame.resetGamaData();
+            MainFrame.resetGame(metaSettings);
+            
             mainFrame.showGame();        
         });
 
         MainButton resumeButton = new MainButton("Resume");
         resumeButton.setBounds(715, 660, 500, 70);
         resumeButton.addActionListener((_) -> {
-            if(!MainFrame.getRoadData().isEmpty()){
+            if(MainFrame.getField() == null){
                 mainFrame.showGame();
             } else{
                 SoundPlayer.playSound("Incorrect.wav");

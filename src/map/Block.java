@@ -4,7 +4,6 @@ import src.utils.*;
 import src.entities.*;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 
 public class Block {
     private Field field;
@@ -23,7 +22,12 @@ public class Block {
     private String blockTypeString;
     private String pathString;
 
-    private EnumMap<EntityType, ArrayList<Civilian>> population = new EnumMap<>(EntityType.class);
+    private ArrayList<Civilian> population = new ArrayList<>();
+    private ArrayList<Civilian> civilians = new ArrayList<>();
+    private ArrayList<Soldier> soldiers = new ArrayList<>();
+    private ArrayList<Medic> medics = new ArrayList<>();
+    private ArrayList<Mechanic> mechanics = new ArrayList<>();
+
 
     private int gunAmount = 0;
 
@@ -33,11 +37,6 @@ public class Block {
         coordinate = new Tuple(x, y);
 
         this.occupationLevel = occupationLevel;
-
-        population.put(EntityType.CIVILIAN, new ArrayList<>());
-        population.put(EntityType.SOLDIER, new ArrayList<>());
-        population.put(EntityType.MEDIC, new ArrayList<>());
-        population.put(EntityType.MECHANIC, new ArrayList<>());
 
         this.blockType = blockType;
         switch (blockType) {
@@ -132,7 +131,7 @@ public class Block {
 
     public boolean contact() {
         boolean contactFlag = false;
-        if (population.get(EntityType.SOLDIER).size() > 0 && getPopulation() > 0) {
+        if (soldiers.size() > 0 && getPopulation() > 0) {
             for (Civilian person : getEveryone()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
@@ -160,11 +159,56 @@ public class Block {
     }
 
     public void addPerson(Civilian person) {
-        population.get(person.getEntityType()).add(person);
+        switch (person.getEntityType()) {
+            case CIVILIAN:
+                civilians.add(person);
+                break;
+            case COMMANDER:
+                population.add(person);
+                soldiers.add((Soldier) person);
+                break;
+            case SOLDIER:
+                population.add(person);
+                soldiers.add((Soldier) person);
+                break;
+            case MEDIC:
+                population.add(person);
+                medics.add((Medic) person);
+                break;
+            case MECHANIC:
+                population.add(person);
+                mechanics.add((Mechanic) person);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown entity type: " + person.getEntityType());
+        }
     }
 
     public void removePerson(Civilian person) {
-        population.get(person.getEntityType()).remove(person);
+        switch (person.getEntityType()) {
+            case CIVILIAN:
+                population.remove(person);
+                civilians.remove(person);
+                break;
+            case COMMANDER:
+                population.remove(person);
+                soldiers.remove((Soldier) person);
+                break;
+            case SOLDIER:
+                population.remove(person);
+                soldiers.remove((Soldier) person);
+                break;
+            case MEDIC:
+                population.remove(person);
+                medics.remove((Medic) person);
+                break;
+            case MECHANIC:
+                population.remove(person);
+                mechanics.remove((Mechanic) person);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown entity type: " + person.getEntityType());
+        }
     }
 
     public void addGun() {
@@ -181,12 +225,12 @@ public class Block {
 
     public Tuple getFirePower() {
         int secondaryTroop = 0;
-        for (Civilian civilian : population.get(EntityType.CIVILIAN)) {
+        for (Civilian civilian : civilians) {
             if (civilian.isArmed()) {
                 secondaryTroop++;
             }
         }
-        return new Tuple(population.get(EntityType.SOLDIER).size(), secondaryTroop);
+        return new Tuple(soldiers.size(), secondaryTroop);
     }
 
     public Path getPath(Direction direction) {
@@ -207,14 +251,24 @@ public class Block {
         return coordinate;
     }
 
+    public ArrayList<Civilian> getCivilians() {
+        return civilians;
+    }
+
+    public ArrayList<Soldier> getSoldiers() {
+        return soldiers;
+    }
+
+    public ArrayList<Medic> getMedics() {
+        return medics;
+    }
+
+    public ArrayList<Mechanic> getMechanics() {
+        return mechanics;
+    }
+
     public ArrayList<Civilian> getEveryone() {
-        ArrayList<Civilian> everyone = new ArrayList<>();
-        for (ArrayList<Civilian> group : population.values()) {
-            for (Civilian civilian : group) {
-                everyone.add(civilian);
-            }
-        }
-        return everyone;
+        return population;
     }
 
     public int getPopulation() {
@@ -242,5 +296,12 @@ public class Block {
     }
     public String getPathString() {
         return pathString;
+    }
+
+    @Override
+    public String toString() {
+        return "Block=" + getCoordinate() + ", commander=" + 0 + ", soldier=" + getSoldiers().size() + ", civilian="
+                + getCivilians().size() + ", medic=" + getMedics().size() + ", mechanic=" + getMechanics().size() + ", path=" + getPathType() + ", dog=" + 0
+                + ", landmark=" + getBlockType() + ", capture=" + false;
     }
 }

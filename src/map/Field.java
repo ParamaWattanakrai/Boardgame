@@ -92,7 +92,7 @@ public class Field {
         int index = rand.nextInt(4);
         while (soldierNum > 0) {
             Block block = field[spawnCoords.get(index).getB()][spawnCoords.get(index).getA()];
-            block.addPerson(new Soldier(block));
+            new Soldier(block);
             index = (index + 1) % spawnCoords.size();
             soldierNum--;
         }
@@ -100,19 +100,19 @@ public class Field {
         index = rand.nextInt(4);
         while (medicNum > 0) {
             Block block = field[spawnCoords.get(index).getB()][spawnCoords.get(index).getA()];
-            block.addPerson(new Medic(block));
+            new Medic(block);
             index = (index + 1) % spawnCoords.size();
             medicNum--;
         }
 
         while (mechanicNum > 0) {
             Block block = field[rand.nextInt(fieldHeight)][rand.nextInt(fieldWidth)];
-            block.addPerson(new Mechanic(block));
+            new Mechanic(block);
             mechanicNum--;
         }
         while (civilianNum > 0) {
             Block block = field[rand.nextInt(fieldHeight)][rand.nextInt(fieldWidth)];
-            block.addPerson(new Mechanic(block));
+            new Civilian(block);
             civilianNum--;
         }
     }
