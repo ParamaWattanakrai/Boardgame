@@ -1,3 +1,5 @@
+package src;
+
 import entities.Civilian;
 import map.Field;
 import map.MetaSettings;
@@ -13,5 +15,7 @@ public class Main {
         field.printField();
         civilian.move(Direction.EAST);
         field.printField();
+        System.out.println(field.getBlock(new Tuple(1, 1)).getBlockType());
+        System.out.println(field.getBlock(new Tuple(1, 1)).getPathString());
     }
 }
