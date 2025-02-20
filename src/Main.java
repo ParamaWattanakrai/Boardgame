@@ -1,10 +1,10 @@
 package src;
 
-import entities.Civilian;
-import map.Field;
-import map.MetaSettings;
-import utils.Direction;
-import utils.Tuple;
+import src.entities.Civilian;
+import src.map.Field;
+import src.map.MetaSettings;
+import src.utils.Direction;
+import src.utils.Tuple;
 
 public class Main {
     public static void main(String[] args) {

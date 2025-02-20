@@ -1,7 +1,7 @@
-package entities;
+package src.entities;
 
-import utils.*;
-import map.*;
+import src.utils.*;
+import src.map.*;
 
 public class Civilian {
     protected EntityType entityType = EntityType.CIVILIAN;

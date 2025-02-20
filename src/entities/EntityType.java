@@ -1,4 +1,4 @@
-package entities;
+package src.entities;
 
 public enum EntityType {
     COMMANDER, SOLDIER, MEDIC, MECHANIC, CIVILIAN;

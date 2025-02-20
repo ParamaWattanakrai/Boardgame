@@ -1,4 +1,4 @@
-package map;
+package src.map;
 
 public class MetaSettings {
     private int turnLimit;

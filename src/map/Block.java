@@ -1,7 +1,7 @@
-package map;
+package src.map;
 
-import utils.*;
-import entities.*;
+import src.utils.*;
+import src.entities.*;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

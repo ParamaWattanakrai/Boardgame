@@ -1,10 +1,10 @@
-package map;
+package src.map;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import entities.*;
-import utils.*;
+import src.entities.*;
+import src.utils.*;
 
 public class Field {
     Random rand = new Random();

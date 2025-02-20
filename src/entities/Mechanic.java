@@ -1,6 +1,6 @@
-package entities;
-import map.Block;
-import utils.Direction;
+package src.entities;
+import src.map.Block;
+import src.utils.Direction;
 
 public class Mechanic extends Civilian {
     protected EntityType entityType = EntityType.MECHANIC;
