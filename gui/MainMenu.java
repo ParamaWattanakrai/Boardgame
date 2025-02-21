@@ -4,12 +4,11 @@ import gui.components.MainButton;
 import gui.utils.FontLoader;
 import gui.utils.ImageLoader;
 import gui.utils.SoundPlayer;
-import src.map.MetaSettings;
-
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
+import src.map.MetaSettings;
 
 public class MainMenu extends JPanel {
     private Font customFont = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
@@ -30,7 +29,7 @@ public class MainMenu extends JPanel {
         MainButton resumeButton = new MainButton("Resume");
         resumeButton.setBounds(715, 660, 500, 70);
         resumeButton.addActionListener((_) -> {
-            if(MainFrame.getField() == null){
+            if(MainFrame.getField() != null){
                 mainFrame.showGame();
             } else{
                 SoundPlayer.playSound("Incorrect.wav");
