@@ -1,6 +1,6 @@
 package gui.screens;
 
-import gui.core.MainFrame;
+import gui.MainFrame;
 import javax.swing.JPanel;
 
 public abstract class AbstractScreen extends JPanel {

@@ -1,8 +1,8 @@
 package gui.screens;
 
+import gui.MainFrame;
 import gui.components.Button;
 import gui.components.TextPanel;
-import gui.core.MainFrame;
 import gui.enums.GameScreen;
 import gui.enums.buttons.GameButton;
 import gui.enums.texts.GameText;

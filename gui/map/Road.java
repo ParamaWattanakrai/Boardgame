@@ -1,6 +1,6 @@
 package gui.map;
 
-import gui.core.MainFrame;
+import gui.MainFrame;
 import gui.events.GridMouseListener;
 import gui.screens.Game;
 import gui.utils.ImageDrawer;

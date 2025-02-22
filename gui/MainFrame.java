@@ -1,4 +1,4 @@
-package gui.core;
+package gui;
 
 import gui.data.GameData;
 import gui.enums.GameScreen;
@@ -32,7 +32,6 @@ public class MainFrame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setIconImage(ImageLoader.loadImage("logo.png"));
-        setVisible(true);
     }
 
     private void createScreen() {

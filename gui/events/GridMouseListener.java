@@ -1,6 +1,6 @@
 package gui.events;
 
-import gui.core.MainFrame;
+import gui.MainFrame;
 import gui.enums.texts.GameText;
 import gui.screens.Game;
 import java.awt.event.MouseEvent;

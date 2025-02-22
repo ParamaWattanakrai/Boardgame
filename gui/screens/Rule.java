@@ -1,7 +1,7 @@
 package gui.screens;
 
+import gui.MainFrame;
 import gui.components.Button;
-import gui.core.MainFrame;
 import gui.enums.GameScreen;
 import gui.enums.buttons.RuleButton;
 import gui.interfaces.ButtonActions;
