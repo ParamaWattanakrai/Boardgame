@@ -66,4 +66,12 @@ public class MainFrame extends JFrame {
     public void setGamaData(GameData gamaData) {
         this.gamaData = gamaData;
     }
+
+    public HashMap<GameScreen, JPanel> getScreens() {
+        return screens;
+    }
+
+    public void setScreens(HashMap<GameScreen, JPanel> screens) {
+        this.screens = screens;
+    }
 }

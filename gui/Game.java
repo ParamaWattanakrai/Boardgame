@@ -57,10 +57,7 @@ public class Game extends JPanel {
         textPanels.put(GamePanel.Stat, new TextPanel(30f));
         textPanels.put(GamePanel.Task, new TextPanel(30f));
         textPanels.put(GamePanel.Data, new TextPanel(20f));
-
-        updateNightText(mainFrame.getGamaData().getNight());
-        updateStatText("Noting here");
-        updateTaskText("Police station\nNuclear plant\nHospital\nStore");
+        resetText();
     }
 
     private void setTextPanelPosition() {
@@ -90,7 +87,6 @@ public class Game extends JPanel {
 
     private void addButtonListener(GameButton button) {
         ActionListener actionListener = (ActionEvent e) -> {
-            System.out.println( e.getActionCommand());
             switch (button) {
                 case Setting -> settingButton();
             }
@@ -137,5 +133,11 @@ public class Game extends JPanel {
 
     public MainFrame getMainFrame() {
         return mainFrame;
+    }
+
+    public void resetText() {
+        updateNightText(mainFrame.getGamaData().getNight());
+        updateStatText("Noting here");
+        updateTaskText("Police station\nNuclear plant\nHospital\nStore");
     }
 }

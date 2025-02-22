@@ -52,7 +52,7 @@ public class MainMenu extends JPanel {
 
     private void addButtonListener(MainButton button) {
         ActionListener actionListener = (ActionEvent e) -> {
-            System.out.println( e.getActionCommand());
+            System.out.println(e.getActionCommand());
             switch (button) {
                 case NEW_GAME -> startButton();
                 case RESUME -> resumeButton();
@@ -67,6 +67,7 @@ public class MainMenu extends JPanel {
         mainFrame.setGamaData(new GameData());
         mainFrame.setField(new Field(new MetaSettings(30, 5, 5, 1, 2, 1, 1, 5, 3, 2, 12)));
         mainFrame.getField().printField();
+        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         mainFrame.showScreen(GameScreen.GAME);
         SoundPlayer.playSound("Press.wav");
     }

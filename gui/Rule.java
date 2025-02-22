@@ -4,6 +4,7 @@ import gui.components.Button;
 import gui.enums.GameScreen;
 import gui.enums.button.RuleButton;
 import gui.utils.ImageLoader;
+import gui.utils.SoundPlayer;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -43,7 +44,6 @@ public class Rule extends JPanel {
 
     private void addButtonListener(RuleButton button) {
         ActionListener actionListener = (ActionEvent e) -> {
-            System.out.println( e.getActionCommand());
             switch (button) {
                 case BACK -> backButton();
             }
@@ -53,6 +53,7 @@ public class Rule extends JPanel {
 
     private void backButton() {
         mainFrame.showScreen(GameScreen.MAIN_MENU);
+        SoundPlayer.playSound("Press.wav");
     }
 
     @Override
