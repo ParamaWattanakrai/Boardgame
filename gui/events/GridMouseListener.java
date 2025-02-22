@@ -36,15 +36,16 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        new Civilian(mainFrame.getField().getBlock(new Tuple(x, y)));
+        new Civilian(mainFrame.getField().getBlock(new Tuple(x, y))).toString();
         mainFrame.getGamaData().setNight(mainFrame.getGamaData().getNight() + 1);
         int[] task = mainFrame.getGamaData().getTask();
 
         switch (mainFrame.getField().getBlock(new Tuple(x, y)).getBlockType()) {
-            case HOSPITAL -> task[3] = 1;
-            case STORE -> task[4] = 1;
-            case POLICESTATION -> task[1] = 1;
-            case POWERPLANT -> task[2] = 1;
+                    case HOSPITAL -> task[3] = 1;
+                    case STORE -> task[4] = 1;
+                    case POLICESTATION -> task[1] = 1;
+                    case POWERPLANT -> task[2] = 1;
+                    default -> System.out.print("");
         }
 
         mainFrame.getGamaData().setTask(task);

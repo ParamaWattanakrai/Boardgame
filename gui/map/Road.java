@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Road extends JPanel {
     private final int x;
     private final int y;
-    private MainFrame mainFrame;
+    private final MainFrame mainFrame;
 
     public Road(int x, int y, Game game,  MainFrame mainFrame) {
         this.x = x;
