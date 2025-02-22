@@ -2,8 +2,10 @@ package gui.core;
 
 import gui.data.GameData;
 import gui.enums.GameScreen;
+import gui.screens.Game;
+import gui.screens.MainMenu;
+import gui.screens.Rule;
 import gui.utils.ImageLoader;
-
 import java.awt.*;
 import java.util.HashMap;
 import javax.swing.*;

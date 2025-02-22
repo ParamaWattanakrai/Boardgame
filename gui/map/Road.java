@@ -1,8 +1,8 @@
 package gui.map;
 
-import gui.core.Game;
 import gui.core.MainFrame;
 import gui.events.GridMouseListener;
+import gui.screens.Game;
 import gui.utils.ImageDrawer;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -23,6 +23,6 @@ public class Road extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        new ImageDrawer(g, x, y, getWidth(), getHeight(), mainFrame);        
+        new ImageDrawer().draw(g, x, y, getWidth(), getHeight(), mainFrame);
     }
 }

@@ -1,4 +1,4 @@
-package gui.enums.button;
+package gui.enums.buttons;
 
 public enum RuleButton {
     BACK

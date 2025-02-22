@@ -1,6 +1,7 @@
 package gui.utils;
 
 import java.io.File;
+import java.io.IOException;
 import javax.sound.sampled.*;
 
 public class SoundPlayer {
@@ -15,7 +16,7 @@ public class SoundPlayer {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-        } catch (Exception e) {
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.out.println("Error playing sound: " + e.getMessage());
         }
     }
@@ -31,7 +32,7 @@ public class SoundPlayer {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.out.println("Error playing sound: " + e.getMessage());
         }
     }

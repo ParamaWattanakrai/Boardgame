@@ -1,7 +1,8 @@
 package gui.events;
 
-import gui.core.Game;
 import gui.core.MainFrame;
+import gui.enums.texts.GameText;
+import gui.screens.Game;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        game.updateDataText(mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
+        game.updateText(GameText.Data, mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
     }
 
     @Override
@@ -47,8 +48,8 @@ public class GridMouseListener implements MouseListener {
         }
 
         mainFrame.getGamaData().setTask(task);
-        game.updateDataText(mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
-        game.updateNightText(mainFrame.getGamaData().getNight());
+        game.updateText(GameText.Data, mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
+        game.updateText(GameText.Night, mainFrame.getGamaData().getNight() + "/15");
 
         String[] tasks = { "", "Police station", "Nuclear plant", "Hospital", "Store" };
         StringBuilder text = new StringBuilder();
@@ -61,7 +62,7 @@ public class GridMouseListener implements MouseListener {
             }
         }
 
-        game.updateTaskText(text.toString());
+        game.updateText(GameText.Task, text.toString());
         panel.revalidate();
         panel.repaint();
     }

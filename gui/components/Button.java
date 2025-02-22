@@ -1,13 +1,12 @@
 package gui.components;
 
+import gui.utils.FontLoader;
+import gui.utils.SoundManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
-
-import gui.utils.FontLoader;
-import gui.utils.SoundPlayer;
 
 public class Button extends JButton {
     private final Font font = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
@@ -22,12 +21,6 @@ public class Button extends JButton {
         setupStyle();
     }
 
-    public Button(String text, boolean pop) {
-        super(text);
-        this.pop = pop;
-        setupStyle();
-    }
-
     private void setupStyle(){
         setBorderPainted(false);
         setFocusPainted(false);
@@ -35,6 +28,10 @@ public class Button extends JButton {
         setForeground(Color.white);
         setFont(font.deriveFont(70f));
         MouseListener();
+    }
+
+    public void setPop(boolean pop){
+        this.pop = pop;
     }
 
     private void MouseListener(){
@@ -45,7 +42,7 @@ public class Button extends JButton {
                 if (pop) {
                     setFont(font.deriveFont(75f));
                 }
-                SoundPlayer.playSound("Select.wav");
+                SoundManager.playSelectSound();
             }
 
             @Override
@@ -54,6 +51,11 @@ public class Button extends JButton {
                 if (pop) {
                     setFont(font.deriveFont(70f));
                 }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                SoundManager.playButtonClickSound();
             }
         });
     }

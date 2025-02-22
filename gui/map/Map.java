@@ -1,7 +1,7 @@
 package gui.map;
 
-import gui.core.Game;
 import gui.core.MainFrame;
+import gui.screens.Game;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;

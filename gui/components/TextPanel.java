@@ -1,5 +1,6 @@
 package gui.components;
 
+import gui.utils.FontLoader;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,10 +8,11 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
-import gui.utils.FontLoader;
-
 public class TextPanel extends JTextArea {
     private final Font font = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
+
+    public TextPanel() {
+    }
      
     public TextPanel(float size) {
         setupStyle(size);

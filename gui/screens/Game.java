@@ -1,0 +1,129 @@
+package gui.screens;
+
+import gui.components.Button;
+import gui.components.TextPanel;
+import gui.core.MainFrame;
+import gui.enums.GameScreen;
+import gui.enums.buttons.GameButton;
+import gui.enums.texts.GameText;
+import gui.interfaces.ButtonActions;
+import gui.interfaces.TextDisplay;
+import gui.map.Map;
+import gui.utils.ImageLoader;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import javax.swing.*;
+
+public class Game extends AbstractScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
+    private HashMap<GameText, TextPanel> textPanels;
+    private HashMap<GameButton, Button> buttons;
+    private Map map;
+
+    public Game(MainFrame mainFrame) {
+        super(mainFrame);
+        initialize();
+    }
+
+    @Override
+    protected void initializeUI() {
+        setLayout(null);
+
+        createTextPanel(); setTextPanelBounds();
+        createButton(); setButtonBounds();
+        createMap();setMapPosition();
+        textPanels.values().forEach(this::add);
+        buttons.values().forEach(this::add);
+        buttons.keySet().forEach(this::addButtonListener);
+        add(map);
+        setVisible(true);
+    }
+
+    //-------- TextPanel --------//
+    @Override
+    public void createTextPanel() {
+        textPanels = new HashMap<>();
+
+        textPanels.put(GameText.NightTitle, new TextPanel("Night",60f));
+        textPanels.put(GameText.StatTitle, new TextPanel("Stat",60f));
+        textPanels.put(GameText.TaskTitle, new TextPanel("Task",60f));
+        textPanels.put(GameText.DataTitle, new TextPanel("Data",60f));
+
+        textPanels.put(GameText.Night, new TextPanel(60f));
+        textPanels.put(GameText.Stat, new TextPanel(30f));
+        textPanels.put(GameText.Task, new TextPanel(30f));
+        textPanels.put(GameText.Data, new TextPanel(20f));
+        resetText();
+    }
+    
+    @Override
+    public void setTextPanelBounds() {
+        textPanels.get(GameText.NightTitle).setBounds(60, 25, 220, 200);
+        textPanels.get(GameText.Night).setBounds(60, 95, 220, 200);
+
+        textPanels.get(GameText.StatTitle).setBounds(60, 210, 220, 200);
+        textPanels.get(GameText.Stat).setBounds(60, 280, 220, 200);
+
+        textPanels.get(GameText.TaskTitle).setBounds(60, 640, 220, 200);
+        textPanels.get(GameText.Task).setBounds(60, 720, 250, 200);
+
+        textPanels.get(GameText.DataTitle).setBounds(1600, 430, 220, 500);
+        textPanels.get(GameText.Data).setBounds(1600, 520, 220, 500);
+    }
+    
+    @Override
+    public void updateText(GameText panel, String text) {
+        textPanels.get(panel).setText(text);
+    }
+
+    public void resetText() {
+        updateText(GameText.Night , mainFrame.getGamaData().getNight() + "/15");
+        updateText(GameText.Stat ,"Noting here");
+        updateText(GameText.Task, "Police station\nNuclear plant\nHospital\nStore");
+    }
+
+    //-------- Button --------//
+    @Override
+    public void createButton() {
+        buttons = new HashMap<>();
+        buttons.put(GameButton.Setting, new Button(""));
+        buttons.get(GameButton.Setting).setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+    }
+
+    @Override
+    public void setButtonBounds() {
+        buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
+    }
+    
+    @Override
+    public void addButtonListener(GameButton button) {
+        ActionListener actionListener = (ActionEvent e) -> {
+            System.out.println(e.getActionCommand());
+            switch (button) {
+                case Setting -> settingButton();
+            }
+        };
+        buttons.get(button).addActionListener(actionListener);
+    }
+
+    private void settingButton() {
+        mainFrame.showScreen(GameScreen.MAIN_MENU);
+    } 
+
+    //-------- Map --------//
+    private void createMap() {
+        map = new Map(this, mainFrame);
+    }
+
+    private void setMapPosition() {
+        map.setBounds(482, 54, 959, 900);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Image backgroundImage = ImageLoader.loadImage("GameBg.png");
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+    }
+}

@@ -24,7 +24,7 @@ public class ImageDrawer {
     private final Image hospital = ImageLoader.loadImage("landmark/3.png");
     private final Image store = ImageLoader.loadImage("landmark/4.png");
 
-    public ImageDrawer(Graphics g, int x, int y, int width, int height, MainFrame mainFrame){
+    public void draw(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {
         drawImages(g, x, y, width, height, mainFrame);
     }
 

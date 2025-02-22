@@ -1,50 +1,52 @@
-package gui.core;
+package gui.screens;
 
 import gui.components.Button;
+import gui.core.MainFrame;
 import gui.enums.GameScreen;
-import gui.enums.button.RuleButton;
+import gui.enums.buttons.RuleButton;
+import gui.interfaces.ButtonActions;
 import gui.utils.ImageLoader;
-import gui.utils.SoundPlayer;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
-public class Rule extends JPanel {
+public class Rule extends AbstractScreen implements ButtonActions<RuleButton>{
     private HashMap<RuleButton, Button> buttons;
-    private MainFrame mainFrame;
 
-    Rule(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
-        
-        createButton();
-        setButtonPosition();
-        initializeUI();
+    public Rule(MainFrame mainFrame) {
+        super(mainFrame);
+        initialize();
     }
 
-    private void initializeUI(){
+    @Override
+    protected void initializeUI() {
         setLayout(null);
+                
+        createButton(); setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
         setVisible(true);
     }
     
-    private void createButton() {
+    @Override
+    public void createButton() {
         buttons = new HashMap<>();
         buttons.put(RuleButton.BACK, new Button(""));
         buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageLoader.loadImage("settingRule.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
     }
 
-    private void setButtonPosition() {
+    @Override
+    public void setButtonBounds() {
         buttons.get(RuleButton.BACK).setBounds(1820, 20, 80, 80);
     }
 
-    private void addButtonListener(RuleButton button) {
+    @Override
+    public void addButtonListener(RuleButton button) {
         ActionListener actionListener = (ActionEvent e) -> {
+            System.out.println(e.getActionCommand());
             switch (button) {
                 case BACK -> backButton();
             }
@@ -54,7 +56,6 @@ public class Rule extends JPanel {
 
     private void backButton() {
         mainFrame.showScreen(GameScreen.MAIN_MENU);
-        SoundPlayer.playSound("Press.wav");
     }
 
     @Override

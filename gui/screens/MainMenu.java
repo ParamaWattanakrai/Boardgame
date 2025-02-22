@@ -1,57 +1,62 @@
-package gui.core;
+package gui.screens;
 
 import gui.components.Button;
+import gui.core.MainFrame;
 import gui.data.GameData;
 import gui.enums.GameScreen;
-import gui.enums.button.MainButton;
+import gui.enums.buttons.MainButton;
+import gui.interfaces.ButtonActions;
 import gui.utils.ImageLoader;
-import gui.utils.SoundPlayer;
-
+import gui.utils.SoundManager;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import javax.swing.JPanel;
 import src.map.Field;
 import src.map.MetaSettings;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends AbstractScreen implements ButtonActions<MainButton>{
+    private final Image backgroundImage = ImageLoader.loadImage("MainBg.png");;
     private HashMap<MainButton, Button> buttons;
-    private MainFrame mainFrame;
 
-    MainMenu(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
-        
-        createButton();
-        setButtonPosition();
-        initializeUI();
-        SoundPlayer.loopSound("MainManu.wav");
+    public MainMenu(MainFrame mainFrame) {
+        super(mainFrame);
+        initialize();
     }
-
-    private void initializeUI() {
+    
+    @Override
+    protected void initializeUI() {
         setLayout(null);
+                
+        createButton(); setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
+        
         setVisible(true);
+        SoundManager.playMainMenuMusic();
     }
-
-    private void createButton() {
+    
+    @Override
+    public void createButton() {
         buttons = new HashMap<>();
-        buttons.put(MainButton.NEW_GAME, new Button(MainButton.NEW_GAME.name()));
-        buttons.put(MainButton.RESUME, new Button(MainButton.RESUME.name()));
-        buttons.put(MainButton.QUIT, new Button(MainButton.QUIT.name()));
-        buttons.put(MainButton.RULE, new Button(MainButton.RULE.name(), false));
-    }
+        for (MainButton button : MainButton.values()) {
+            buttons.put(button, new Button(button.name()));
+        }
 
-    private void setButtonPosition() {
+        buttons.get(MainButton.RULE).setPop(false);
+    }
+    
+    @Override
+    public void setButtonBounds() {
         buttons.get(MainButton.NEW_GAME).setBounds(715, 490, 500, 70);
         buttons.get(MainButton.RESUME).setBounds(715, 660, 500, 70);
         buttons.get(MainButton.QUIT).setBounds(715, 840, 500, 70);
         buttons.get(MainButton.RULE).setBounds(120, 910, 240, 50);
     }
 
-    private void addButtonListener(MainButton button) {
+    @Override
+    public void addButtonListener(MainButton button) {
         ActionListener actionListener = (ActionEvent e) -> {
             System.out.println(e.getActionCommand());
             switch (button) {
@@ -70,32 +75,27 @@ public class MainMenu extends JPanel {
         mainFrame.getField().printField();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         mainFrame.showScreen(GameScreen.GAME);
-        SoundPlayer.playSound("Press.wav");
     }
     
     private void resumeButton() {
         if (mainFrame.getField() != null) {
             mainFrame.showScreen(GameScreen.GAME);
-            SoundPlayer.playSound("Press.wav");
         } else {
-            SoundPlayer.playSound("Incorrect.wav");
+            SoundManager.playIncorrectSound();
         }
     }
     
     private void quitButton() {
-        SoundPlayer.playSound("Press.wav");
         System.exit(0);
     }
 
     private void ruleButton() {
         mainFrame.showScreen(GameScreen.RULE);
-        SoundPlayer.playSound("Press.wav");
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image backgroundImage = ImageLoader.loadImage("MainBg.png");
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
     }
 }
