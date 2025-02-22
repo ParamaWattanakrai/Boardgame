@@ -1,12 +1,13 @@
 package gui.components;
 
-import gui.utils.FontLoader;
-import gui.utils.SoundPlayer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+
+import gui.utils.FontLoader;
+import gui.utils.SoundPlayer;
 
 public class Button extends JButton {
     private final Font font = FontLoader.loadFont("BlackOpsOne-Regular.ttf");

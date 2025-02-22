@@ -1,6 +1,6 @@
 package gui.utils;
 
-import gui.MainFrame;
+import gui.core.MainFrame;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

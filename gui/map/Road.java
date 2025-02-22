@@ -1,8 +1,8 @@
 package gui.map;
 
-import gui.Game;
-import gui.MainFrame;
-import gui.listeners.GridMouseListener;
+import gui.core.Game;
+import gui.core.MainFrame;
+import gui.events.GridMouseListener;
 import gui.utils.ImageDrawer;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -10,9 +10,9 @@ import javax.swing.JPanel;
 public class Road extends JPanel {
     private final int x;
     private final int y;
-    private final MainFrame mainFrame;
+    private MainFrame mainFrame;
 
-    public Road(int x, int y, Game game, MainFrame mainFrame) {
+    public Road(int x, int y, Game game,  MainFrame mainFrame) {
         this.x = x;
         this.y = y;
         this.mainFrame = mainFrame;
