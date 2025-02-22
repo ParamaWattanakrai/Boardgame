@@ -1,63 +1,115 @@
 package gui;
 
-import gui.components.GamePanel;
-import gui.components.MainButton;
+import gui.components.Button;
+import gui.components.TextPanel;
+import gui.enums.GameScreen;
+import gui.enums.button.GameButton;
+import gui.enums.panel.GamePanel;
 import gui.map.Map;
 import gui.utils.ImageLoader;
+import gui.utils.SoundPlayer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 import javax.swing.*;
 
 public class Game extends JPanel {
-    private final GamePanel nightTitel = new GamePanel("Night", 70f);
-    private final GamePanel statTitel = new GamePanel("Stat", 70f);
-    private final GamePanel taskTitel = new GamePanel("Task", 70f);
-    private final GamePanel dataTitel = new GamePanel("Data", 70f);
-
-    private static GamePanel night = new GamePanel("", 60f);
-    private static GamePanel stat = new GamePanel("wow", 50f);
-    private static GamePanel task = new GamePanel("", 30f);
-    private static GamePanel data = new GamePanel("", 25f);
-    private static MainButton setting = new MainButton("");
-    private static Map map = new Map();
+    private HashMap<GamePanel, TextPanel> textPanels;
+    private HashMap<GameButton, Button> buttons;
+    private Map map;
+    private MainFrame mainFrame;
 
     public Game(MainFrame mainFrame) {
-        setLayout(null);
-        nightTitel.setBounds(60, 25, 220, 200);
-        night.setBounds(60,95, 220, 200);
+        this.mainFrame =  mainFrame;        
 
-        statTitel.setBounds(60, 210, 220, 200);
-        stat.setBounds(60, 280, 220, 200);
+        createTextPanel();
+        setTextPanelPosition();
 
-        taskTitel.setBounds(60, 640, 220, 200);
-        task.setBounds(60, 720, 250, 200);
+        createButton();
+        setButtonPosition();
 
-        map.setBounds(482, 54, 959, 900);
+        creatMap();
+        setMapPosition();
 
-        dataTitel.setBounds(1600, 430, 220, 500);
-        data.setBounds(1600, 520, 220, 500);
-
-        setting.setBounds(1820, 20, 80, 80);
-        setting.setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
-        setting.addActionListener((_) -> {
-            mainFrame.showMainMenu();
-        });
-
-        add(nightTitel);
-        add(night);
-
-        add(statTitel);
-        add(stat);
-
-        add(taskTitel);
-        add(task);
-        
-        add(map);
-
-        add(dataTitel);
-        add(data);
-
-        add(setting);
+        initializeUI();
         setVisible(true);
+    }
+
+    private void initializeUI() {
+        setLayout(null);
+
+        textPanels.values().forEach(this::add);
+        buttons.values().forEach(this::add);
+        buttons.keySet().forEach(this::addButtonListener);
+        add(map);
+    }
+
+    //-------- TextPanel --------//
+    private void createTextPanel() {
+        textPanels = new HashMap<>();
+        textPanels.put(GamePanel.NightTitle, new TextPanel("Night",60f));
+        textPanels.put(GamePanel.StatTitle, new TextPanel("Stat",60f));
+        textPanels.put(GamePanel.TaskTitle, new TextPanel("Task",60f));
+        textPanels.put(GamePanel.DataTitle, new TextPanel("Data",60f));
+
+        textPanels.put(GamePanel.Night, new TextPanel(60f));
+        textPanels.put(GamePanel.Stat, new TextPanel(30f));
+        textPanels.put(GamePanel.Task, new TextPanel(30f));
+        textPanels.put(GamePanel.Data, new TextPanel(20f));
+
+        updateNightText(mainFrame.getGamaData().getNight());
+        updateStatText("Noting here");
+        updateTaskText("Police station\nNuclear plant\nHospital\nStore");
+    }
+
+    private void setTextPanelPosition() {
+        textPanels.get(GamePanel.NightTitle).setBounds(60, 25, 220, 200);
+        textPanels.get(GamePanel.Night).setBounds(60, 95, 220, 200);
+
+        textPanels.get(GamePanel.StatTitle).setBounds(60, 210, 220, 200);
+        textPanels.get(GamePanel.Stat).setBounds(60, 280, 220, 200);
+
+        textPanels.get(GamePanel.TaskTitle).setBounds(60, 640, 220, 200);
+        textPanels.get(GamePanel.Task).setBounds(60, 720, 250, 200);
+
+        textPanels.get(GamePanel.DataTitle).setBounds(1600, 430, 220, 500);
+        textPanels.get(GamePanel.Data).setBounds(1600, 520, 220, 500);
+    }
+
+    //-------- Button --------//
+    private void createButton() {
+        buttons = new HashMap<>();
+        buttons.put(GameButton.Setting, new Button(""));
+        buttons.get(GameButton.Setting).setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+    }
+
+    private void setButtonPosition() {
+        buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
+    }
+
+    private void addButtonListener(GameButton button) {
+        ActionListener actionListener = (ActionEvent e) -> {
+            System.out.println( e.getActionCommand());
+            switch (button) {
+                case Setting -> settingButton();
+            }
+        };
+        buttons.get(button).addActionListener(actionListener);
+    }
+
+    private void settingButton() {
+        mainFrame.showScreen(GameScreen.MAIN_MENU);
+        SoundPlayer.playSound("Press.wav");
+    }
+
+    //-------- Map --------//
+    private void creatMap() {
+        map = new Map(this, mainFrame);
+    }
+
+    private void setMapPosition() {
+        map.setBounds(482, 54, 959, 900);
     }
 
     @Override
@@ -67,51 +119,23 @@ public class Game extends JPanel {
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
     }
 
-    public static GamePanel getData() {
-        return data;
+    public void updateNightText(int nightCount) {
+        textPanels.get(GamePanel.Night).setText(nightCount + "/15");
     }
 
-    public static void setData(GamePanel data) {
-        Game.data = data;
+    public void updateStatText(String statText) {
+        textPanels.get(GamePanel.Stat).setText(statText);
     }
 
-    public static Map getMap() {
-        return map;
+    public void updateTaskText(String taskText) {
+        textPanels.get(GamePanel.Task).setText(taskText);
     }
 
-    public static void setMap(Map map) {
-        Game.map = map;
+    public void updateDataText(String dataText) {
+        textPanels.get(GamePanel.Data).setText(dataText);
     }
 
-    public static GamePanel getNight() {
-        return night;
-    }
-
-    public static void setNight(GamePanel night) {
-        Game.night = night;
-    }
-
-    public static GamePanel getStat() {
-        return stat;
-    }
-
-    public static void setStat(GamePanel stat) {
-        Game.stat = stat;
-    }
-
-    public static GamePanel getTask() {
-        return task;
-    }
-
-    public static void setTask(GamePanel task) {
-        Game.task = task;
-    }
-
-    public static MainButton getSetting() {
-        return setting;
-    }
-
-    public static void setSetting(MainButton setting) {
-        Game.setting = setting;
+    public MainFrame getMainFrame() {
+        return mainFrame;
     }
 }

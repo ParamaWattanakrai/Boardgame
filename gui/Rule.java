@@ -1,26 +1,58 @@
 package gui;
 
-import gui.components.MainButton;
+import gui.components.Button;
+import gui.enums.GameScreen;
+import gui.enums.button.RuleButton;
 import gui.utils.ImageLoader;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class Rule extends JPanel{
-    private MainButton setting = new MainButton("");
+public class Rule extends JPanel {
+    private HashMap<RuleButton, Button> buttons;
+    private MainFrame mainFrame;
 
     public Rule(MainFrame mainFrame) {
-        setLayout(null);
-        setting.setBounds(1820, 20, 80, 80);
-        Image settingimg = ImageLoader.loadImage("settingRule.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        setting.setIcon(new ImageIcon(settingimg));
-        setting.addActionListener((_) -> {
-            mainFrame.showMainMenu();
-        });
+        this.mainFrame = mainFrame;
+        
+        createButton();
+        setButtonPosition();
+        initializeUI();
+    }
 
-        add(setting);
+    private void initializeUI(){
+        setLayout(null);
+        buttons.values().forEach(this::add);
+        buttons.keySet().forEach(this::addButtonListener);
         setVisible(true);
+    }
+    
+    private void createButton() {
+        buttons = new HashMap<>();
+        buttons.put(RuleButton.BACK, new Button(""));
+        buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageLoader.loadImage("settingRule.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+    }
+
+    private void setButtonPosition() {
+        buttons.get(RuleButton.BACK).setBounds(1820, 20, 80, 80);
+    }
+
+    private void addButtonListener(RuleButton button) {
+        ActionListener actionListener = (ActionEvent e) -> {
+            System.out.println( e.getActionCommand());
+            switch (button) {
+                case BACK -> backButton();
+            }
+        };
+        buttons.get(button).addActionListener(actionListener);
+    }
+
+    private void backButton() {
+        mainFrame.showScreen(GameScreen.MAIN_MENU);
     }
 
     @Override
