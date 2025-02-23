@@ -11,12 +11,12 @@ import src.entities.Civilian;
 import src.utils.Tuple;
 
 public class GridMouseListener implements MouseListener {
-    private final JPanel panel;
-    private final int x;
-    private final int y;
-    private final Game game;
-    private final MainFrame mainFrame;
-    private final WorldMap map;
+    private JPanel panel;
+    private int x;
+    private int y;
+    private Game game;
+    private MainFrame mainFrame;
+    private WorldMap map;
 
     public GridMouseListener(JPanel panel, int x, int y, Game game, MainFrame mainFrame, WorldMap map) {
         this.panel = panel;
@@ -29,47 +29,24 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        game.updateText(GameText.Data, mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
+        updateData();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        highlightBlockฺBeside(x, y);
         new Civilian(mainFrame.getField().getBlock(new Tuple(x, y))).toString();
+        updateData();
+
         mainFrame.getGamaData().setNight(mainFrame.getGamaData().getNight() + 1);
-        int[] task = mainFrame.getGamaData().getTask();
+        updateNight();
 
-        switch (mainFrame.getField().getBlock(new Tuple(x, y)).getBlockType()) {
-                    case HOSPITAL -> task[3] = 1;
-                    case STORE -> task[4] = 1;
-                    case POLICESTATION -> task[1] = 1;
-                    case POWERPLANT -> task[2] = 1;
-                    default -> System.out.print("");
-        }
-
-        mainFrame.getGamaData().setTask(task);
-        game.updateText(GameText.Data, mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
-        game.updateText(GameText.Night, mainFrame.getGamaData().getNight() + "/15");
-
-        String[] tasks = { "", "Police station", "Nuclear plant", "Hospital", "Store" };
-        StringBuilder text = new StringBuilder();
-
-        for (int i = 1; i < tasks.length; i++) {
-            if (mainFrame.getGamaData().getTask()[i] == 0) {
-                text.append(tasks[i]).append("\n");
-            } else {
-                text.append(tasks[0]).append("\n");
-            }
-        }
-
-        game.updateText(GameText.Task, text.toString());
-        panel.revalidate();
-        panel.repaint();
+        updateTask();
+        highlightBlockBeside(x, y);
     }
 
     @Override
@@ -82,7 +59,52 @@ public class GridMouseListener implements MouseListener {
 
     }
 
-    private void highlightBlockฺBeside(int x, int y){
-        map.getRoad(x,y).setHighlighted(!map.getRoad(x,y).isHighlighted());
+    private void updateTask(){
+        int[] task = mainFrame.getGamaData().getTask();
+        switch (mainFrame.getField().getBlock(new Tuple(x, y)).getBlockType()) {
+                    case HOSPITAL -> task[3] = 1;
+                    case STORE -> task[4] = 1;
+                    case POLICESTATION -> task[1] = 1;
+                    case POWERPLANT -> task[2] = 1;
+                    default -> System.out.print("");
+        }
+
+        String[] tasks = { "", "Police station", "Nuclear plant", "Hospital", "Store" };
+        StringBuilder text = new StringBuilder();
+
+        for (int i = 1; i < tasks.length; i++) {
+            if (mainFrame.getGamaData().getTask()[i] == 0) {
+                text.append(tasks[i]).append("\n");
+            } else {
+                text.append(tasks[0]).append("\n");
+            }
+        }
+        game.updateText(GameText.Task, text.toString());
+    }
+
+    private void updateNight(){
+        game.updateText(GameText.Night, mainFrame.getGamaData().getNight() + "/15");
+    }
+
+    private void updateData(){
+        game.updateText(GameText.Data, mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
+    }
+
+    private void highlightBlockBeside(int x, int y){
+        map.getRoad(x, y).setSelect(!map.getRoad(x, y).isSelect());
+        
+        // what this shit
+        if (map.getRoad(x, y).isSelect()) {
+            if (x + 1 < 5) map.getRoad(x + 1, y).setHighlighted(true);
+            if (y + 1 < 5) map.getRoad(x, y + 1).setHighlighted(true);
+            if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlighted(true);
+            if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlighted(true);
+        } else {
+            if (x + 1 < 5) map.getRoad(x + 1, y).setHighlighted(false);
+            if (y + 1 < 5) map.getRoad(x, y + 1).setHighlighted(false);
+            if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlighted(false);
+            if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlighted(false);
+        }
+        map.repaint();
     }
 }

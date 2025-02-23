@@ -113,7 +113,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     //-------- Map --------//
     private void createMap() {
-        map = new WorldMap(mainFrame, this);
+        map = new WorldMap(this, mainFrame);
     }
 
     private void setMapPosition() {

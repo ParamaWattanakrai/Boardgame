@@ -2,16 +2,16 @@ package gui.components;
 
 import gui.MainFrame;
 import gui.screens.Game;
-
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class WorldMap extends JPanel {
     private Road[][] road = new Road[5][5];
-    MainFrame mainFrame;
-    Game game;
-    public WorldMap(MainFrame mainFrame, Game game){
+    private MainFrame mainFrame;
+    private Game game;
+    
+    public WorldMap( Game game, MainFrame mainFrame){
         this.mainFrame = mainFrame;
         this.game = game;
         createBlock();
