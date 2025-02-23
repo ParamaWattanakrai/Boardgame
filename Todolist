@@ -1,0 +1,7 @@
+- gui
+เปลี่ยนจากวาดรูปลงบน Road เป็นการสร้าง panel เพิ่มลงบน Road แทน เพิ่อให้ประชากรกดได้)
+ทำข้อความ Stat
+ทำปุ่ม End Turn
+ทำปุ่ม Setting
+ทำ Barricade
+ทำ Action interface
