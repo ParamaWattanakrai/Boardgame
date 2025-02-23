@@ -1,6 +1,7 @@
 package gui.events;
 
 import gui.MainFrame;
+import gui.components.WorldMap;
 import gui.enums.texts.GameText;
 import gui.screens.Game;
 import java.awt.event.MouseEvent;
@@ -15,13 +16,15 @@ public class GridMouseListener implements MouseListener {
     private final int y;
     private final Game game;
     private final MainFrame mainFrame;
+    private final WorldMap map;
 
-    public GridMouseListener(JPanel panel, int x, int y, Game game, MainFrame mainFrame) {
+    public GridMouseListener(JPanel panel, int x, int y, Game game, MainFrame mainFrame, WorldMap map) {
         this.panel = panel;
         this.x = x;
         this.y = y;
         this.game = game;
         this.mainFrame = mainFrame;
+        this.map = map;
     }
 
     @Override
@@ -36,6 +39,7 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        highlightBlockฺBeside(x, y);
         new Civilian(mainFrame.getField().getBlock(new Tuple(x, y))).toString();
         mainFrame.getGamaData().setNight(mainFrame.getGamaData().getNight() + 1);
         int[] task = mainFrame.getGamaData().getTask();
@@ -76,5 +80,9 @@ public class GridMouseListener implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
 
+    }
+
+    private void highlightBlockฺBeside(int x, int y){
+        map.getRoad(x,y).setHighlighted(!map.getRoad(x,y).isHighlighted());
     }
 }

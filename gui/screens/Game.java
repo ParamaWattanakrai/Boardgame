@@ -3,12 +3,12 @@ package gui.screens;
 import gui.MainFrame;
 import gui.components.Button;
 import gui.components.TextArea;
+import gui.components.WorldMap;
 import gui.enums.GameScreen;
 import gui.enums.buttons.GameButton;
 import gui.enums.texts.GameText;
 import gui.interfaces.ButtonActions;
 import gui.interfaces.TextDisplay;
-import gui.map.Map;
 import gui.utils.ImageLoader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ import javax.swing.*;
 public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
     private HashMap<GameText, TextArea> textPanels;
     private HashMap<GameButton, Button> buttons;
-    private Map map;
+    private WorldMap map;
 
     public Game(MainFrame mainFrame) {
         super(mainFrame);
@@ -113,7 +113,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     //-------- Map --------//
     private void createMap() {
-        map = new Map(this, mainFrame);
+        map = new WorldMap(mainFrame, this);
     }
 
     private void setMapPosition() {

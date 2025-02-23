@@ -1,9 +1,8 @@
 package src.map;
 
-import src.utils.*;
-import src.entities.*;
-
 import java.util.ArrayList;
+import src.entities.*;
+import src.utils.*;
 
 public class Block {
     private Field field;
