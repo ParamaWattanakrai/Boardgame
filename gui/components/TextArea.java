@@ -8,17 +8,17 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
-public class TextPanel extends JTextArea {
+public class TextArea extends JTextArea {
     private final Font font = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
 
-    public TextPanel() {
+    public TextArea() {
     }
      
-    public TextPanel(float size) {
+    public TextArea(float size) {
         setupStyle(size);
     }
 
-    public TextPanel(String text, float size) {
+    public TextArea(String text, float size) {
         super(text);
         setupStyle(size);
     }

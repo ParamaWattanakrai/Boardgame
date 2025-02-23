@@ -2,7 +2,7 @@ package gui.screens;
 
 import gui.MainFrame;
 import gui.components.Button;
-import gui.components.TextPanel;
+import gui.components.TextArea;
 import gui.enums.GameScreen;
 import gui.enums.buttons.GameButton;
 import gui.enums.texts.GameText;
@@ -16,8 +16,8 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.*;
 
-public class Game extends AbstractScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
-    private HashMap<GameText, TextPanel> textPanels;
+public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
+    private HashMap<GameText, TextArea> textPanels;
     private HashMap<GameButton, Button> buttons;
     private Map map;
 
@@ -45,15 +45,15 @@ public class Game extends AbstractScreen implements ButtonActions<GameButton>, T
     public void createTextPanel() {
         textPanels = new HashMap<>();
 
-        textPanels.put(GameText.NightTitle, new TextPanel("Night",60f));
-        textPanels.put(GameText.StatTitle, new TextPanel("Stat",60f));
-        textPanels.put(GameText.TaskTitle, new TextPanel("Task",60f));
-        textPanels.put(GameText.DataTitle, new TextPanel("Data",60f));
+        textPanels.put(GameText.NightTitle, new TextArea("Night",60f));
+        textPanels.put(GameText.StatTitle, new TextArea("Stat",60f));
+        textPanels.put(GameText.TaskTitle, new TextArea("Task",60f));
+        textPanels.put(GameText.DataTitle, new TextArea("Data",60f));
 
-        textPanels.put(GameText.Night, new TextPanel(60f));
-        textPanels.put(GameText.Stat, new TextPanel(30f));
-        textPanels.put(GameText.Task, new TextPanel(30f));
-        textPanels.put(GameText.Data, new TextPanel(20f));
+        textPanels.put(GameText.Night, new TextArea(60f));
+        textPanels.put(GameText.Stat, new TextArea(30f));
+        textPanels.put(GameText.Task, new TextArea(30f));
+        textPanels.put(GameText.Data, new TextArea(20f));
         resetText();
     }
     

@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-public class Rule extends AbstractScreen implements ButtonActions<RuleButton>{
+public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     private HashMap<RuleButton, Button> buttons;
 
     public Rule(MainFrame mainFrame) {

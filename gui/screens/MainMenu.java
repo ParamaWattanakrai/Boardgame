@@ -16,7 +16,7 @@ import java.util.HashMap;
 import src.map.Field;
 import src.map.MetaSettings;
 
-public class MainMenu extends AbstractScreen implements ButtonActions<MainButton>{
+public class MainMenu extends BaseScreen implements ButtonActions<MainButton>{
     private final Image backgroundImage = ImageLoader.loadImage("MainBg.png");;
     private HashMap<MainButton, Button> buttons;
 
