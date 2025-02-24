@@ -84,8 +84,7 @@ public class GridMouseListener implements MouseListener {
             }
         }
 
-        mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.SOUTH).barricade();
-
+        mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.SOUTH).buildBarricade();
         game.updateText(GameText.Task, text.toString());
     }
 

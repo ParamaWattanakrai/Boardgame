@@ -95,7 +95,7 @@ public class ImageDrawer {
         int centerX = (width - BARRICADE_SIZE*5) / 2;
         int centerY = (height - BARRICADE_SIZE*5) / 2;
         int Y = (height - BARRICADE_SIZE*5);
-
+        System.out.println(Y);
         Block block = mainFrame.getField().getBlock(new Tuple(x, y));
         if(block.getPath(Direction.NORTH).isBarricaded()) g.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
         if(block.getPath(Direction.SOUTH).isBarricaded()) g.drawImage(barricadImage, centerX, Y, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
