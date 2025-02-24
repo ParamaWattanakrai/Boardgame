@@ -9,14 +9,12 @@ public class Dog extends Entity {
     }
 
     @Override
-    public boolean move(Direction direction) {
+    public void move(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
         if (neighborBlock != block) {
             block.removeEntity(this);
             block = neighborBlock;
             neighborBlock.removeEntity(this);
-            return true;
         }
-        return false;
     }
 }
