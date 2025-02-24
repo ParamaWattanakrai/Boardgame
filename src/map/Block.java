@@ -139,17 +139,19 @@ public class Block {
         return contactFlag;
     }
 
-    public boolean occupy() {
-        if (getAllCivilians().size() > 0) {
-            if (occupationLevel < 2) {
-                occupationLevel--;
-            }
-            return true;
+    public void occupy() {
+        if (occupationLevel < 2) {
+            occupationLevel++;
         }
+    }
+    public void unOccupy() {
         if (occupationLevel > 0) {
             occupationLevel--;
         }
-        return false;
+    }
+
+    public int getOccupationLevel() {
+        return occupationLevel;
     }
 
     public Block getNeighborBlock(Direction direction) {
@@ -165,13 +167,9 @@ public class Block {
         entityMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
     }
 
-    public boolean removeEntity(Entity entity) {
+    public void removeEntity(Entity entity) {
         EntityType entityType = entity.getEntityType();
-        List<Entity> entityPopulation = entityMap.get(entityType);
-        if (entityPopulation != null) {
-            return entityPopulation.remove(entity);
-        }
-        return false;
+        entityMap.get(entityType).remove(entity);
     }
 
     public void addGun() {
@@ -279,6 +277,20 @@ public class Block {
             }
         }
         return alive;
+    }
+    public List<Civilian> getAllComa() {
+        List<Civilian> coma = new ArrayList<>();
+        for (EntityType entityType : entityMap.keySet()) {
+            if (entityType != EntityType.DOG) {
+                for (Entity civilianEntity : entityMap.get(entityType)) {
+                    Civilian civilian = (Civilian) civilianEntity;
+                    if (civilian.getVitality() == Vitality.COMA) {
+                        coma.add(civilian);
+                    }
+                }
+            }
+        }
+        return coma;
     }
 
     public BlockType getBlockType() {

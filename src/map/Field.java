@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.Action;
-
 import src.entities.*;
 import src.utils.*;
 
@@ -19,10 +17,6 @@ public class Field {
     private Block[][] field;
 
     private ArrayList<Tuple> spawnCoords = new ArrayList<>();
-    private ArrayList<Tuple> hospitalCoords = new ArrayList<>();
-    private ArrayList<Tuple> storeCoords = new ArrayList<>();
-    private ArrayList<Tuple> policeStationCoords = new ArrayList<>();
-    private ArrayList<Tuple> powerPlantCoords = new ArrayList<>();
 
     private HashMap<BlockType, List<Block>> landmarkMap = new HashMap<>();
 
@@ -40,6 +34,7 @@ public class Field {
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA(), spawnCoords.get(0).getB() + 1));
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA() + 1, spawnCoords.get(0).getB() + 1));
         for (Tuple coordinate : spawnCoords) {
+            addLandmark(BlockType.SPAWN, field[coordinate.getB()][coordinate.getA()]);
             typeField[coordinate.getB()][coordinate.getA()] = BlockType.SPAWN;
         }
 
@@ -52,7 +47,7 @@ public class Field {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
             if (typeField[randY][randX] == null) {
-                hospitalCoords.add(new Tuple(randX, randY));
+                addLandmark(BlockType.HOSPITAL, field[randY][randX]);
                 typeField[randY][randX] = BlockType.HOSPITAL;
                 remainingHospital--;
             }
@@ -61,7 +56,7 @@ public class Field {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
             if (typeField[randY][randX] == null) {
-                hospitalCoords.add(new Tuple(randX, randY));
+                addLandmark(BlockType.STORE, field[randY][randX]);
                 typeField[randY][randX] = BlockType.STORE;
                 remainingStore--;
             }
@@ -70,7 +65,7 @@ public class Field {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
             if (typeField[randY][randX] == null) {
-                hospitalCoords.add(new Tuple(randX, randY));
+                addLandmark(BlockType.POLICESTATION, field[randY][randX]);
                 typeField[randY][randX] = BlockType.POLICESTATION;
                 remainingPoliceStation--;
             }
@@ -79,7 +74,7 @@ public class Field {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
             if (typeField[randY][randX] == null) {
-                hospitalCoords.add(new Tuple(randX, randY));
+                addLandmark(BlockType.POWERPLANT, field[randY][randX]);
                 typeField[randY][randX] = BlockType.POWERPLANT;
                 remainingPowerPlant--;
             }
@@ -143,6 +138,24 @@ public class Field {
         }
     }
 
+    public void occupyAlgorithm(Block block) {
+        if (block.getBlockType() == BlockType.POWERPLANT) {
+            if (block.getAllEntity(EntityType.MECHANIC).size() > 0) {
+                block.occupy();
+                return;
+            }
+        } else if (block.getBlockType() == BlockType.HOSPITAL) {
+            if (block.getAllEntity(EntityType.MEDIC).size() > 0) {
+                block.occupy();
+                return;
+            }
+        } else if (block.getAllAlive().size() > 0) {
+            block.occupy();
+        } else {
+            block.unOccupy();
+        }
+    }
+
     public void addAction(CivilianAction action, Runnable actionRunnable) {
         actionMap.computeIfAbsent(action, _ -> new ArrayList<>()).add(actionRunnable);
     }
@@ -151,8 +164,12 @@ public class Field {
         actionMap.get(action).remove(actionRunnable);
     }
 
-    public void generateSpecialBlocks(BlockType blockType, int blockTypeQuota) {
-        
+    public void addLandmark(BlockType blockType, Block block) {
+        landmarkMap.computeIfAbsent(blockType, _ -> new ArrayList<>()).add(block);
+    }
+
+    public void removeLandmark(BlockType blockType, Block block) {
+        landmarkMap.get(blockType).remove(block);
     }
 
     public Block getRandomBlock(int x, int y, BlockType blockType, PathType[] possiblePathTypes) {
@@ -190,6 +207,28 @@ public class Field {
 
     public ArrayList<Tuple> getSpawnCoords() {
         return spawnCoords;
+    }
+
+    public List<Block> getOccupiedHospitals() {
+        List<Block> occupiedHospitals = new ArrayList<>();
+        for (Block block : landmarkMap.get(BlockType.HOSPITAL)) {
+            if (block.getOccupationLevel() >= 2) {
+                occupiedHospitals.add(block);
+            }
+        }
+        return occupiedHospitals;
+    }
+
+    public List<Block> getOccupiedLandmarks() {
+        List<Block> occupiedLandmarks = new ArrayList<>();
+        for (BlockType blockType : landmarkMap.keySet()) {
+            for (Block block : landmarkMap.get(blockType)) {
+                if (block.getOccupationLevel() >= 2) {
+                    occupiedLandmarks.add(block);
+                }
+            }
+        }
+        return occupiedLandmarks;
     }
 
     public List<Entity> getAllEntity(EntityType entityType) {

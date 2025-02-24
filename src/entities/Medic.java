@@ -9,13 +9,14 @@ public class Medic extends Civilian {
         contacted = true;
     }
 
-    public boolean cure() {
-        for (Civilian person : block.getAllCivilians()) {
-            if (person.getVitality() == Vitality.COMA) {
-                person.disinfect();
-                return true;
-            }
+    public boolean validateCure() {
+        return (block.getField().getOccupiedHospitals().size() > 0 &&
+                block.getAllComa().size() > 0);
+    }
+
+    public void cure() {
+        if (validateCure()) {
+            block.getAllComa().get(0).disinfect();
         }
-        return false;
     }
 }

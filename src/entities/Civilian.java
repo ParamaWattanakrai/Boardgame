@@ -60,6 +60,7 @@ public class Civilian extends Entity {
     }
 
     public void disinfect() {
+        teleport(block.getField().getOccupiedHospitals().get(0));
         vitality = Vitality.ALIVE;
     }
 
