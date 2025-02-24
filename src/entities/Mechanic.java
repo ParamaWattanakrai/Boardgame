@@ -10,7 +10,7 @@ public class Mechanic extends Civilian {
 
     public boolean buildBarricade(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
-        if (neighborBlock != block && block.getPath(direction).barricade()) {
+        if (neighborBlock != block && block.getPath(direction).buildBarricade()) {
             return true;
         }
         return false;
