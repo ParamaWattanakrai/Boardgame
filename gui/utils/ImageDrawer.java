@@ -67,8 +67,16 @@ public class ImageDrawer {
                     default -> civilianImage;
                 };
     
-                int posX = new Random().nextInt(width - POPULATION_SIZE);
-                int posY = new Random().nextInt(height - POPULATION_SIZE);
+                int posX = 0;
+                int posY = 0;
+
+                if (width > POPULATION_SIZE) {
+                    posX = new Random().nextInt(width - POPULATION_SIZE);
+                }
+                if (height > POPULATION_SIZE) {
+                    posY = new Random().nextInt(height - POPULATION_SIZE);
+                }
+
                 g.drawImage(image, posX, posY, POPULATION_SIZE, POPULATION_SIZE, null);
             }
         }

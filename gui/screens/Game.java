@@ -89,11 +89,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons = new HashMap<>();
         buttons.put(GameButton.Setting, new Button(""));
         buttons.get(GameButton.Setting).setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        buttons.put(GameButton.EndButton, new Button("End Button", 50));
     }
 
     @Override
     public void setButtonBounds() {
         buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
+        buttons.get(GameButton.EndButton).setBounds(1475,  900, 500, 50);
     }
     
     @Override
@@ -102,6 +104,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             System.out.println(e.getActionCommand());
             switch (button) {
                 case Setting -> settingButton();
+                case EndButton -> settingEndButton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -109,7 +112,11 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     private void settingButton() {
         mainFrame.showScreen(GameScreen.MAIN_MENU);
-    } 
+    }
+
+    private void settingEndButton(){
+        System.out.println("End Turn");
+    }
 
     //-------- Map --------//
     private void createMap() {

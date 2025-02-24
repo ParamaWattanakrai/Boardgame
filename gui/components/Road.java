@@ -23,7 +23,7 @@ public class Road extends JPanel {
         addMouseListener(new GridMouseListener(this, x, y, game, mainFrame, map));
         setOpaque(false);
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
