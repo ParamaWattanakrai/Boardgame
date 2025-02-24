@@ -16,7 +16,7 @@ import src.utils.Direction;
 import src.utils.Tuple;
 
 public class ImageDrawer {
-    private final int ENTITY_SIZE = 25;
+    private final int ENTITY_SIZE = 50;
     private final int LANDMARK_SIZE = 75;
     private final int BARRICADE_SIZE = 30;
 
