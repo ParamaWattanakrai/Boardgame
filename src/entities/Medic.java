@@ -1,5 +1,5 @@
 package src.entities;
-import src.map.*;
+import src.map.Block;
 
 public class Medic extends Civilian {
     protected EntityType entityType = EntityType.MEDIC;

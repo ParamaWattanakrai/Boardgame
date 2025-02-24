@@ -1,16 +1,9 @@
 package src;
 
-import java.util.HashMap;
 import java.util.List;
 
-import src.entities.Entity;
-
-import src.entities.Civilian;
-import src.entities.CivilianAction;
-import src.entities.EntityType;
-import src.map.Field;
-import src.map.Block;
-import src.map.MetaSettings;
+import src.entities.*;
+import src.map.*;
 import src.utils.Direction;
 import src.utils.Tuple;
 

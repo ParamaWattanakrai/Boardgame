@@ -1,6 +1,6 @@
 package src.entities;
 
-import src.map.*;
+import src.map.Block;
 import src.utils.Direction;
 
 public class Civilian extends Entity {
