@@ -17,7 +17,7 @@ import src.utils.Tuple;
 public class ImageDrawer {
     private final int ENTITY_SIZE = 25;
     private final int LANDMARK_SIZE = 75;
-    private final int BARRICADE_SIZE = 60;
+    private final int BARRICADE_SIZE = 30;
 
     private final Image civilianImage = ImageLoader.loadImage("entities/civilian.png");
     private final Image medicImage = ImageLoader.loadImage("entities/medic.png");
@@ -92,7 +92,8 @@ public class ImageDrawer {
     }
 
     public void drawBarricade(Graphics g, int x, int y, int width, int height, MainFrame mainFrame){
-        g.drawImage(barricadImage, 0, 0, BARRICADE_SIZE/2, BARRICADE_SIZE, null);
-
+        int centerX = (width - BARRICADE_SIZE*5) / 2;
+        
+        g.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
     }
 }
