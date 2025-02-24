@@ -150,7 +150,7 @@ public class Field {
     }
 
     public Block getRandomBlock(int x, int y, BlockType blockType, PathType[] possiblePathTypes) {
-        return new Block(this, x, y, blockType, possiblePathTypes[rand.nextInt(possiblePathTypes.length)], rand.nextInt(5), 0);
+        return new Block(this, x, y, blockType, possiblePathTypes[rand.nextInt(possiblePathTypes.length)], rand.nextInt(4), 0);
     }
 
     public Block getNextBlock(Block block, Direction direction) {
