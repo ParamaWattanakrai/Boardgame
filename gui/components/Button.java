@@ -11,8 +11,15 @@ import javax.swing.JButton;
 public class Button extends JButton {
     private final Font font = FontLoader.loadFont("BlackOpsOne-Regular.ttf");
     private boolean pop = true;
+    private float fontSize = 70;
 
     public Button() {
+        setupStyle();
+    }
+
+    public Button(String text,float fontSize) {
+        super(text);
+        this.fontSize = fontSize;
         setupStyle();
     }
 
@@ -26,7 +33,7 @@ public class Button extends JButton {
         setFocusPainted(false);
         setContentAreaFilled(false);
         setForeground(Color.white);
-        setFont(font.deriveFont(70f));
+        setFont(font.deriveFont(fontSize));
         MouseListener();
     }
 
@@ -40,7 +47,7 @@ public class Button extends JButton {
             public void mouseEntered(MouseEvent e) {
                 setForeground(Color.yellow);
                 if (pop) {
-                    setFont(font.deriveFont(75f));
+                    setFont(font.deriveFont(fontSize + 5));
                 }
                 SoundManager.playSelectSound();
             }
@@ -49,7 +56,7 @@ public class Button extends JButton {
             public void mouseExited(MouseEvent e) {
                 setForeground(Color.white);
                 if (pop) {
-                    setFont(font.deriveFont(70f));
+                    setFont(font.deriveFont(fontSize));
                 }
             }
 
