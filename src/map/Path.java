@@ -11,11 +11,19 @@ public class Path {
         exist = false;
     }
 
-    public boolean barricade() {
+    public boolean buildBarricade() {
         if (barricaded) {
             return false;
         }
         barricaded = true;
+        return true;
+    }
+
+    public boolean destroyBarricade() {
+        if (!barricaded) {
+            return false;
+        }
+        barricaded = false;
         return true;
     }
 
