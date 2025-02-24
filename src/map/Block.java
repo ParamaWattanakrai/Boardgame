@@ -24,8 +24,8 @@ public class Block {
     private String blockTypeString;
     private String pathString;
 
-    private HashMap<EntityType, List<Entity>> populationMap = new HashMap<>();
-    private List<Entity> shooters = new ArrayList<>();
+    private HashMap<EntityType, List<Entity>> entityMap = new HashMap<>();
+    private List<Civilian> shooters = new ArrayList<>();
 
     private int gunAmount = 0;
 
@@ -129,8 +129,8 @@ public class Block {
 
     public boolean contact() {
         boolean contactFlag = false;
-        if (getAllEntity(EntityType.SOLDIER).size() > 0 && getAllCivilian().size() > 0) {
-            for (Civilian person : getAllCivilian()) {
+        if (getAllEntity(EntityType.SOLDIER).size() > 0 && getAllCivilians().size() > 0) {
+            for (Civilian person : getAllCivilians()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
                 }
@@ -140,7 +140,7 @@ public class Block {
     }
 
     public boolean occupy() {
-        if (getAllCivilian().size() > 0) {
+        if (getAllCivilians().size() > 0) {
             if (occupationLevel < 2) {
                 occupationLevel--;
             }
@@ -158,12 +158,12 @@ public class Block {
 
     public void addEntity(Entity entity) {
         EntityType entityType = entity.getEntityType();
-        populationMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
+        entityMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
     }
 
     public boolean removeEntity(Entity entity) {
         EntityType entityType = entity.getEntityType();
-        List<Entity> entityPopulation = populationMap.get(entityType);
+        List<Entity> entityPopulation = entityMap.get(entityType);
         if (entityPopulation != null) {
             return entityPopulation.remove(entity);
         }
@@ -184,7 +184,7 @@ public class Block {
 
     // public Tuple getFirePower() {
     //     int secondaryTroop = 0;
-    //     for (Civilian civilian : getAllCivilian()) {
+    //     for (Civilian civilian : getAllCivilians()) {
     //         if (civilian.isArmed()) {
     //             secondaryTroop++;
     //         }
@@ -192,7 +192,7 @@ public class Block {
     //     return new Tuple(getAllEntity(EntityType.SOLDIER).size(), secondaryTroop);
     // }
 
-    public void addShooter(Entity entity) {
+    public void addShooter(Civilian entity) {
         shooters.add(entity);
     }
 
@@ -232,32 +232,44 @@ public class Block {
         return new Path();
     }
 
+    public Field getField() {
+        return field;
+    }
+
     public Tuple getCoordinate() {
         return coordinate;
     }
 
-    public HashMap<EntityType, List<Entity>> getPopulationMap() {
-        return populationMap;
+    public HashMap<EntityType, List<Entity>> getentityMap() {
+        return entityMap;
     }
 
     public List<Entity> getAllEntity(EntityType entityType) {
-        List<Entity> entityList = populationMap.get(entityType);
+        List<Entity> entityList = entityMap.get(entityType);
         if (entityList != null) {
             return entityList;
         }
         return new ArrayList<>();
     }
 
-    public List<Civilian> getAllCivilian() {
+    public List<Civilian> getAllCivilians() {
         List<Civilian> civilians = new ArrayList<>();
-        for (EntityType entityType : populationMap.keySet()) {
+        for (EntityType entityType : entityMap.keySet()) {
             if (entityType != EntityType.DOG) {
-                for (Entity civilian : populationMap.get(entityType)) {
+                for (Entity civilian : entityMap.get(entityType)) {
                     civilians.add((Civilian) civilian);
                 }
             }
         }
         return civilians;
+    }
+    
+    public List<Dog> getAllDogs() {
+        List<Dog> dogs = new ArrayList<>();
+        for (Entity dogEntity : entityMap.get(EntityType.DOG)) {
+            dogs.add((Dog) dogEntity);
+        }
+        return dogs;
     }
 
     public BlockType getBlockType() {
@@ -268,7 +280,7 @@ public class Block {
         return pathType;
     }
 
-    public List<Entity> getShooters() {
+    public List<Civilian> getShooters() {
         return shooters;
     }
 

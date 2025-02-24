@@ -6,6 +6,7 @@ import java.util.List;
 import src.entities.Entity;
 
 import src.entities.Civilian;
+import src.entities.CivilianAction;
 import src.entities.EntityType;
 import src.map.Field;
 import src.map.MetaSettings;
@@ -18,20 +19,14 @@ public class Main {
         Field field = new Field(metaSettings);
         field.printField();
         Civilian civilian = new Civilian(field.getBlock(new Tuple(0, 0)));
+        civilian.contact();
         field.printField();
-        System.out.println(civilian.move(Direction.EAST));
-        field.printField();
-        System.out.println(field.getBlock(new Tuple(2, 2)).getBlockType());
-        System.out.println(field.getBlock(new Tuple(2, 2)).getPathString());
-        System.out.println(field.getBlock(new Tuple(2, 2)));
-        HashMap<EntityType, List<Entity>> populationMap = field.getBlock(new Tuple(2, 2)).getPopulationMap();
-        for (EntityType entityType : populationMap.keySet()) {
-            System.out.println(entityType);
-            List<Entity> entityList = populationMap.get(entityType);
-            for (Entity entity : entityList) {
-                Civilian hit = (Civilian) entity;
-                System.out.println(hit.getHitRate());
-            }
+        System.out.println(civilian.validateMove(Direction.EAST));
+        if (civilian.validateMove(Direction.EAST)) {
+            field.addAction(CivilianAction.MOVE, () -> civilian.move(Direction.EAST));
+            System.out.println("Added Action");
         }
+        field.endTurn();
+        field.printField();
     }
 }
