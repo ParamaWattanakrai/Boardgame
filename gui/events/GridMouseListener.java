@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import src.entities.Civilian;
+import src.utils.Direction;
 import src.utils.Tuple;
 
 public class GridMouseListener implements MouseListener {
@@ -82,6 +83,9 @@ public class GridMouseListener implements MouseListener {
                 text.append(tasks[0]).append("\n");
             }
         }
+
+        mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.SOUTH).barricade();
+
         game.updateText(GameText.Task, text.toString());
     }
 

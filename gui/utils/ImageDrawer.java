@@ -12,6 +12,7 @@ import src.entities.Medic;
 import src.entities.Soldier;
 import src.map.Block;
 import src.map.PathType;
+import src.utils.Direction;
 import src.utils.Tuple;
 
 public class ImageDrawer {
@@ -92,7 +93,14 @@ public class ImageDrawer {
 
     public void drawBarricade(Graphics g, int x, int y, int width, int height, MainFrame mainFrame){
         int centerX = (width - BARRICADE_SIZE*5) / 2;
+        int centerY = (height - BARRICADE_SIZE*5) / 2;
+        int Y = (height - BARRICADE_SIZE*5);
+
+        Block block = mainFrame.getField().getBlock(new Tuple(x, y));
+        if(block.getPath(Direction.NORTH).isBarricaded()) g.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.SOUTH).isBarricaded()) g.drawImage(barricadImage, centerX, Y, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
         
-        g.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.EAST).isBarricaded()) g.drawImage(barricadImage, 0, centerY, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.WEST).isBarricaded()) g.drawImage(barricadImage, width, centerY, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
     }
 }
