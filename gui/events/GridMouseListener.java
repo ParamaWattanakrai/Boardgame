@@ -50,7 +50,6 @@ public class GridMouseListener implements MouseListener {
         highlightBlockBeside(x, y);
         map.getRoad(x, y).setBarricade(!map.getRoad(x, y).isBarricade());
         map.repaint();
-
     }
 
     @Override
