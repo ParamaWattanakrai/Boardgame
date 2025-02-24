@@ -40,6 +40,7 @@ public class GridMouseListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         selectBlock(x, y);
         game.loadEntityButton(x, y);
+      
         game.repaint();
         map.repaint();
     }
@@ -53,7 +54,7 @@ public class GridMouseListener implements MouseListener {
     public void mouseReleased(MouseEvent e) {
 
     }
-
+    
     private void updateData(){
         game.updateText(GameText.Data, mainFrame.getField().getBlock(new Tuple(x, y)).toString().replace(", ", "\n"));
     }

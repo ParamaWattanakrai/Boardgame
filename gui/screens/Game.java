@@ -2,6 +2,7 @@ package gui.screens;
 
 import gui.MainFrame;
 import gui.components.Button;
+import gui.components.Road;
 import gui.components.TextArea;
 import gui.components.WorldMap;
 import gui.enums.GameScreen;
@@ -175,7 +176,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             for (Civilian alive : allAlive) {
                 Button btn = new Button(alive.getEntityType().name(), 30);
                 btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-                btn.addActionListener(_ ->  entityButton(alive));
+                btn.addActionListener(_ ->  entityButton(map.getRoad(x, y),alive));
                 panelEntity.add(btn);
             }
         }
@@ -187,13 +188,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         scrollPane.repaint();
     }
 
-    private void entityButton(Civilian alive){
+    private void entityButton(Road road, Civilian alive){
         System.out.println(alive.getEntityType().toString());
-        loadActionButton(alive);
+        loadActionButton(road, alive);
     }
 
     //-------- Action button --------//
-    public void loadActionButton(Civilian alive) {
+    public void loadActionButton(Road road, Civilian alive) {
         textPanels.get(GameText.SelectTitle).setText("Action");
         panelEntity.removeAll();
         // List<CivilianAction> actions = ;    
@@ -201,7 +202,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         for (CivilianAction action : CivilianAction.values()) {
             Button btn = new Button(action.name(), 30);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btn.addActionListener(_ ->  actionButton(action));
+            btn.addActionListener(_ ->  actionButton(road, action, alive));
             panelEntity.add(btn);
         }
         
@@ -212,7 +213,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         scrollPane.repaint();
     }
 
-    private void actionButton(CivilianAction action){
+    private void actionButton(Road road, CivilianAction action, Civilian alive){
         System.out.println(action.name());
     }
 

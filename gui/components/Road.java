@@ -10,11 +10,11 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 public class Road extends JPanel {
-    private int x;
-    private int y;
     private MainFrame mainFrame;
     private Game game;
     private WorldMap map;
+    private int x;
+    private int y;
 
     public Road(int x, int y, WorldMap map, Game game, MainFrame mainFrame) {
         this.x = x;
@@ -39,7 +39,6 @@ public class Road extends JPanel {
         }
         g2d.dispose();
     }
-    
     public void setX(int x) {
         this.x = x;
     }
