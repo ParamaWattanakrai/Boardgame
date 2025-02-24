@@ -24,6 +24,8 @@ public class Field {
     private ArrayList<Tuple> policeStationCoords = new ArrayList<>();
     private ArrayList<Tuple> powerPlantCoords = new ArrayList<>();
 
+    private HashMap<BlockType, List<Block>> landmarkMap = new HashMap<>();
+
     private HashMap<CivilianAction, List<Runnable>> actionMap = new HashMap<>();
 
     public Field(MetaSettings metaSettings) {
@@ -147,6 +149,10 @@ public class Field {
 
     public void removeAction(CivilianAction action, Runnable actionRunnable) {
         actionMap.get(action).remove(actionRunnable);
+    }
+
+    public void generateSpecialBlocks(BlockType blockType, int blockTypeQuota) {
+        
     }
 
     public Block getRandomBlock(int x, int y, BlockType blockType, PathType[] possiblePathTypes) {

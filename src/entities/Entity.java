@@ -17,17 +17,12 @@ public abstract class Entity {
         block.removeEntity(this);
     }
 
+    public void teleport(Block toBlock) {
+        block.removeEntity(this);
+        toBlock.addEntity(this);
+    }
+
     public abstract void move(Direction direction);
-    // {
-    //     Block neighborBlock = block.getNeighborBlock(direction);
-    //     if (neighborBlock != block) {
-    //         block.removeEntity(this);
-    //         block = neighborBlock;
-    //         neighborBlock.removeEntity(this);
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     public EntityType getEntityType() {
         return entityType;
