@@ -65,11 +65,11 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.NightTitle).setBounds(60, 25, 220, 200);
         textPanels.get(GameText.Night).setBounds(60, 95, 220, 200);
 
-        textPanels.get(GameText.StatTitle).setBounds(60, 210, 220, 200);
-        textPanels.get(GameText.Stat).setBounds(60, 280, 220, 200);
+        textPanels.get(GameText.StatTitle).setBounds(60, 220, 220, 200);
+        textPanels.get(GameText.Stat).setBounds(60, 305, 220, 200);
 
-        textPanels.get(GameText.TaskTitle).setBounds(60, 640, 220, 200);
-        textPanels.get(GameText.Task).setBounds(60, 720, 250, 200);
+        textPanels.get(GameText.TaskTitle).setBounds(60, 650, 220, 200);
+        textPanels.get(GameText.Task).setBounds(60, 740, 250, 200);
 
         textPanels.get(GameText.DataTitle).setBounds(1600, 380, 220, 500);
         textPanels.get(GameText.Data).setBounds(1600, 470, 220, 500);
@@ -98,7 +98,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     @Override
     public void setButtonBounds() {
         buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
-        buttons.get(GameButton.EndButton).setBounds(1475,  900, 500, 50);
+        buttons.get(GameButton.EndButton).setBounds(1475,  905, 500, 50);
     }
     
     @Override
