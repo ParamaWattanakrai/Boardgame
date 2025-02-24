@@ -23,10 +23,15 @@ public class Main {
         field.printField();
         System.out.println(field.getBlock(new Tuple(2, 2)).getBlockType());
         System.out.println(field.getBlock(new Tuple(2, 2)).getPathString());
-        HashMap<EntityType, List<Entity>> populationMap =  field.getBlock(new Tuple(2, 2)).getPopulationMap();
+        System.out.println(field.getBlock(new Tuple(2, 2)));
+        HashMap<EntityType, List<Entity>> populationMap = field.getBlock(new Tuple(2, 2)).getPopulationMap();
         for (EntityType entityType : populationMap.keySet()) {
             System.out.println(entityType);
-            System.out.println(populationMap.get(entityType));
+            List<Entity> entityList = populationMap.get(entityType);
+            for (Entity entity : entityList) {
+                Civilian hit = (Civilian) entity;
+                System.out.println(hit.getHitRate());
+            }
         }
     }
 }

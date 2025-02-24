@@ -25,6 +25,7 @@ public class Block {
     private String pathString;
 
     private HashMap<EntityType, List<Entity>> populationMap = new HashMap<>();
+    private List<Entity> shooters = new ArrayList<>();
 
     private int gunAmount = 0;
 
@@ -181,14 +182,40 @@ public class Block {
         return false;
     }
 
-    public Tuple getFirePower() {
-        int secondaryTroop = 0;
-        for (Civilian civilian : getAllCivilian()) {
-            if (civilian.isArmed()) {
-                secondaryTroop++;
+    // public Tuple getFirePower() {
+    //     int secondaryTroop = 0;
+    //     for (Civilian civilian : getAllCivilian()) {
+    //         if (civilian.isArmed()) {
+    //             secondaryTroop++;
+    //         }
+    //     }
+    //     return new Tuple(getAllEntity(EntityType.SOLDIER).size(), secondaryTroop);
+    // }
+
+    public void addShooter(Entity entity) {
+        shooters.add(entity);
+    }
+
+    public void removeShooter(Entity entity) {
+        shooters.remove(entity);
+    }
+
+    public int shootDog() {
+        int dogShot = 0;
+        List<Entity> dogs = getAllEntity(EntityType.DOG);
+        for (Entity dog : dogs) {
+            for (Entity shooterEntity : shooters) {
+                Civilian shooter = (Civilian) shooterEntity;
+                boolean shot = Math.random() > shooter.getHitRate() ? false : true;
+                if (shot) {
+                    dog.kill();
+                    dogShot++;
+                    break;
+                }
+                shooters.remove(shooterEntity);
             }
         }
-        return new Tuple(getAllEntity(EntityType.SOLDIER).size(), secondaryTroop);
+        return dogShot;
     }
 
     public Path getPath(Direction direction) {
@@ -239,6 +266,10 @@ public class Block {
 
     public PathType getPathType() {
         return pathType;
+    }
+
+    public List<Entity> getShooters() {
+        return shooters;
     }
 
     public int getOrientation() {

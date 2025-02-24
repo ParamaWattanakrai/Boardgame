@@ -4,6 +4,7 @@ import src.map.*;
 import src.utils.Direction;
 
 public class Civilian extends Entity {
+    protected double hitRate = 0.75;
     protected Vitality vitality = Vitality.ALIVE;
     protected boolean contacted = false;
     protected boolean armed = false;
@@ -53,6 +54,10 @@ public class Civilian extends Entity {
         if (armed) {
             block.addGun();
         }
+    }
+
+    public double getHitRate() {
+        return hitRate;
     }
 
     public Vitality getVitality() {

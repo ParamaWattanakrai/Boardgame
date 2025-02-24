@@ -1,22 +1,14 @@
 package src.entities;
-
 import src.map.Block;
 import src.utils.Direction;
 
-public abstract class Entity {
-    protected EntityType entityType;
-    protected Block block;
+public class Dog extends Entity {
 
-    public Entity(Block block, EntityType entityType) {
-        this.entityType = entityType;
-        this.block = block;
-        block.addEntity(this);
+    public Dog(Block block) {
+        super(block, EntityType.DOG);
     }
 
-    public void kill() {
-        block.removeEntity(this);
-    }
-
+    @Override
     public boolean move(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
         if (neighborBlock != block) {
@@ -26,9 +18,5 @@ public abstract class Entity {
             return true;
         }
         return false;
-    }
-
-    public EntityType getEntityType() {
-        return entityType;
     }
 }
