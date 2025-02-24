@@ -9,6 +9,7 @@ import src.entities.Civilian;
 import src.entities.CivilianAction;
 import src.entities.EntityType;
 import src.map.Field;
+import src.map.Block;
 import src.map.MetaSettings;
 import src.utils.Direction;
 import src.utils.Tuple;
@@ -28,5 +29,9 @@ public class Main {
         }
         field.endTurn();
         field.printField();
+        List<Block> manhattanBlocks = field.getBlock(new Tuple(2, 2)).getManhattanBlocks(2);
+        for (Block block : manhattanBlocks) {
+            System.out.println(block.getCoordinate());
+        }
     }
 }
