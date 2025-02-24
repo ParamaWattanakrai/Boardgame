@@ -19,7 +19,7 @@ public class Civilian extends Entity {
     }
 
     public boolean validateMove(Direction direction) {
-        if (!isContacted()) {
+        if (!isContacted() && vitality == Vitality.ALIVE) {
             return false;
         }
         Block neighborBlock = block.getNeighborBlock(direction);
@@ -69,6 +69,14 @@ public class Civilian extends Entity {
 
     public double getHitRate() {
         return hitRate;
+    }
+
+    public void trueAction() {
+        inAction = true;
+    }
+
+    public void falseAction() {
+        inAction = false;
     }
 
     public boolean isInAction() {

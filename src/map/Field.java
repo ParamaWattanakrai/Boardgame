@@ -162,10 +162,40 @@ public class Field {
         return spawnCoords;
     }
 
+    public List<Entity> getAllEntity(EntityType entityType) {
+        List<Entity> entities = new ArrayList<>();
+        for (Block[] row : field) {
+            for (Block block : row) {
+                entities.addAll(block.getAllEntity(entityType));
+            }
+        }
+        return entities;
+    }
+
+    public List<Civilian> getAllCivilians() {
+        List<Civilian> civilians = new ArrayList<>();
+        for (Block[] row : field) {
+            for (Block block : row) {
+                civilians.addAll(block.getAllCivilians());
+            }
+        }
+        return civilians;
+    }
+
+    public List<Dog> getAllDog() {
+        List<Dog> dogs = new ArrayList<>();
+        for (Block[] row : field) {
+            for (Block block : row) {
+                dogs.addAll(block.getAllDogs());
+            }
+        }
+        return dogs;
+    }
+
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilian().size() + ")");
+                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilians().size() + ")");
             }
             System.out.println();
         }

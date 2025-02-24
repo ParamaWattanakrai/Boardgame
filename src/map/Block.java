@@ -129,8 +129,8 @@ public class Block {
 
     public boolean contact() {
         boolean contactFlag = false;
-        if (getAllEntity(EntityType.SOLDIER).size() > 0 && getAllCivilian().size() > 0) {
-            for (Civilian person : getAllCivilian()) {
+        if (getAllEntity(EntityType.SOLDIER).size() > 0 && getAllCivilians().size() > 0) {
+            for (Civilian person : getAllCivilians()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
                 }
@@ -140,7 +140,7 @@ public class Block {
     }
 
     public boolean occupy() {
-        if (getAllCivilian().size() > 0) {
+        if (getAllCivilians().size() > 0) {
             if (occupationLevel < 2) {
                 occupationLevel--;
             }
@@ -184,7 +184,7 @@ public class Block {
 
     // public Tuple getFirePower() {
     //     int secondaryTroop = 0;
-    //     for (Civilian civilian : getAllCivilian()) {
+    //     for (Civilian civilian : getAllCivilians()) {
     //         if (civilian.isArmed()) {
     //             secondaryTroop++;
     //         }
@@ -252,7 +252,7 @@ public class Block {
         return new ArrayList<>();
     }
 
-    public List<Civilian> getAllCivilian() {
+    public List<Civilian> getAllCivilians() {
         List<Civilian> civilians = new ArrayList<>();
         for (EntityType entityType : entityMap.keySet()) {
             if (entityType != EntityType.DOG) {
@@ -262,6 +262,14 @@ public class Block {
             }
         }
         return civilians;
+    }
+    
+    public List<Dog> getAllDogs() {
+        List<Dog> dogs = new ArrayList<>();
+        for (Entity dogEntity : entityMap.get(EntityType.DOG)) {
+            dogs.add((Dog) dogEntity);
+        }
+        return dogs;
     }
 
     public BlockType getBlockType() {

@@ -10,7 +10,7 @@ public class Medic extends Civilian {
     }
 
     public boolean cure() {
-        for (Civilian person : block.getAllCivilian()) {
+        for (Civilian person : block.getAllCivilians()) {
             if (person.getVitality() == Vitality.COMA) {
                 person.disinfect();
                 return true;
