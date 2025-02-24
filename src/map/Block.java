@@ -24,12 +24,6 @@ public class Block {
     private String blockTypeString;
     private String pathString;
 
-    private ArrayList<Civilian> population = new ArrayList<>();
-    private ArrayList<Civilian> civilians = new ArrayList<>();
-    private ArrayList<Soldier> soldiers = new ArrayList<>();
-    private ArrayList<Medic> medics = new ArrayList<>();
-    private ArrayList<Mechanic> mechanics = new ArrayList<>();
-
     private HashMap<EntityType, List<Entity>> populationMap = new HashMap<>();
 
     private int gunAmount = 0;
@@ -134,7 +128,7 @@ public class Block {
 
     public boolean contact() {
         boolean contactFlag = false;
-        if (soldiers.size() > 0 && getAllCivilian().size() > 0) {
+        if (getAllEntity(EntityType.SOLDIER).size() > 0 && getAllCivilian().size() > 0) {
             for (Civilian person : getAllCivilian()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
@@ -189,12 +183,12 @@ public class Block {
 
     public Tuple getFirePower() {
         int secondaryTroop = 0;
-        for (Civilian civilian : civilians) {
+        for (Civilian civilian : getAllCivilian()) {
             if (civilian.isArmed()) {
                 secondaryTroop++;
             }
         }
-        return new Tuple(soldiers.size(), secondaryTroop);
+        return new Tuple(getAllEntity(EntityType.SOLDIER).size(), secondaryTroop);
     }
 
     public Path getPath(Direction direction) {
