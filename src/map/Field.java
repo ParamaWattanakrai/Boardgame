@@ -124,6 +124,12 @@ public class Field {
     }
 
     public void endTurn() {
+        for (Block[] row : field) {
+            for (Block block : row) {
+                System.out.println("Dog Shot:" + block.shootDog());
+            }
+        }
+
         for (CivilianAction civilianAction : CivilianAction.values()) {
             List<Runnable> actionRunnables = actionMap.get(civilianAction);
             if (actionRunnables == null) {
@@ -137,6 +143,10 @@ public class Field {
 
     public void addAction(CivilianAction action, Runnable actionRunnable) {
         actionMap.computeIfAbsent(action, _ -> new ArrayList<>()).add(actionRunnable);
+    }
+
+    public void removeAction(CivilianAction action, Runnable actionRunnable) {
+        actionMap.get(action).remove(actionRunnable);
     }
 
     public Block getRandomBlock(int x, int y, BlockType blockType, PathType[] possiblePathTypes) {

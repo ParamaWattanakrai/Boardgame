@@ -12,7 +12,7 @@ public class Path {
     }
 
     public boolean barricade() {
-        if (exist || barricaded) {
+        if (barricaded) {
             return false;
         }
         barricaded = true;
