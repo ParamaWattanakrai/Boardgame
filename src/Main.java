@@ -1,6 +1,12 @@
 package src;
 
+import java.util.HashMap;
+import java.util.List;
+
+import src.entities.Entity;
+
 import src.entities.Civilian;
+import src.entities.EntityType;
 import src.map.Field;
 import src.map.MetaSettings;
 import src.utils.Direction;
@@ -13,9 +19,14 @@ public class Main {
         field.printField();
         Civilian civilian = new Civilian(field.getBlock(new Tuple(0, 0)));
         field.printField();
-        civilian.move(Direction.EAST);
+        System.out.println(civilian.move(Direction.EAST));
         field.printField();
-        System.out.println(field.getBlock(new Tuple(1, 1)).getBlockType());
-        System.out.println(field.getBlock(new Tuple(1, 1)).getPathString());
+        System.out.println(field.getBlock(new Tuple(2, 2)).getBlockType());
+        System.out.println(field.getBlock(new Tuple(2, 2)).getPathString());
+        HashMap<EntityType, List<Entity>> populationMap =  field.getBlock(new Tuple(2, 2)).getPopulationMap();
+        for (EntityType entityType : populationMap.keySet()) {
+            System.out.println(entityType);
+            System.out.println(populationMap.get(entityType));
+        }
     }
 }

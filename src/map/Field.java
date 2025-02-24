@@ -143,7 +143,7 @@ public class Field {
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getPopulation().size());
+                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilian().size());
             }
             System.out.println();
         }

@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
+
 import src.entities.Civilian;
 import src.entities.Mechanic;
 import src.entities.Medic;
@@ -56,8 +58,8 @@ public class ImageDrawer {
     }
 
     public void drawPopulation(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {    
-        ArrayList<Civilian> populations = mainFrame.getField().getBlock(new Tuple(x, y)).getPopulation();
-        for (Civilian population : populations) {
+        List<Civilian> civilian = mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilian();
+        for (Civilian population : civilian) {
             if (population != null) {
                 Image image = switch (population) {
                     case Mechanic _ -> mechanicImage;

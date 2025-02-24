@@ -5,8 +5,7 @@ import src.utils.Direction;
 public class Mechanic extends Civilian {
     protected EntityType entityType = EntityType.MECHANIC;
     public Mechanic(Block block) {
-        super(block);
-        entityType = EntityType.MECHANIC;
+        super(block, EntityType.MECHANIC);
     }
 
     public boolean buildBarricade(Direction direction) {

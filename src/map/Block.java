@@ -1,6 +1,9 @@
 package src.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import src.entities.*;
 import src.utils.*;
 
@@ -27,6 +30,7 @@ public class Block {
     private ArrayList<Medic> medics = new ArrayList<>();
     private ArrayList<Mechanic> mechanics = new ArrayList<>();
 
+    private HashMap<EntityType, List<Entity>> populationMap = new HashMap<>();
 
     private int gunAmount = 0;
 
@@ -130,8 +134,8 @@ public class Block {
 
     public boolean contact() {
         boolean contactFlag = false;
-        if (soldiers.size() > 0 && getPopulation().size() > 0) {
-            for (Civilian person : getPopulation()) {
+        if (soldiers.size() > 0 && getAllCivilian().size() > 0) {
+            for (Civilian person : getAllCivilian()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
                 }
@@ -141,7 +145,7 @@ public class Block {
     }
 
     public boolean occupy() {
-        if (getPopulation().size() > 0) {
+        if (getAllCivilian().size() > 0) {
             if (occupationLevel < 2) {
                 occupationLevel--;
             }
@@ -157,30 +161,18 @@ public class Block {
         return field.getNextBlock(this, direction);
     }
 
-    public void addPerson(Civilian person) {
-        population.add(person);
-        if (person instanceof Soldier) {
-            soldiers.add((Soldier) person);
-        } else if (person instanceof Medic) {
-            medics.add((Medic) person);
-        } else if (person instanceof Mechanic) {
-            mechanics.add((Mechanic) person);
-        } else {
-            civilians.add(person);
-        }
+    public void addEntity(Entity entity) {
+        EntityType entityType = entity.getEntityType();
+        populationMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
     }
 
-    public void removePerson(Civilian person) {
-        population.remove(person);
-        if (person instanceof Soldier) {
-            soldiers.remove(person);
-        } else if (person instanceof Medic) {
-            medics.remove(person);
-        } else if (person instanceof Mechanic) {
-            mechanics.remove(person);
-        } else {
-            civilians.remove(person);
+    public boolean removeEntity(Entity entity) {
+        EntityType entityType = entity.getEntityType();
+        List<Entity> entityPopulation = populationMap.get(entityType);
+        if (entityPopulation != null) {
+            return entityPopulation.remove(entity);
         }
+        return false;
     }
 
     public void addGun() {
@@ -223,24 +215,28 @@ public class Block {
         return coordinate;
     }
 
-    public ArrayList<Civilian> getCivilians() {
+    public HashMap<EntityType, List<Entity>> getPopulationMap() {
+        return populationMap;
+    }
+
+    public List<Entity> getAllEntity(EntityType entityType) {
+        List<Entity> entityList = populationMap.get(entityType);
+        if (entityList != null) {
+            return entityList;
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Civilian> getAllCivilian() {
+        List<Civilian> civilians = new ArrayList<>();
+        for (EntityType entityType : populationMap.keySet()) {
+            if (entityType != EntityType.DOG) {
+                for (Entity civilian : populationMap.get(entityType)) {
+                    civilians.add((Civilian) civilian);
+                }
+            }
+        }
         return civilians;
-    }
-
-    public ArrayList<Soldier> getSoldiers() {
-        return soldiers;
-    }
-
-    public ArrayList<Medic> getMedics() {
-        return medics;
-    }
-
-    public ArrayList<Mechanic> getMechanics() {
-        return mechanics;
-    }
-
-    public ArrayList<Civilian> getPopulation() {
-        return population;
     }
 
     public BlockType getBlockType() {
@@ -268,8 +264,8 @@ public class Block {
 
     @Override
     public String toString() {
-        return "Block=" + getCoordinate() + ", commander=" + 0 + ", soldier=" + getSoldiers().size() + ", civilian="
-                + getCivilians().size() + ", medic=" + getMedics().size() + ", mechanic=" + getMechanics().size() + ", path=" + getPathType() + ", dog=" + 0
+        return "Block=" + getCoordinate() + ", soldier=" + getAllEntity(EntityType.SOLDIER).size() + ", civilian="
+                + getAllEntity(EntityType.CIVILIAN).size() + ", medic=" + getAllEntity(EntityType.MEDIC).size() + ", mechanic=" + getAllEntity(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
                 + ", landmark=" + getBlockType() + ", capture=" + false;
     }
 }

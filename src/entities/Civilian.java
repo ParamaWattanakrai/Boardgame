@@ -1,27 +1,29 @@
 package src.entities;
 
-import src.utils.*;
 import src.map.*;
+import src.utils.Direction;
 
-public class Civilian {
-    protected EntityType entityType = EntityType.CIVILIAN;
-    protected Block block;
+public class Civilian extends Entity {
     protected Vitality vitality = Vitality.ALIVE;
     protected boolean contacted = false;
     protected boolean armed = false;
 
     public Civilian(Block block) {
-        this.block = block;
-        block.addPerson(this);
+        super(block, EntityType.CIVILIAN);
     }
 
+    public Civilian(Block block, EntityType entityType) {
+        super(block, entityType);
+    }
+
+    @Override
     public boolean move(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
         if (neighborBlock != block &&
         block.getPath(direction).doesExist() && neighborBlock.getPath(direction).doesExist()) {
-            block.removePerson(this);
+            block.removeEntity(this);
             block = neighborBlock;
-            neighborBlock.addPerson(this);
+            neighborBlock.removeEntity(this);
             return true;
         }
         return false;
@@ -51,10 +53,6 @@ public class Civilian {
         if (armed) {
             block.addGun();
         }
-    }
-
-    public EntityType getEntityType() {
-        return entityType;
     }
 
     public Vitality getVitality() {

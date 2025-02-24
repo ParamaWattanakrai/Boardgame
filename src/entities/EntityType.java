@@ -1,5 +1,5 @@
 package src.entities;
 
 public enum EntityType {
-    COMMANDER, SOLDIER, MEDIC, MECHANIC, CIVILIAN;
+    DOG, SOLDIER, MEDIC, MECHANIC, CIVILIAN;
 }
