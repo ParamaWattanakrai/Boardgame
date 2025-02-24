@@ -97,7 +97,7 @@ public class Block {
                     break;
                 case 3:
                     eastPath.destroy();
-                    pathString = "╩";
+                    pathString = "╣";
                     break;
             }
         }
@@ -263,7 +263,7 @@ public class Block {
         }
         return civilians;
     }
-    
+
     public List<Dog> getAllDogs() {
         List<Dog> dogs = new ArrayList<>();
         for (Entity dogEntity : entityMap.get(EntityType.DOG)) {
@@ -301,7 +301,7 @@ public class Block {
 
     @Override
     public String toString() {
-        return "Block=" + getCoordinate() + ", soldier=" + getAllEntity(EntityType.SOLDIER).size() + ", civilian="
+        return "Block=" + getCoordinate() + ", Path" + getPathType() + getOrientation() + ", soldier=" + getAllEntity(EntityType.SOLDIER).size() + ", civilian="
                 + getAllEntity(EntityType.CIVILIAN).size() + ", medic=" + getAllEntity(EntityType.MEDIC).size() + ", mechanic=" + getAllEntity(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
                 + ", landmark=" + getBlockType() + ", capture=" + false;
     }

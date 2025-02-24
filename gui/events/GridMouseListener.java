@@ -46,8 +46,9 @@ public class GridMouseListener implements MouseListener {
         updateNight();
 
         updateTask();
-        highlightBlockBeside(x, y);
+        // highlightBlockBeside(x, y);
         map.getRoad(x, y).setBarricade(!map.getRoad(x, y).isBarricade());
+        map.repaint();
 
     }
 
