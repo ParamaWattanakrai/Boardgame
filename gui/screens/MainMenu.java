@@ -16,7 +16,7 @@ import java.util.HashMap;
 import src.map.Field;
 import src.map.MetaSettings;
 
-public class MainMenu extends BaseScreen implements ButtonActions<MainButton>{
+public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private final Image backgroundImage = ImageLoader.loadImage("MainBg.png");;
     private HashMap<MainButton, Button> buttons;
 
@@ -24,19 +24,20 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton>{
         super(mainFrame);
         initialize();
     }
-    
+
     @Override
     protected void initializeUI() {
         setLayout(null);
-                
-        createButton(); setButtonBounds();
+
+        createButton();
+        setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
-        
+
         setVisible(true);
         SoundManager.playMainMenuMusic();
     }
-    
+
     @Override
     public void createButton() {
         buttons = new HashMap<>();
@@ -46,12 +47,12 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton>{
 
         buttons.get(MainButton.RULE).setPop(false);
     }
-    
+
     @Override
     public void setButtonBounds() {
-        buttons.get(MainButton.NEW_GAME).setBounds(715, 490, 500, 70);
-        buttons.get(MainButton.RESUME).setBounds(715, 660, 500, 70);
-        buttons.get(MainButton.QUIT).setBounds(715, 840, 500, 70);
+        buttons.get(MainButton.NEW_GAME).setBounds(715, 515, 500, 70);
+        buttons.get(MainButton.RESUME).setBounds(715, 690, 500, 70);
+        buttons.get(MainButton.QUIT).setBounds(715, 870, 500, 70);
         buttons.get(MainButton.RULE).setBounds(120, 910, 240, 50);
     }
 
@@ -76,7 +77,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton>{
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         mainFrame.showScreen(GameScreen.GAME);
     }
-    
+
     private void resumeButton() {
         if (mainFrame.getField() != null) {
             mainFrame.showScreen(GameScreen.GAME);
@@ -84,7 +85,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton>{
             SoundManager.playIncorrectSound();
         }
     }
-    
+
     private void quitButton() {
         System.exit(0);
     }
