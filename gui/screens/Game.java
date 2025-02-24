@@ -71,8 +71,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.TaskTitle).setBounds(60, 640, 220, 200);
         textPanels.get(GameText.Task).setBounds(60, 720, 250, 200);
 
-        textPanels.get(GameText.DataTitle).setBounds(1600, 430, 220, 500);
-        textPanels.get(GameText.Data).setBounds(1600, 520, 220, 500);
+        textPanels.get(GameText.DataTitle).setBounds(1600, 380, 220, 500);
+        textPanels.get(GameText.Data).setBounds(1600, 470, 220, 500);
     }
     
     @Override
