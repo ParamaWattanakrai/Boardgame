@@ -126,7 +126,7 @@ public class Field {
     public void endTurn() {
         for (Block[] row : field) {
             for (Block block : row) {
-                System.out.println("Dog Shot:" + block.shootDog());
+                System.out.println("Dog Shot: " + block.shootDog());
             }
         }
 
@@ -166,6 +166,20 @@ public class Field {
 
     public Block getBlock(Tuple coordinate) {
         return field[coordinate.getB()][coordinate.getA()];
+    }
+
+    public List<Block> getManhattanBlocks(Tuple coordinate, int distance) {
+        int x1 = coordinate.getA();
+        int y1 = coordinate.getB();
+        List<Block> manhattanBlocks = new ArrayList<>();
+        for (int y2 = 0; y2 < field.length; y2++) {
+            for (int x2 = 0; x2 < field[0].length; x2++) {
+                if (Math.abs(x1 - x2) + Math.abs(y1 - y2) == distance) {
+                    manhattanBlocks.add(field[y2][x2]);
+                }
+            }
+        }
+        return manhattanBlocks;
     }
 
     public ArrayList<Tuple> getSpawnCoords() {

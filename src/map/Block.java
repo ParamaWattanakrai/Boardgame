@@ -156,6 +156,10 @@ public class Block {
         return field.getNextBlock(this, direction);
     }
 
+    public List<Block> getManhattanBlocks(int distance) {
+        return field.getManhattanBlocks(coordinate, distance);
+    }
+
     public void addEntity(Entity entity) {
         EntityType entityType = entity.getEntityType();
         entityMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
@@ -240,7 +244,7 @@ public class Block {
         return coordinate;
     }
 
-    public HashMap<EntityType, List<Entity>> getentityMap() {
+    public HashMap<EntityType, List<Entity>> getEntityMap() {
         return entityMap;
     }
 
