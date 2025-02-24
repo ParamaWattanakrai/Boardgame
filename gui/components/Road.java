@@ -15,6 +15,7 @@ public class Road extends JPanel {
     private MainFrame mainFrame;
     private boolean isSelect;
     private boolean isHighlighted;
+    private boolean isBarricade;
 
     public Road(int x, int y, WorldMap map, Game game, MainFrame mainFrame) {
         this.x = x;
@@ -39,6 +40,10 @@ public class Road extends JPanel {
             g2d.setColor(new Color(0, 255, 0, 100));
             g2d.fillRect(0, 0, getWidth(), getHeight());
         }
+        if (isBarricade) {
+            new ImageDrawer().drawBarricade(g, x, y, getWidth(), getHeight(), mainFrame);
+
+        }
         g2d.dispose();
     }
 
@@ -56,5 +61,13 @@ public class Road extends JPanel {
 
     public void setHighlighted(boolean isHighlighted) {
         this.isHighlighted = isHighlighted;
+    }
+
+    public boolean isBarricade() {
+        return isBarricade;
+    }
+
+    public void setBarricade(boolean isBarricade) {
+        this.isBarricade = isBarricade;
     }
 }

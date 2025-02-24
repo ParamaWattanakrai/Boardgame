@@ -4,9 +4,8 @@ import gui.MainFrame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.Random;
 import java.util.List;
-
+import java.util.Random;
 import src.entities.Civilian;
 import src.entities.Mechanic;
 import src.entities.Medic;
@@ -16,8 +15,9 @@ import src.map.PathType;
 import src.utils.Tuple;
 
 public class ImageDrawer {
-    private final int ENTITY_SIZE = 50;
+    private final int ENTITY_SIZE = 25;
     private final int LANDMARK_SIZE = 75;
+    private final int BARRICADE_SIZE = 60;
 
     private final Image civilianImage = ImageLoader.loadImage("entities/civilian.jpg");
     private final Image medicImage = ImageLoader.loadImage("entities/medic.jpg");
@@ -33,6 +33,8 @@ public class ImageDrawer {
     private final Image nuclearPlant = ImageLoader.loadImage("landmark/2.png");
     private final Image hospital = ImageLoader.loadImage("landmark/3.png");
     private final Image store = ImageLoader.loadImage("landmark/4.png");
+
+    private final Image barricadImage = ImageLoader.loadImage("Barricade.png");
 
     public void drawRoad(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {
         Block block = mainFrame.getField().getBlock(new Tuple(x, y));
@@ -87,5 +89,10 @@ public class ImageDrawer {
         int centerX = x + (width - LANDMARK_SIZE) / 2;
         int centerY = y + (height - LANDMARK_SIZE) / 2;
         g.drawImage(image, centerX, centerY, LANDMARK_SIZE, LANDMARK_SIZE, null);
+    }
+
+    public void drawBarricade(Graphics g, int x, int y, int width, int height, MainFrame mainFrame){
+        g.drawImage(barricadImage, 0, 0, BARRICADE_SIZE/2, BARRICADE_SIZE, null);
+
     }
 }
