@@ -19,10 +19,10 @@ public class ImageDrawer {
     private final int LANDMARK_SIZE = 75;
     private final int BARRICADE_SIZE = 60;
 
-    private final Image civilianImage = ImageLoader.loadImage("entities/civilian.jpg");
-    private final Image medicImage = ImageLoader.loadImage("entities/medic.jpg");
-    private final Image soldierImage = ImageLoader.loadImage("entities/soldier.jpg");
-    private final Image mechanicImage = ImageLoader.loadImage("entities/mechanic.jpg");
+    private final Image civilianImage = ImageLoader.loadImage("entities/civilian.png");
+    private final Image medicImage = ImageLoader.loadImage("entities/medic.png");
+    private final Image soldierImage = ImageLoader.loadImage("entities/soldier.png");
+    private final Image mechanicImage = ImageLoader.loadImage("entities/mechanic.png");
 
     private final Image fourwayRoad = ImageLoader.loadImage("map/fourway.png");
     private final Image threewayRoad = ImageLoader.loadImage("map/threeway.png");
