@@ -16,7 +16,7 @@ import src.map.PathType;
 import src.utils.Tuple;
 
 public class ImageDrawer {
-    private final int POPULATION_SIZE = 15;
+    private final int ENTITY_SIZE = 50;
     private final int LANDMARK_SIZE = 75;
 
     private final Image civilianImage = ImageLoader.loadImage("entities/civilian.jpg");
@@ -57,6 +57,7 @@ public class ImageDrawer {
     }
 
     public void drawPopulation(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {    
+        System.out.println("WIDTH: " + width + "\nHEIGHT: " + height);
         List<Civilian> civilian = mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilian();
         for (Civilian population : civilian) {
             if (population != null) {
@@ -67,9 +68,9 @@ public class ImageDrawer {
                     default -> civilianImage;
                 };
     
-                int posX = new Random().nextInt(width - POPULATION_SIZE);
-                int posY = new Random().nextInt(height - POPULATION_SIZE);
-                g.drawImage(image, posX, posY, POPULATION_SIZE, POPULATION_SIZE, null);
+                int posX = new Random().nextInt(width - ENTITY_SIZE);
+                int posY = new Random().nextInt(height - ENTITY_SIZE);
+                g.drawImage(image, posX, posY, ENTITY_SIZE, ENTITY_SIZE, null);
             }
         }
     }

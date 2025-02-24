@@ -6,6 +6,7 @@ import src.utils.Direction;
 public class Civilian extends Entity {
     protected double hitRate = 0.75;
     protected Vitality vitality = Vitality.ALIVE;
+    protected boolean inAction = false;
     protected boolean contacted = false;
     protected boolean armed = false;
 
@@ -17,14 +18,37 @@ public class Civilian extends Entity {
         super(block, entityType);
     }
 
-    @Override
-    public boolean move(Direction direction) {
+    public boolean validateMove(Direction direction) {
+        if (!isContacted()) {
+            return false;
+        }
         Block neighborBlock = block.getNeighborBlock(direction);
-        if (neighborBlock != block &&
-        block.getPath(direction).doesExist() && neighborBlock.getPath(direction).doesExist()) {
+        return (neighborBlock != block &&
+                block.getPath(direction).doesExist() &&
+                neighborBlock.getPath(direction).doesExist());
+    }
+
+    @Override
+    public void move(Direction direction) {
+        if (validateMove(direction)) {
+            Block neighborBlock = block.getNeighborBlock(direction);
             block.removeEntity(this);
             block = neighborBlock;
-            neighborBlock.removeEntity(this);
+            neighborBlock.addEntity(this);
+        }
+    }
+
+    public boolean arm() {
+        if (!armed && block.removeGun()) {
+            armed = true;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean disarm() {
+        if (armed) {
+            block.addGun();
             return true;
         }
         return false;
@@ -43,21 +67,12 @@ public class Civilian extends Entity {
         contacted = true;
     }
 
-    public boolean arm() {
-        if (!armed && block.removeGun()) {
-            armed = true;
-            return true;
-        }
-        return false;
-    }
-    public void disarm() {
-        if (armed) {
-            block.addGun();
-        }
-    }
-
     public double getHitRate() {
         return hitRate;
+    }
+
+    public boolean isInAction() {
+        return inAction;
     }
 
     public Vitality getVitality() {

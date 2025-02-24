@@ -24,8 +24,8 @@ public class Block {
     private String blockTypeString;
     private String pathString;
 
-    private HashMap<EntityType, List<Entity>> populationMap = new HashMap<>();
-    private List<Entity> shooters = new ArrayList<>();
+    private HashMap<EntityType, List<Entity>> entityMap = new HashMap<>();
+    private List<Civilian> shooters = new ArrayList<>();
 
     private int gunAmount = 0;
 
@@ -158,12 +158,12 @@ public class Block {
 
     public void addEntity(Entity entity) {
         EntityType entityType = entity.getEntityType();
-        populationMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
+        entityMap.computeIfAbsent(entityType, _ -> new ArrayList<>()).add(entity);
     }
 
     public boolean removeEntity(Entity entity) {
         EntityType entityType = entity.getEntityType();
-        List<Entity> entityPopulation = populationMap.get(entityType);
+        List<Entity> entityPopulation = entityMap.get(entityType);
         if (entityPopulation != null) {
             return entityPopulation.remove(entity);
         }
@@ -192,7 +192,7 @@ public class Block {
     //     return new Tuple(getAllEntity(EntityType.SOLDIER).size(), secondaryTroop);
     // }
 
-    public void addShooter(Entity entity) {
+    public void addShooter(Civilian entity) {
         shooters.add(entity);
     }
 
@@ -232,16 +232,20 @@ public class Block {
         return new Path();
     }
 
+    public Field getField() {
+        return field;
+    }
+
     public Tuple getCoordinate() {
         return coordinate;
     }
 
-    public HashMap<EntityType, List<Entity>> getPopulationMap() {
-        return populationMap;
+    public HashMap<EntityType, List<Entity>> getentityMap() {
+        return entityMap;
     }
 
     public List<Entity> getAllEntity(EntityType entityType) {
-        List<Entity> entityList = populationMap.get(entityType);
+        List<Entity> entityList = entityMap.get(entityType);
         if (entityList != null) {
             return entityList;
         }
@@ -250,9 +254,9 @@ public class Block {
 
     public List<Civilian> getAllCivilian() {
         List<Civilian> civilians = new ArrayList<>();
-        for (EntityType entityType : populationMap.keySet()) {
+        for (EntityType entityType : entityMap.keySet()) {
             if (entityType != EntityType.DOG) {
-                for (Entity civilian : populationMap.get(entityType)) {
+                for (Entity civilian : entityMap.get(entityType)) {
                     civilians.add((Civilian) civilian);
                 }
             }
@@ -268,7 +272,7 @@ public class Block {
         return pathType;
     }
 
-    public List<Entity> getShooters() {
+    public List<Civilian> getShooters() {
         return shooters;
     }
 

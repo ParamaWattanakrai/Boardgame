@@ -1,7 +1,11 @@
 package src.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
+
+import javax.swing.Action;
 
 import src.entities.*;
 import src.utils.*;
@@ -11,14 +15,16 @@ public class Field {
     int fieldHeight;
     int fieldWidth;
 
-    PathType[] allPathTypes = PathType.values();
+    private PathType[] allPathTypes = PathType.values();
     private Block[][] field;
 
-    ArrayList<Tuple> spawnCoords = new ArrayList<>();
-    ArrayList<Tuple> hospitalCoords = new ArrayList<>();
-    ArrayList<Tuple> storeCoords = new ArrayList<>();
-    ArrayList<Tuple> policeStationCoords = new ArrayList<>();
-    ArrayList<Tuple> powerPlantCoords = new ArrayList<>();
+    private ArrayList<Tuple> spawnCoords = new ArrayList<>();
+    private ArrayList<Tuple> hospitalCoords = new ArrayList<>();
+    private ArrayList<Tuple> storeCoords = new ArrayList<>();
+    private ArrayList<Tuple> policeStationCoords = new ArrayList<>();
+    private ArrayList<Tuple> powerPlantCoords = new ArrayList<>();
+
+    private HashMap<CivilianAction, List<Runnable>> actionMap = new HashMap<>();
 
     public Field(MetaSettings metaSettings) {
         fieldHeight = metaSettings.getFieldHeight();
@@ -117,6 +123,22 @@ public class Field {
         }
     }
 
+    public void endTurn() {
+        for (CivilianAction civilianAction : CivilianAction.values()) {
+            List<Runnable> actionRunnables = actionMap.get(civilianAction);
+            if (actionRunnables == null) {
+                continue;
+            }
+            for (Runnable runnable : actionRunnables) {
+                runnable.run();
+            }
+        }
+    }
+
+    public void addAction(CivilianAction action, Runnable actionRunnable) {
+        actionMap.computeIfAbsent(action, _ -> new ArrayList<>()).add(actionRunnable);
+    }
+
     public Block getRandomBlock(int x, int y, BlockType blockType, PathType[] possiblePathTypes) {
         return new Block(this, x, y, blockType, possiblePathTypes[rand.nextInt(possiblePathTypes.length)], rand.nextInt(5), 0);
     }
@@ -143,7 +165,7 @@ public class Field {
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilian().size());
+                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilian().size() + ")");
             }
             System.out.println();
         }
