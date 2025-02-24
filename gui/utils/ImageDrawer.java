@@ -59,7 +59,6 @@ public class ImageDrawer {
     }
 
     public void drawPopulation(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {    
-        System.out.println("WIDTH: " + width + "\nHEIGHT: " + height);
         List<Civilian> civilian = mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilians();
         for (Civilian population : civilian) {
             if (population != null) {
