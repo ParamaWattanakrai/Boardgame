@@ -10,7 +10,8 @@ public class WorldMap extends JPanel {
     private Road[][] road = new Road[5][5];
     private MainFrame mainFrame;
     private Game game;
-    
+    private Road select = null;
+
     public WorldMap( Game game, MainFrame mainFrame){
         this.mainFrame = mainFrame;
         this.game = game;
@@ -35,5 +36,13 @@ public class WorldMap extends JPanel {
 
     public void setRoad(Road[][] road) {
         this.road = road;
+    }
+
+    public Road getSelect() {
+        return select;
+    }
+
+    public void setSelect(Road select) {
+        this.select = select;
     }
 }

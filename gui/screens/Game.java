@@ -10,16 +10,24 @@ import gui.enums.texts.GameText;
 import gui.interfaces.ButtonActions;
 import gui.interfaces.TextDisplay;
 import gui.utils.ImageLoader;
+import gui.utils.MinimalScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.*;
+import src.entities.Civilian;
+import src.entities.CivilianAction;
 import src.entities.EntityType;
+import src.utils.Tuple;
 
 public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
     private HashMap<GameText, TextArea> textPanels;
     private HashMap<GameButton, Button> buttons;
+    private JScrollPane scrollPane;
+    private JPanel panelEntity  = new JPanel();
+
     private WorldMap map;
 
     public Game(MainFrame mainFrame) {
@@ -38,6 +46,20 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
         add(map);
+
+        panelEntity.setLayout(new BoxLayout(panelEntity, BoxLayout.Y_AXIS));
+        panelEntity.setOpaque(false);
+        
+        scrollPane = new JScrollPane(panelEntity);
+        scrollPane.setOpaque(false);
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBounds(1520, 440, 350, 150); 
+        scrollPane.getVerticalScrollBar().setUI(new MinimalScrollBarUI());
+        scrollPane.getVerticalScrollBar().setOpaque(false);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        add(scrollPane);
         setVisible(true);
         
     }
@@ -51,6 +73,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.put(GameText.StatTitle, new TextArea("Stat",60f));
         textPanels.put(GameText.TaskTitle, new TextArea("Task",60f));
         textPanels.put(GameText.DataTitle, new TextArea("Data",60f));
+        textPanels.put(GameText.SelectTitle, new TextArea("Select",60f));
+        textPanels.put(GameText.Action, new TextArea("Action",60f));
 
         textPanels.put(GameText.Night, new TextArea(60f));
         textPanels.put(GameText.Stat, new TextArea(30f));
@@ -72,7 +96,12 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.Task).setBounds(60, 740, 250, 200);
 
         textPanels.get(GameText.DataTitle).setBounds(1600, 380, 220, 500);
+        textPanels.get(GameText.DataTitle).setVisible(false);
         textPanels.get(GameText.Data).setBounds(1600, 470, 220, 500);
+        textPanels.get(GameText.Data).setVisible(false);
+
+        textPanels.get(GameText.SelectTitle).setBounds(1610, 360, 250, 100);
+        textPanels.get(GameText.Action).setBounds(1610, 675, 250, 100);
     }
     
     @Override
@@ -92,7 +121,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons = new HashMap<>();
         buttons.put(GameButton.Setting, new Button(""));
         buttons.get(GameButton.Setting).setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
-        buttons.put(GameButton.EndButton, new Button("End Button", 50));
+        buttons.put(GameButton.EndButton, new Button("END TURN", 50));
     }
 
     @Override
@@ -137,11 +166,74 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         map.setBounds(482, 54, 959, 900);
     }
 
+     //-------- Entity button --------//
+     public void loadEntityButton(int x, int y) {
+        textPanels.get(GameText.SelectTitle).setText("Entity");
+        panelEntity.removeAll();
+        List<Civilian> allAlive = mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive();    
+        if (!allAlive.isEmpty()) {
+            for (Civilian alive : allAlive) {
+                Button btn = new Button(alive.getEntityType().name(), 30);
+                btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+                btn.addActionListener(_ ->  entityButton(alive));
+                panelEntity.add(btn);
+            }
+        }
+        
+        panelEntity.setPreferredSize(new Dimension(400, Math.max(allAlive.size()*70, 300)));
+        panelEntity.revalidate();
+        panelEntity.repaint();
+        scrollPane.revalidate();
+        scrollPane.repaint();
+    }
+
+    private void entityButton(Civilian alive){
+        System.out.println(alive.getEntityType().toString());
+        loadActionButton(alive);
+    }
+
+    //-------- Action button --------//
+    public void loadActionButton(Civilian alive) {
+        textPanels.get(GameText.SelectTitle).setText("Action");
+        panelEntity.removeAll();
+        // List<CivilianAction> actions = ;    
+
+        for (CivilianAction action : CivilianAction.values()) {
+            Button btn = new Button(action.name(), 30);
+            btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btn.addActionListener(_ ->  actionButton(action));
+            panelEntity.add(btn);
+        }
+        
+        panelEntity.setPreferredSize(new Dimension(400, Math.max(CivilianAction.values().length*70, 300)));
+        panelEntity.revalidate();
+        panelEntity.repaint();
+        scrollPane.revalidate();
+        scrollPane.repaint();
+    }
+
+    private void actionButton(CivilianAction action){
+        System.out.println(action.name());
+    }
+
+    public void resetButton(){
+        panelEntity.removeAll();
+        textPanels.get(GameText.SelectTitle).setText("Select");
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image backgroundImage = ImageLoader.loadImage("GameBg.png");
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
         endButton();
+    }
+
+    public WorldMap getMap() {
+        return map;
+    }
+
+    public void setMap(WorldMap map) {
+        this.map = map;
     }
 }

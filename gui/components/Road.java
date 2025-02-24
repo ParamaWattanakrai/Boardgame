@@ -13,14 +13,15 @@ public class Road extends JPanel {
     private int x;
     private int y;
     private MainFrame mainFrame;
-    private boolean isSelect;
-    private boolean isHighlighted;
-    private boolean isBarricade;
+    private Game game;
+    private WorldMap map;
 
     public Road(int x, int y, WorldMap map, Game game, MainFrame mainFrame) {
         this.x = x;
         this.y = y;
         this.mainFrame = mainFrame;
+        this.game = game;
+        this.map = map;
         addMouseListener(new GridMouseListener(this, x, y, game, mainFrame, map));
         setOpaque(false);
     }
@@ -32,42 +33,18 @@ public class Road extends JPanel {
         new ImageDrawer().drawLandmark(g, x, y, getWidth(), getHeight(), mainFrame);
         new ImageDrawer().drawPopulation(g, x, y, getWidth(), getHeight(), mainFrame);
         Graphics2D g2d = (Graphics2D) g.create();
-        if (isHighlighted) {
-            g2d.setColor(new Color(255, 0, 0, 100));
-            g2d.fillRect(0, 0, getWidth(), getHeight());
-        }
-        if (isSelect) {
+        if (map.getSelect() == this) {
             g2d.setColor(new Color(0, 255, 0, 100));
             g2d.fillRect(0, 0, getWidth(), getHeight());
         }
-        if (isBarricade) {
-            new ImageDrawer().drawBarricade(g, x, y, getWidth(), getHeight(), mainFrame);
-
-        }
         g2d.dispose();
     }
-
-    public boolean isSelect() {
-        return isSelect;
+    
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public void setSelect(boolean isSelect) {
-        this.isSelect = isSelect;
-    }
-
-    public boolean isHighlighted() {
-        return isHighlighted;
-    }
-
-    public void setHighlighted(boolean isHighlighted) {
-        this.isHighlighted = isHighlighted;
-    }
-
-    public boolean isBarricade() {
-        return isBarricade;
-    }
-
-    public void setBarricade(boolean isBarricade) {
-        this.isBarricade = isBarricade;
+    public void setY(int y) {
+        this.y = y;
     }
 }

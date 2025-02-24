@@ -75,7 +75,11 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         mainFrame.setField(new Field(new MetaSettings(30, 5, 5, 1, 2, 1, 1, 5, 3, 2, 12)));
         mainFrame.getField().printField();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
+        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetButton();
+        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().setSelect(null);
         mainFrame.showScreen(GameScreen.GAME);
+
+    
     }
 
     private void resumeButton() {
