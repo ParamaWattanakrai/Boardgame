@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.*;
+import src.entities.EntityType;
 
 public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
     private HashMap<GameText, TextArea> textPanels;
@@ -38,6 +39,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.keySet().forEach(this::addButtonListener);
         add(map);
         setVisible(true);
+        
     }
 
     //-------- TextPanel --------//
@@ -55,6 +57,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.put(GameText.Task, new TextArea(30f));
         textPanels.put(GameText.Data, new TextArea(20f));
         resetText();
+
     }
     
     @Override
@@ -104,7 +107,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             System.out.println(e.getActionCommand());
             switch (button) {
                 case Setting -> settingButton();
-                case EndButton -> settingEndButton();
+                case EndButton -> endButton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -114,8 +117,15 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         mainFrame.showScreen(GameScreen.MAIN_MENU);
     }
 
-    private void settingEndButton(){
-        System.out.println("End Turn");
+    private void endButton(){
+        int dogSize = mainFrame.getField().getAllEntity(EntityType.DOG).size();
+        int CivilianSize = mainFrame.getField().getAllEntity(EntityType.CIVILIAN).size();
+        int SoldierSize = mainFrame.getField().getAllEntity(EntityType.SOLDIER).size();
+        int docterSize = mainFrame.getField().getAllEntity(EntityType.MEDIC).size();
+        int engineerSize = mainFrame.getField().getAllEntity(EntityType.MECHANIC).size();
+
+        String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nDocter: " + docterSize + "\nEngineer: " + engineerSize;
+        updateText(GameText.Stat, str);
     }
 
     //-------- Map --------//
@@ -132,5 +142,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         super.paintComponent(g);
         Image backgroundImage = ImageLoader.loadImage("GameBg.png");
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+        endButton();
     }
 }

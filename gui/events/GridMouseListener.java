@@ -47,10 +47,9 @@ public class GridMouseListener implements MouseListener {
         updateNight();
 
         updateTask();
-        // highlightBlockBeside(x, y);
+        highlightBlockBeside(x, y);
         map.getRoad(x, y).setBarricade(!map.getRoad(x, y).isBarricade());
         map.repaint();
-
     }
 
     @Override
@@ -83,8 +82,9 @@ public class GridMouseListener implements MouseListener {
                 text.append(tasks[0]).append("\n");
             }
         }
-
-        mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.SOUTH).buildBarricade();
+        // mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.EAST).buildBarricade();
+        mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.WEST).buildBarricade();
+        // mainFrame.getField().getBlock(new Tuple(x, y)).getPath(Direction.SOUTH).buildBarricade();
         game.updateText(GameText.Task, text.toString());
     }
 
