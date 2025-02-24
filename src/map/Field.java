@@ -216,6 +216,14 @@ public class Field {
         return dogs;
     }
 
+    public int getFieldHeight() {
+        return fieldHeight;
+    }
+
+    public int getFieldWidth() {
+        return fieldWidth;
+    }
+
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {

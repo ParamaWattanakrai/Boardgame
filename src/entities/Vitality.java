@@ -1,5 +1,5 @@
 package src.entities;
 
-enum Vitality {
+public enum Vitality {
     ALIVE, COMA, DEAD;
 }

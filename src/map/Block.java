@@ -186,16 +186,6 @@ public class Block {
         return false;
     }
 
-    // public Tuple getFirePower() {
-    //     int secondaryTroop = 0;
-    //     for (Civilian civilian : getAllCivilians()) {
-    //         if (civilian.isArmed()) {
-    //             secondaryTroop++;
-    //         }
-    //     }
-    //     return new Tuple(getAllEntity(EntityType.SOLDIER).size(), secondaryTroop);
-    // }
-
     public void addShooter(Civilian entity) {
         shooters.add(entity);
     }
@@ -274,6 +264,21 @@ public class Block {
             dogs.add((Dog) dogEntity);
         }
         return dogs;
+    }
+
+    public List<Civilian> getAllAlive() {
+        List<Civilian> alive = new ArrayList<>();
+        for (EntityType entityType : entityMap.keySet()) {
+            if (entityType != EntityType.DOG) {
+                for (Entity civilianEntity : entityMap.get(entityType)) {
+                    Civilian civilian = (Civilian) civilianEntity;
+                    if (civilian.getVitality() == Vitality.ALIVE) {
+                        alive.add(civilian);
+                    }
+                }
+            }
+        }
+        return alive;
     }
 
     public BlockType getBlockType() {
