@@ -1,2 +1,7 @@
 - gui
 ทำ Action interface
+รองรับ ไม่ Contact กับ Coma                  
+
+- logic
+หมาเดินไม่ทะลุ Barricade
+หมาฉลาด
