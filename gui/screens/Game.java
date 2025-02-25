@@ -27,11 +27,15 @@ import src.utils.Tuple;
 public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
     private HashMap<GameText, TextArea> textPanels;
     private HashMap<GameButton, Button> buttons;
-    private JScrollPane scrollPane;
-    private JPanel panelEntity  = new JPanel();
-    private Mode mode  = Mode.Default;
-
     private WorldMap map;
+
+    private JScrollPane scrollEntityButton;
+    private JPanel entityPanel  = new JPanel();
+
+    private JScrollPane scrollActionButton;
+    private JPanel actionPanel  = new JPanel();
+
+    private Mode mode  = Mode.Default;
 
     public Game(MainFrame mainFrame) {
         super(mainFrame);
@@ -50,19 +54,34 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.keySet().forEach(this::addButtonListener);
         add(map);
 
-        panelEntity.setLayout(new BoxLayout(panelEntity, BoxLayout.Y_AXIS));
-        panelEntity.setOpaque(false);
+        entityPanel.setLayout(new BoxLayout(entityPanel, BoxLayout.Y_AXIS));
+        entityPanel.setOpaque(false);
+
+        actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
+        actionPanel.setOpaque(false);
         
-        scrollPane = new JScrollPane(panelEntity);
-        scrollPane.setOpaque(false);
-        scrollPane.setBorder(null);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.setBounds(1520, 440, 350, 150); 
-        scrollPane.getVerticalScrollBar().setUI(new MinimalScrollBarUI());
-        scrollPane.getVerticalScrollBar().setOpaque(false);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        add(scrollPane);
+        scrollEntityButton = new JScrollPane(entityPanel);
+        scrollEntityButton.setOpaque(false);
+        scrollEntityButton.setBorder(null);
+        scrollEntityButton.getViewport().setOpaque(false);
+        scrollEntityButton.setBounds(1520, 440, 350, 150); 
+        scrollEntityButton.getVerticalScrollBar().setUI(new MinimalScrollBarUI());
+        scrollEntityButton.getVerticalScrollBar().setOpaque(false);
+        scrollEntityButton.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollEntityButton.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        scrollActionButton = new JScrollPane(actionPanel);
+        scrollActionButton.setOpaque(false);
+        scrollActionButton.setBorder(null);
+        scrollActionButton.getViewport().setOpaque(false);
+        scrollActionButton.setBounds(1520, 740, 350, 100); 
+        scrollActionButton.getVerticalScrollBar().setUI(new MinimalScrollBarUI());
+        scrollActionButton.getVerticalScrollBar().setOpaque(false);
+        scrollActionButton.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollActionButton.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        add(scrollEntityButton);
+        add(scrollActionButton);
         setVisible(true);
     }
 
@@ -83,8 +102,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.put(GameText.Task, new TextArea(30f));
         textPanels.put(GameText.Data, new TextArea(20f));
         resetText();
-
-
     }
     
     @Override
@@ -103,8 +120,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.Data).setBounds(1600, 470, 220, 500);
         textPanels.get(GameText.Data).setVisible(false);
 
-        textPanels.get(GameText.SelectTitle).setBounds(1610, 360, 250, 100);
-        textPanels.get(GameText.Action).setBounds(1610, 675, 250, 100);
+        textPanels.get(GameText.SelectTitle).setBounds(1610, 360, 250, 70);
+        textPanels.get(GameText.Action).setBounds(1610, 675, 250, 70);
     }
     
     @Override
@@ -113,7 +130,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     public void resetText() {
-             updateText(GameText.Night , mainFrame.getGamaData().getNight() + "/15");
+        updateText(GameText.Night , mainFrame.getGamaData().getNight() + "/15");
         updateText(GameText.Stat ,"Noting here");
         updateText(GameText.Task, "Police station\nNuclear plant\nHospital\nStore");
     }
@@ -151,7 +168,14 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     private void endButton(){
         mainFrame.getField().endTurn();
-        mainFrame.repaint();
+        map.repaint();
+        map.setSelect(null);
+        textPanels.get(GameText.SelectTitle).setText("Select");
+
+        entityPanel.removeAll();
+        actionPanel.removeAll();
+        entityPanel.repaint();
+        actionPanel.repaint();
     }
 
     //-------- Map --------//
@@ -164,9 +188,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
      //-------- Entity button --------//
-     public void loadEntityButton(int x, int y) {
+    public void loadEntityButton(int x, int y) {
         textPanels.get(GameText.SelectTitle).setText("Entity");
-        panelEntity.removeAll();
+        entityPanel.removeAll();
         List<Civilian> allAlive = mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive(); 
         
         if (!allAlive.isEmpty()) {
@@ -175,15 +199,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 Button btn = new Button(allAlive.get(i).getEntityType().name(), 30);
                 btn.setAlignmentX(Component.CENTER_ALIGNMENT);
                 btn.addActionListener(_ ->  entityButton(map.getRoad(x, y), o));
-                panelEntity.add(btn);
+                entityPanel.add(btn);
             }
         }
         
-        panelEntity.setPreferredSize(new Dimension(400, Math.max(allAlive.size()*70, 300)));
-        panelEntity.revalidate();
-        panelEntity.repaint();
-        scrollPane.revalidate();
-        scrollPane.repaint();
+        entityPanel.setPreferredSize(new Dimension(400, Math.max(allAlive.size()*70, 300)));
+        entityPanel.revalidate();
+        entityPanel.repaint();
     }
 
     private void entityButton(Road road, int alive){
@@ -194,22 +216,20 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     //-------- Action button --------//
-    public void loadActionButton(Road road, int alive) {
+    private void loadActionButton(Road road, int alive) {
         textPanels.get(GameText.SelectTitle).setText("Action");
-        panelEntity.removeAll();
+        entityPanel.removeAll();
 
         for (CivilianAction action : CivilianAction.values()) {
             Button btn = new Button(action.name(), 30);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
             btn.addActionListener(_ ->  actionButton(road, action, alive));
-            panelEntity.add(btn);
+            entityPanel.add(btn);
         }
         
-        panelEntity.setPreferredSize(new Dimension(400, Math.max(CivilianAction.values().length*70, 300)));
-        panelEntity.revalidate();
-        panelEntity.repaint();
-        scrollPane.revalidate();
-        scrollPane.repaint();
+        entityPanel.setPreferredSize(new Dimension(400, Math.max(CivilianAction.values().length*70, 300)));
+        entityPanel.revalidate();
+        entityPanel.repaint();        
     }
 
     private void actionButton(Road road, CivilianAction action, int alive){
@@ -222,17 +242,50 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         map.setAction(action);
         map.setAlive(alive);
         setMode(Mode.Action);
+
         textPanels.get(GameText.SelectTitle).setText("Select");
-        panelEntity.removeAll();
-        panelEntity.revalidate();
-        panelEntity.repaint();
+        entityPanel.removeAll();
+        entityPanel.revalidate();
+        entityPanel.repaint();
         map.revalidate();
         map.repaint();
     }
 
     public void resetButton(){
-        panelEntity.removeAll();
+        entityPanel.removeAll();
         textPanels.get(GameText.SelectTitle).setText("Select");
+    }
+
+     //-------- In Action  --------//
+    public void loadInActionButton() {
+        textPanels.get(GameText.Action).setText("Action");
+        actionPanel.removeAll();
+        List<Civilian> allAlive = mainFrame.getField().getAllCivilians(); 
+        int cont = 0;
+        if (allAlive != null) {
+            for (Civilian civilian : allAlive) {
+                if (civilian.getActionRunnable() != null) {
+                    System.out.println("wow");
+                    Button btn = new Button(civilian.getEntityType().name(), 30);
+                    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    btn.addActionListener(_ ->  inActionButton(civilian));
+                    actionPanel.add(btn);
+                    cont++;
+                } 
+            }
+        }
+        
+        actionPanel.setPreferredSize(new Dimension(400, Math.max(cont*70, 300)));
+        actionPanel.revalidate();
+        actionPanel.repaint();        
+    }
+
+    private void inActionButton(Civilian civilian){        
+        mainFrame.getField().removeAction(civilian, civilian.getCivilianAction(), civilian.getActionRunnable());
+        actionPanel.removeAll();
+        loadInActionButton();
+        actionPanel.revalidate();
+        actionPanel.repaint();   
     }
 
     @Override
@@ -248,7 +301,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
         String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nDocter: " + docterSize + "\nEngineer: " + engineerSize;
         updateText(GameText.Stat, str);
-
     }
 
     public WorldMap getMap() {

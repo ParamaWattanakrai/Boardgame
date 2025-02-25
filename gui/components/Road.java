@@ -53,7 +53,6 @@ public class Road extends JPanel {
         this.y = y;
     }
 
-
     public int getA() {
         return x;
     }

@@ -42,37 +42,42 @@ public class GridMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("clicked on (" + x + ", " + y + ")");
         if (game.getMode() == Mode.Action && map.getSelect() != null && map.getAction() != null) {
-            System.out.println("Previously (" + map.getSelect().getA() + ", " + map.getSelect().getB() +")");
             if (nearBlock(x, y)) {
                 int startX = map.getSelect().getA();
                 int startY = map.getSelect().getB();
                 int dx = x - startX;
                 int dy = y - startY;
 
-                System.out.println("Difference " + dx + ", " + dy);
                 Direction direction = Direction.offsetToDirection(new Tuple(dx, dy));
-
                 Civilian civilian = mainFrame.getField().getBlock(new Tuple(startX, startY)).getAllAlive().get(map.getAlive());
                 System.out.println(civilian.getEntityType());
 
                 civilian.contact();
                 switch (map.getAction()) {
                     case MOVE -> {
-                        System.out.println("[" + startX +", " + startY + "] To " + direction);
-                        System.out.println(civilian.validateMove(direction));
                         if (civilian.validateMove(direction)) {
                             Direction finalDirection = direction;
-                            mainFrame.getField().addAction(CivilianAction.MOVE, () -> civilian.move(finalDirection));
-                            System.out.println("Added Action");
+                            mainFrame.getField().addAction(civilian, CivilianAction.MOVE, () -> civilian.move(finalDirection));
                         }
-
                     }
+                    case SHOOT -> {
+                        System.out.println("SHOOT");
+                    }
+                    case BUILD -> {
+                        System.out.println("BUILD");
+                    }
+                    case HEAL -> {
+                        System.out.println("HEAL");
+                    }
+                    case ARM -> {
+                        System.out.println("ARM");
+                    }
+
                     default -> System.out.print("");
                 }
-
             }
+
             int selectX = map.getSelect().getA();
             int selectY = map.getSelect().getB();
             if (selectX + 1 < 5) map.getRoad(selectX + 1, selectY).setHighlight(false);
@@ -81,14 +86,16 @@ public class GridMouseListener implements MouseListener {
             if (selectY - 1 >= 0) map.getRoad(selectX, selectY - 1).setHighlight(false);
             map.setSelect(null);
             game.setMode(Mode.Default);
-
+        } else{
+            selectBlock(x, y);
         }
 
-        selectBlock(x, y);
         game.loadEntityButton(x, y);
-      
+        game.loadInActionButton();
         game.repaint();
         map.repaint();
+        map.revalidate();
+
     }
 
     public boolean nearBlock(int x, int y) {
