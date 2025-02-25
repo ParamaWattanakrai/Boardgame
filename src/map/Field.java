@@ -137,6 +137,9 @@ public class Field {
                 runnable.run();
             }
             actionMap = new HashMap<>();
+            for (Civilian civilian : getAllCivilians()) {
+                civilian.nullAction();
+            }
         }
     }
 
@@ -158,14 +161,14 @@ public class Field {
         }
     }
 
-    public void addAction(Civilian civilian, CivilianAction action, Runnable actionRunnable) {
-        civilian.takeAction(actionRunnable);
-        actionMap.computeIfAbsent(action, _ -> new ArrayList<>()).add(actionRunnable);
+    public void addAction(Civilian civilian, CivilianAction civilianAction, Runnable actionRunnable) {
+        civilian.setAction(civilianAction, actionRunnable);
+        actionMap.computeIfAbsent(civilianAction, _ -> new ArrayList<>()).add(actionRunnable);
     }
 
-    public void removeAction(Civilian civilian, CivilianAction action, Runnable actionRunnable) {
+    public void removeAction(Civilian civilian, CivilianAction civilianAction, Runnable actionRunnable) {
         civilian.nullAction();
-        actionMap.get(action).remove(actionRunnable);
+        actionMap.get(civilianAction).remove(actionRunnable);
     }
 
     public void printAction() {

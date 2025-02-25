@@ -9,7 +9,8 @@ public class Civilian extends Entity {
     protected boolean contacted = false;
     protected boolean armed = false;
 
-    protected Runnable actionTaking;
+    protected CivilianAction civilianAction;
+    protected Runnable actionRunnable;
 
     public Civilian(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.CIVILIAN, blockWidth, blockHeight, entitySize);
@@ -76,16 +77,21 @@ public class Civilian extends Entity {
         return hitRate;
     }
 
-    public void takeAction(Runnable actionRunnable) {
-        actionTaking = actionRunnable;
+    public void setAction(CivilianAction civilianAction, Runnable actionRunnable) {
+        this.civilianAction = civilianAction;
+        this.actionRunnable = actionRunnable;
     }
 
     public void nullAction() {
-        actionTaking = null;
+        civilianAction = null;
+        actionRunnable = null;
     }
 
-    public Runnable getActionTaking() {
-        return actionTaking;
+    public CivilianAction getCivilianAction() {
+        return civilianAction;
+    }
+    public Runnable getActionRunnable() {
+        return actionRunnable;
     }
 
     public Vitality getVitality() {
