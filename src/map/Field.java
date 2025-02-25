@@ -33,8 +33,8 @@ public class Field {
         field = new Block[fieldHeight][fieldWidth];
         BlockType[][] typeField = new BlockType[fieldHeight][fieldWidth];
 
-        spawnCoords.add(new Tuple(rand.nextInt(fieldWidth - 2) + 1,
-                                  rand.nextInt(fieldHeight - 2) + 1));
+        spawnCoords.add(new Tuple(rand.nextInt(fieldWidth - 3) + 1,
+                                  rand.nextInt(fieldHeight - 3) + 1));
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA() + 1, spawnCoords.get(0).getB()));
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA(), spawnCoords.get(0).getB() + 1));
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA() + 1, spawnCoords.get(0).getB() + 1));
