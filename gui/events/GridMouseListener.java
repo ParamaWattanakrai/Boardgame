@@ -44,19 +44,19 @@ public class GridMouseListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (game.getMode() == Mode.Action && map.getSelect() != null && map.getAction() != null) {
             if (nearBlock(x,y)) {
-                int startX = map.getSelect().getA();
-                int startY = map.getSelect().getB();
+                int startX = map.getSelect().getB();
+                int startY = map.getSelect().getA();
                 int dx = x - startX;
                 int dy = y - startY;
 
                 Direction direction = null;
                 if (dx == 0) {
-                    direction = (dy > 0) ? Direction.SOUTH : Direction.NORTH;
+                    direction = (dy > 0) ? Direction.NORTH : Direction.SOUTH;
                 } else if (dy == 0) {
                     direction = (dx > 0) ? Direction.EAST : Direction.WEST;
                 }
 
-                Civilian civilian = mainFrame.getField().getBlock(new Tuple(startX, startY)).getAllAlive().get(map.getAlive());
+                Civilian civilian = mainFrame.getField().getBlock(new Tuple(startY, startX)).getAllAlive().get(map.getAlive());
                 System.out.println(civilian.getEntityType());
 
                 civilian.contact();
@@ -97,8 +97,7 @@ public class GridMouseListener implements MouseListener {
         if (x - 1 >= 0 && map.getSelect() == map.getRoad(x - 1, y)) return true;  
         if (x + 1 < 5 && map.getSelect() == map.getRoad(x + 1, y)) return true;   
         if (y - 1 >= 0 && map.getSelect() == map.getRoad(x, y - 1)) return true;   
-        if (y + 1 < 5 && map.getSelect() == map.getRoad(x, y + 1)) return true;   
-        return false;
+        return y + 1 < 5 && map.getSelect() == map.getRoad(x, y + 1);
     }
     
 
