@@ -8,11 +8,6 @@ import java.util.List;
 
 import src.entities.Entity;
 import src.entities.EntityType;
-import src.entities.Civilian;
-import src.entities.Dog;
-import src.entities.Mechanic;
-import src.entities.Medic;
-import src.entities.Soldier;
 import src.map.Block;
 import src.map.PathType;
 import src.utils.Direction;
