@@ -8,7 +8,7 @@ public enum Direction {
         }
         @Override
         public Tuple getOffset() {
-            return new Tuple(0, 1);
+            return new Tuple(0, -1);
         }
     },
     EAST {
@@ -28,7 +28,7 @@ public enum Direction {
         }
         @Override
         public Tuple getOffset() {
-            return new Tuple(0, -1);
+            return new Tuple(0, 1);
         }
     },
     WEST {
@@ -48,11 +48,11 @@ public enum Direction {
     public static Direction offsetToDirection(Tuple offset) {
         int x = offset.getA();
         int y = offset.getB();
-        if (x == 0 && y == 1) {
+        if (x == 0 && y == -1) {
             return NORTH;
         } else if (x == 1 && y == 0) {
             return EAST;
-        } else if (x == 0 && y == -1) {
+        } else if (x == 0 && y == 1) {
             return SOUTH;
         } else if (x == -1 && y == 0) {
             return WEST;
