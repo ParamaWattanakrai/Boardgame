@@ -62,7 +62,7 @@ public class GridMouseListener implements MouseListener {
                 civilian.contact();
                 switch (map.getAction()) {
                     case MOVE -> {
-                        System.out.println("[" + startX +", " + startY + "] To " + direction.name() );
+                        System.out.println("[" + startX +", " + startY + "] To " + direction);
                         System.out.println(civilian.validateMove(direction));
                         if (civilian.validateMove(direction)) {
                             Direction finalDirection = direction;
