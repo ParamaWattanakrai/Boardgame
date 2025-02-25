@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.*;
 import src.entities.Civilian;
-import src.entities.CivilianAction;
+import src.entities.ActionType;
 import src.entities.EntityType;
 import src.utils.Tuple;
 
@@ -168,7 +168,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     private void endButton(){
-        mainFrame.getField().endTurn();
+        mainFrame.getField().endTurn(1);
         map.repaint();
         map.setSelect(null);
         textPanels.get(GameText.SelectTitle).setText("Select");
@@ -221,19 +221,19 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.SelectTitle).setText("Action");
         entityPanel.removeAll();
 
-        for (CivilianAction action : CivilianAction.values()) {
+        for (ActionType action : ActionType.values()) {
             Button btn = new Button(action.name(), 30);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
             btn.addActionListener(_ ->  actionButton(road, action, alive));
             entityPanel.add(btn);
         }
         
-        entityPanel.setPreferredSize(new Dimension(400, Math.max(CivilianAction.values().length*70, 300)));
+        entityPanel.setPreferredSize(new Dimension(400, Math.max(ActionType.values().length*70, 300)));
         entityPanel.revalidate();
         entityPanel.repaint();        
     }
 
-    private void actionButton(Road road, CivilianAction action, int alive){
+    private void actionButton(Road road, ActionType action, int alive){
         int x = road.getA();
         int y = road.getB();
         if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
@@ -282,7 +282,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     private void inActionButton(Civilian civilian){        
-        mainFrame.getField().removeAction(civilian, civilian.getCivilianAction(), civilian.getActionRunnable());
+        mainFrame.getField().removeAction(civilian.getActionType(), civilian, civilian.getActionRunnable());
         actionPanel.removeAll();
         loadInActionButton();
         actionPanel.revalidate();

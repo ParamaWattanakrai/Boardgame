@@ -9,7 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import src.entities.Civilian;
-import src.entities.CivilianAction;
+import src.entities.Mechanic;
+import src.entities.Medic;
+import src.entities.ActionType;
 import src.utils.Direction;
 import src.utils.Tuple;
 
@@ -57,21 +59,40 @@ public class GridMouseListener implements MouseListener {
                 switch (map.getAction()) {
                     case MOVE -> {
                         if (civilian.validateMove(direction)) {
-                            Direction finalDirection = direction;
-                            mainFrame.getField().addAction(civilian, CivilianAction.MOVE, () -> civilian.move(finalDirection));
+                            mainFrame.getField().addAction(ActionType.MOVE, civilian, () -> civilian.move(direction));
                         }
                     }
                     case SHOOT -> {
-                        System.out.println("SHOOT");
+                        if (civilian.validateShoot(direction)) {
+                            mainFrame.getField().addAction(ActionType.SHOOT, civilian, () -> civilian.shoot());
+                            civilian.getBlock().getNeighborBlock(direction).addShooter(civilian);;
+                        }
                     }
                     case BUILD -> {
-                        System.out.println("BUILD");
+                        if (!(civilian instanceof Mechanic)) {
+                            System.out.println("Not a mechanic!");
+                            break;
+                        }
+                        Mechanic mechanic = (Mechanic) civilian;
+                        if (mechanic.validateBuildBarricade(direction)) {
+                            mainFrame.getField().addAction(ActionType.BUILD, mechanic, () -> mechanic.buildBarricade(direction));
+                        }
                     }
                     case HEAL -> {
-                        System.out.println("HEAL");
+                        if (!(civilian instanceof Medic)) {
+                            System.out.println("Not a medic!");
+                            break;
+                        }
+                        Medic medic = (Medic) civilian;
+                        if (medic.validateCure()) {
+                            mainFrame.getField().addAction(ActionType.HEAL, medic, () -> medic.cure());
+                        }
                     }
                     case ARM -> {
-                        System.out.println("ARM");
+                        if (civilian.validateArm()) {
+                            civilian.getBlock().addGunToBeLooted();
+                            mainFrame.getField().addAction(ActionType.ARM, civilian, () -> civilian.arm());
+                        }
                     }
 
                     default -> System.out.print("");

@@ -14,7 +14,5 @@ public class Main {
         field.printField();
         Civilian civilian = new Civilian(field.getBlock(new Tuple(0, 0)), metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
         civilian.contact();
-        civilian.trueAction();
-        System.out.println(civilian.isInAction());
     }
 }

@@ -41,6 +41,10 @@ public abstract class Entity {
 
     public abstract void move(Direction direction);
 
+    public Block getBlock() {
+        return block;
+    }
+
     public Tuple getPixelCoordinate() {
         return pixelCoordinate;
     }

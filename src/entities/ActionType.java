@@ -1,5 +1,5 @@
 package src.entities;
 
-public enum CivilianAction {
+public enum ActionType {
     SHOOT, MOVE, BUILD, HEAL, ARM;
 }

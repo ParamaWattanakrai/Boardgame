@@ -9,20 +9,25 @@ import src.entities.*;
 import src.utils.*;
 
 public class Field {
+    MetaSettings metaSettings;
+
     Random rand = new Random();
     int fieldHeight;
     int fieldWidth;
 
     private PathType[] allPathTypes = PathType.values();
     private Block[][] field;
+    private List<Tuple> nextRoundDogCoordinates = new ArrayList<>();
 
     private ArrayList<Tuple> spawnCoords = new ArrayList<>();
 
     private HashMap<BlockType, List<Block>> landmarkMap = new HashMap<>();
 
-    private HashMap<CivilianAction, List<Runnable>> actionMap = new HashMap<>();
+    private HashMap<ActionType, List<ActorActionPair>> actionMap = new HashMap<>();
 
     public Field(MetaSettings metaSettings) {
+        this.metaSettings = metaSettings;
+
         fieldHeight = metaSettings.getFieldHeight();
         fieldWidth = metaSettings.getFieldWidth();
         field = new Block[fieldHeight][fieldWidth];
@@ -118,9 +123,12 @@ public class Field {
             new Civilian(block, metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
             civilianNum--;
         }
+
+        
+        nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
     }
 
-    public void endTurn() {
+    public void endTurn(int dogIncoming) {
         printAction();
         for (Block[] row : field) {
             for (Block block : row) {
@@ -128,19 +136,65 @@ public class Field {
             }
         }
 
-        for (CivilianAction civilianAction : CivilianAction.values()) {
-            List<Runnable> actionRunnables = actionMap.get(civilianAction);
+        for (ActionType actionType : ActionType.values()) {
+            List<ActorActionPair> actionRunnables = actionMap.get(actionType);
             if (actionRunnables == null) {
                 continue;
             }
-            for (Runnable runnable : actionRunnables) {
-                runnable.run();
+            for (ActorActionPair actorActionPair : actionRunnables) {
+                actorActionPair.getRunnable().run();
             }
             actionMap = new HashMap<>();
             for (Civilian civilian : getAllCivilians()) {
                 civilian.nullAction();
             }
         }
+
+        for (Dog dog : getAllDog()) {
+            dog.algorithm();
+        }
+
+        for (Block[] row : field) {
+            for (Block block : row) {
+                block.resetGunToBeLooted();
+                occupyAlgorithm(block);
+            }
+        }
+
+        for (Tuple coordinate : nextRoundDogCoordinates) {
+            new Dog(field[coordinate.getB()][coordinate.getA()], metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
+        }
+        nextRoundDogCoordinates.clear();
+
+        while (dogIncoming > 0) {
+            nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
+            dogIncoming--;
+        }
+    }
+
+    public Tuple getRandomEdgeCoordinate() {
+        Random rand = new Random();
+        int rows = field.length;
+        int cols = field[0].length;
+
+        int edge = rand.nextInt(4);
+        int i = 0, j = 0;
+
+        if (edge == 0) {
+            i = 0;
+            j = rand.nextInt(cols);
+        } else if (edge == 1) {
+            i = rows - 1;
+            j = rand.nextInt(cols);
+        } else if (edge == 2) {
+            i = rand.nextInt(rows);
+            j = 0;
+        } else {
+            i = rand.nextInt(rows);
+            j = cols - 1;
+        }
+
+        return new Tuple(j, i);
     }
 
     public void occupyAlgorithm(Block block) {
@@ -161,18 +215,18 @@ public class Field {
         }
     }
 
-    public void addAction(Civilian civilian, CivilianAction civilianAction, Runnable actionRunnable) {
-        civilian.setAction(civilianAction, actionRunnable);
-        actionMap.computeIfAbsent(civilianAction, _ -> new ArrayList<>()).add(actionRunnable);
+    public void addAction(ActionType ActionType, Civilian civilian, Runnable actionRunnable) {
+        civilian.setAction(ActionType, actionRunnable);
+        actionMap.computeIfAbsent(ActionType, _ -> new ArrayList<>()).add(new ActorActionPair(civilian, actionRunnable));
     }
 
-    public void removeAction(Civilian civilian, CivilianAction civilianAction, Runnable actionRunnable) {
+    public void removeAction(ActionType ActionType, Civilian civilian, Runnable actionRunnable) {
         civilian.nullAction();
-        actionMap.get(civilianAction).remove(actionRunnable);
+        actionMap.get(ActionType).remove(new ActorActionPair(civilian, actionRunnable));
     }
 
     public void printAction() {
-        for (CivilianAction action : actionMap.keySet()) {
+        for (ActionType action : actionMap.keySet()) {
             System.out.println(actionMap.get(action));
         }
     }

@@ -14,4 +14,9 @@ public class Soldier extends Civilian {
     public double getHitRate() {
         return hitRate;
     }
+
+    @Override
+    public void infect() {
+        vitality = Vitality.COMA;
+    }
 }

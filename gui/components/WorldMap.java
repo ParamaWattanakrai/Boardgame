@@ -5,7 +5,7 @@ import gui.screens.Game;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import src.entities.CivilianAction;
+import src.entities.ActionType;
 
 public class WorldMap extends JPanel {
     private Road[][] road = new Road[5][5];
@@ -13,7 +13,7 @@ public class WorldMap extends JPanel {
     private Game game;
     private Road select = null;
 
-    private CivilianAction action;
+    private ActionType action;
     private int alive;
 
     public WorldMap( Game game, MainFrame mainFrame){
@@ -50,11 +50,11 @@ public class WorldMap extends JPanel {
         this.select = select;
     }
 
-    public CivilianAction getAction() {
+    public ActionType getAction() {
         return action;
     }
 
-    public void setAction(CivilianAction action) {
+    public void setAction(ActionType action) {
         this.action = action;
     }
 

@@ -28,6 +28,7 @@ public class Block {
     private List<Civilian> shooters = new ArrayList<>();
 
     private int gunAmount = 0;
+    private int gunToBeLooted = 0;
 
     public Block(Field field, int x, int y, BlockType blockType, PathType pathType, int orientation, int occupationLevel) {
 
@@ -187,11 +188,27 @@ public class Block {
         entityMap.get(entityType).remove(entity);
     }
 
-    public void addGun() {
+    public void addGunToBeLooted() {
+        gunToBeLooted++;
+    }
+
+    public void removeGunToBeLooted() {
+        gunToBeLooted--;
+    }
+
+    public void resetGunToBeLooted() {
+        gunToBeLooted = 0;
+    }
+
+    public int getGunToBeLooted() {
+        return gunToBeLooted;
+    }
+
+    public void addGunAmount() {
         gunAmount++;
     }
 
-    public boolean removeGun() {
+    public boolean removeGunAmount() {
         if (gunAmount > 0) {
             gunAmount--;
             return true;
@@ -283,6 +300,9 @@ public class Block {
 
     public List<Dog> getAllDogs() {
         List<Dog> dogs = new ArrayList<>();
+        if (entityMap.get(EntityType.DOG) == null) {
+            return dogs;
+        }
         for (Entity dogEntity : entityMap.get(EntityType.DOG)) {
             dogs.add((Dog) dogEntity);
         }

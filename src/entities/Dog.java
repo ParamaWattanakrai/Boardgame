@@ -51,12 +51,13 @@ public class Dog extends Entity {
 
         if (yDifference != 0) {
             if (yDifference > 0) {
-                moveDirectionCandidates[1] = Direction.NORTH;
-            } else {
                 moveDirectionCandidates[1] = Direction.SOUTH;
+            } else {
+                moveDirectionCandidates[1] = Direction.NORTH;
             }
         }
 
+        System.out.println("Dog moving " + moveDirectionCandidates[0] + " or " + moveDirectionCandidates[1]);
         move(moveDirectionCandidates[(int) (Math.random() * 2)]);
 
         if (block.getAllAlive().size() > 0) {
@@ -74,11 +75,12 @@ public class Dog extends Entity {
         if (neighborBlock != block) {
             block.removeEntity(this);
             block = neighborBlock;
-            neighborBlock.removeEntity(this);
+            neighborBlock.addEntity(this);
         }
     }
 
     public void bite(Civilian civilian) {
         civilian.infect();
+        System.out.println("I bit" + civilian);
     }
 }
