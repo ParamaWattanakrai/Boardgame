@@ -5,12 +5,16 @@ import gui.screens.Game;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import src.entities.CivilianAction;
 
 public class WorldMap extends JPanel {
     private Road[][] road = new Road[5][5];
     private MainFrame mainFrame;
     private Game game;
     private Road select = null;
+
+    private CivilianAction action;
+    private int alive;
 
     public WorldMap( Game game, MainFrame mainFrame){
         this.mainFrame = mainFrame;
@@ -45,4 +49,22 @@ public class WorldMap extends JPanel {
     public void setSelect(Road select) {
         this.select = select;
     }
+
+    public CivilianAction getAction() {
+        return action;
+    }
+
+    public void setAction(CivilianAction action) {
+        this.action = action;
+    }
+
+    public int getAlive() {
+        return alive;
+    }
+
+    public void setAlive(int alive) {
+        this.alive = alive;
+    }
+
+    
 }

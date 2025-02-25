@@ -15,7 +15,8 @@ public class Road extends JPanel {
     private WorldMap map;
     private int x;
     private int y;
-
+    private boolean isHighlight = false;
+    
     public Road(int x, int y, WorldMap map, Game game, MainFrame mainFrame) {
         this.x = x;
         this.y = y;
@@ -34,16 +35,38 @@ public class Road extends JPanel {
         new ImageDrawer().drawPopulation(g, x, y, getWidth(), getHeight(), mainFrame);
         Graphics2D g2d = (Graphics2D) g.create();
         if (map.getSelect() == this) {
-            g2d.setColor(new Color(0, 255, 0, 100));
+            g2d.setColor(new Color(0, 255, 0, 50));
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+        }
+        if (isHighlight) {
+            g2d.setColor(new Color( 255, 0, 0,50));
             g2d.fillRect(0, 0, getWidth(), getHeight());
         }
         g2d.dispose();
     }
+
     public void setX(int x) {
         this.x = x;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+
+    public int getA() {
+        return x;
+    }
+
+    public int getB() {
+        return y;
+    }
+
+    public boolean isHighlight() {
+        return isHighlight;
+    }
+
+    public void setHighlight(boolean isHighlight) {
+        this.isHighlight = isHighlight;
     }
 }
