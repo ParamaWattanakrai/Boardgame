@@ -181,7 +181,7 @@ public class Field {
         int blockY = block.getCoordinate().getB();
         try {
             System.out.println(direction.getOffset());
-            return field[blockX + direction.getOffset().getB()][blockY + direction.getOffset().getA()];
+            return field[blockY + direction.getOffset().getB()][blockX + direction.getOffset().getA()];
         } catch (Exception e) {
             System.out.println(String.format("There is no further block %sward", direction.toString().toLowerCase()));
         }

@@ -44,4 +44,20 @@ public enum Direction {
     
     public abstract Direction getOpposite();
     public abstract Tuple getOffset();
+
+    public static Direction offsetToDirection(Tuple offset) {
+        int x = offset.getA();
+        int y = offset.getB();
+        if (x == 0 && y == 1) {
+            return NORTH;
+        } else if (x == 1 && y == 0) {
+            return EAST;
+        } else if (x == 0 && y == -1) {
+            return SOUTH;
+        } else if (x == -1 && y == 0) {
+            return WEST;
+        } else {
+            return null;
+        }
+    }
 }
