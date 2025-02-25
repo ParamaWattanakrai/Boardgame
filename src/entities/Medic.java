@@ -10,6 +10,9 @@ public class Medic extends Civilian {
     }
 
     public boolean validateCure() {
+        if (!isContacted() && vitality == Vitality.ALIVE) {
+            return false;
+        }
         return (block.getField().getOccupiedHospitals().size() > 0 &&
                 block.getAllComa().size() > 0);
     }

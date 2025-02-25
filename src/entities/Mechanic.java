@@ -8,6 +8,13 @@ public class Mechanic extends Civilian {
         super(block, EntityType.MECHANIC);
     }
 
+    public boolean validateBuildBarricade(Direction direction) {
+        if (!isContacted() && vitality == Vitality.ALIVE) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean buildBarricade(Direction direction) {
         Block neighborBlock = block.getNeighborBlock(direction);
         if (neighborBlock != block && block.getPath(direction).buildBarricade()) {
