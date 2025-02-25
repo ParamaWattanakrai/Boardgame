@@ -14,17 +14,7 @@ public class Main {
         field.printField();
         Civilian civilian = new Civilian(field.getBlock(new Tuple(0, 0)), metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
         civilian.contact();
-        field.printField();
-        System.out.println(civilian.validateMove(Direction.EAST));
-        if (civilian.validateMove(Direction.EAST)) {
-            field.addAction(CivilianAction.MOVE, () -> civilian.move(Direction.EAST));
-            System.out.println("Added Action");
-        }
-        field.endTurn();
-        field.printField();
-        List<Block> manhattanBlocks = field.getBlock(new Tuple(2, 2)).getManhattanBlocks(2);
-        for (Block block : manhattanBlocks) {
-            System.out.println(block.getCoordinate());
-        }
+        civilian.trueAction();
+        System.out.println(civilian.isInAction());
     }
 }

@@ -158,11 +158,13 @@ public class Field {
         }
     }
 
-    public void addAction(CivilianAction action, Runnable actionRunnable) {
+    public void addAction(Civilian civilian, CivilianAction action, Runnable actionRunnable) {
+        civilian.takeAction(actionRunnable);
         actionMap.computeIfAbsent(action, _ -> new ArrayList<>()).add(actionRunnable);
     }
 
-    public void removeAction(CivilianAction action, Runnable actionRunnable) {
+    public void removeAction(Civilian civilian, CivilianAction action, Runnable actionRunnable) {
+        civilian.nullAction();
         actionMap.get(action).remove(actionRunnable);
     }
 

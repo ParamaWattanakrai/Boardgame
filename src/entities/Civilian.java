@@ -6,9 +6,10 @@ import src.utils.Direction;
 public class Civilian extends Entity {
     protected double hitRate = 0.75;
     protected Vitality vitality = Vitality.ALIVE;
-    protected boolean inAction = false;
     protected boolean contacted = false;
     protected boolean armed = false;
+
+    protected Runnable actionTaking;
 
     public Civilian(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.CIVILIAN, blockWidth, blockHeight, entitySize);
@@ -75,16 +76,16 @@ public class Civilian extends Entity {
         return hitRate;
     }
 
-    public void trueAction() {
-        inAction = true;
+    public void takeAction(Runnable actionRunnable) {
+        actionTaking = actionRunnable;
     }
 
-    public void falseAction() {
-        inAction = false;
+    public void nullAction() {
+        actionTaking = null;
     }
 
-    public boolean isInAction() {
-        return inAction;
+    public Runnable getActionTaking() {
+        return actionTaking;
     }
 
     public Vitality getVitality() {
