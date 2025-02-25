@@ -227,6 +227,9 @@ public class Block {
     public int shootDog() {
         int dogShot = 0;
         List<Entity> dogs = getAllEntityOfType(EntityType.DOG);
+        if (dogs == null) {
+            return dogShot;
+        }
         for (Entity dog : dogs) {
             for (Entity shooterEntity : shooters) {
                 Civilian shooter = (Civilian) shooterEntity;
