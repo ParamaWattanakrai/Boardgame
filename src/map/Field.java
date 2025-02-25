@@ -123,7 +123,7 @@ public class Field {
     public void endTurn() {
         for (Block[] row : field) {
             for (Block block : row) {
-                System.out.println("Dog Shot: " + block.shootDog());
+                block.shootDog();
             }
         }
 
@@ -180,6 +180,7 @@ public class Field {
         int blockX = block.getCoordinate().getA();
         int blockY = block.getCoordinate().getB();
         try {
+            System.out.println(direction.getOffset());
             return field[blockX + direction.getOffset().getB()][blockY + direction.getOffset().getA()];
         } catch (Exception e) {
             System.out.println(String.format("There is no further block %sward", direction.toString().toLowerCase()));

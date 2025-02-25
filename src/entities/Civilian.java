@@ -23,6 +23,7 @@ public class Civilian extends Entity {
             return false;
         }
         Block neighborBlock = block.getNeighborBlock(direction);
+        System.out.println("trying to move from " + block.getCoordinate() + " to " + neighborBlock.getCoordinate());
         return (neighborBlock != block &&
                 block.getPath(direction).doesExist() &&
                 neighborBlock.getPath(direction).doesExist());
@@ -32,6 +33,7 @@ public class Civilian extends Entity {
     public void move(Direction direction) {
         if (validateMove(direction)) {
             Block neighborBlock = block.getNeighborBlock(direction);
+            System.out.println("moved from " + block.getCoordinate() + " to " + neighborBlock.getCoordinate());
             block.removeEntity(this);
             block = neighborBlock;
             neighborBlock.addEntity(this);
