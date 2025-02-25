@@ -5,8 +5,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.List;
-import java.util.Random;
+
+import src.entities.Entity;
+import src.entities.EntityType;
 import src.entities.Civilian;
+import src.entities.Dog;
 import src.entities.Mechanic;
 import src.entities.Medic;
 import src.entities.Soldier;
@@ -20,6 +23,7 @@ public class ImageDrawer {
     private final int LANDMARK_SIZE = 75;
     private final int BARRICADE_SIZE = 30;
 
+    private final Image dogImage = ImageLoader.loadImage("entities/dog.png");
     private final Image civilianImage = ImageLoader.loadImage("entities/civilian.png");
     private final Image medicImage = ImageLoader.loadImage("entities/medic.png");
     private final Image soldierImage = ImageLoader.loadImage("entities/soldier.png");
@@ -60,18 +64,19 @@ public class ImageDrawer {
     }
 
     public void drawPopulation(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {    
-        List<Civilian> civilian = mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilians();
-        for (Civilian population : civilian) {
-            if (population != null) {
-                Image image = switch (population) {
-                    case Mechanic _ -> mechanicImage;
-                    case Medic _ -> medicImage;
-                    case Soldier _ -> soldierImage;
+        List<Entity> entityList = mainFrame.getField().getBlock(new Tuple(x, y)).getAllEntities();
+        for (Entity entity : entityList) {
+            if (entity != null) {
+                Image image = switch (entity.getEntityType()) {
+                    case EntityType.DOG -> dogImage;
+                    case EntityType.MECHANIC -> mechanicImage;
+                    case EntityType.MEDIC -> medicImage;
+                    case EntityType.SOLDIER -> soldierImage;
                     default -> civilianImage;
                 };
     
-                int posX = population.getPixelCoordinate().getA();
-                int posY = population.getPixelCoordinate().getB();
+                int posX = entity.getPixelCoordinate().getA();
+                int posY = entity.getPixelCoordinate().getB();
                 g.drawImage(image, posX, posY, ENTITY_SIZE, ENTITY_SIZE, null);
             }
         }
