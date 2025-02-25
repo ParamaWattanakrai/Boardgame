@@ -6,7 +6,7 @@ public class Medic extends Civilian {
 
     public Medic(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.MEDIC, blockWidth, blockHeight, entitySize);
-        contacted = true;
+        contact();
     }
 
     public boolean validateCure() {
