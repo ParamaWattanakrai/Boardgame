@@ -127,9 +127,24 @@ public class Block {
         }
     }
 
+    public boolean coordinateOccupied(int posX, int posY, int entitySize) {
+        List<Entity> allEntities = getAllEntities();
+        for (Entity entity : allEntities) {
+            Tuple entityCoord = entity.getPixelCoordinate();
+            if (entityCoord == null) {
+                continue;
+            }
+            if ((entityCoord.getA() <= posX && posX <= entityCoord.getA() + 15) &&
+                (entityCoord.getB() <= posY && posY <= entityCoord.getB() + 15)) {
+                    return true;
+                }
+        }
+        return false;
+    }
+
     public boolean contact() {
         boolean contactFlag = false;
-        if (getAllEntity(EntityType.SOLDIER).size() > 0 && getAllCivilians().size() > 0) {
+        if (getAllEntityOfType(EntityType.SOLDIER).size() > 0 && getAllCivilians().size() > 0) {
             for (Civilian person : getAllCivilians()) {
                 if (!person.isContacted()) {
                     contactFlag = true;
@@ -194,7 +209,7 @@ public class Block {
 
     public int shootDog() {
         int dogShot = 0;
-        List<Entity> dogs = getAllEntity(EntityType.DOG);
+        List<Entity> dogs = getAllEntityOfType(EntityType.DOG);
         for (Entity dog : dogs) {
             for (Entity shooterEntity : shooters) {
                 Civilian shooter = (Civilian) shooterEntity;
@@ -236,7 +251,17 @@ public class Block {
         return entityMap;
     }
 
-    public List<Entity> getAllEntity(EntityType entityType) {
+    public List<Entity> getAllEntities() {
+        List<Entity> entities = new ArrayList<>();
+        for (EntityType entityType : entityMap.keySet()) {
+            for (Entity entity : entityMap.get(entityType)) {
+                entities.add(entity);
+            }
+        }
+        return entities;
+    }
+
+    public List<Entity> getAllEntityOfType(EntityType entityType) {
         List<Entity> entityList = entityMap.get(entityType);
         if (entityList != null) {
             return entityList;
@@ -322,8 +347,8 @@ public class Block {
 
     @Override
     public String toString() {
-        return "Block=" + getCoordinate() + ", Path" + getPathType() + getOrientation() + ", soldier=" + getAllEntity(EntityType.SOLDIER).size() + ", civilian="
-                + getAllEntity(EntityType.CIVILIAN).size() + ", medic=" + getAllEntity(EntityType.MEDIC).size() + ", mechanic=" + getAllEntity(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
+        return "Block=" + getCoordinate() + ", Path" + getPathType() + getOrientation() + ", soldier=" + getAllEntityOfType(EntityType.SOLDIER).size() + ", civilian="
+                + getAllEntityOfType(EntityType.CIVILIAN).size() + ", medic=" + getAllEntityOfType(EntityType.MEDIC).size() + ", mechanic=" + getAllEntityOfType(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
                 + ", landmark=" + getBlockType() + ", capture=" + false;
     }
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Dog extends Entity {
 
-    public Dog(Block block) {
-        super(block, EntityType.DOG);
+    public Dog(Block block, int blockWidth, int blockHeight, int entitySize) {
+        super(block, EntityType.DOG, blockWidth, blockHeight, entitySize);
     }
 
     public void algorithm() {

@@ -148,11 +148,11 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     private void endButton(){
-        int dogSize = mainFrame.getField().getAllEntity(EntityType.DOG).size();
-        int CivilianSize = mainFrame.getField().getAllEntity(EntityType.CIVILIAN).size();
-        int SoldierSize = mainFrame.getField().getAllEntity(EntityType.SOLDIER).size();
-        int docterSize = mainFrame.getField().getAllEntity(EntityType.MEDIC).size();
-        int engineerSize = mainFrame.getField().getAllEntity(EntityType.MECHANIC).size();
+        int dogSize = mainFrame.getField().getAllEntityOfType(EntityType.DOG).size();
+        int CivilianSize = mainFrame.getField().getAllEntityOfType(EntityType.CIVILIAN).size();
+        int SoldierSize = mainFrame.getField().getAllEntityOfType(EntityType.SOLDIER).size();
+        int docterSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC).size();
+        int engineerSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC).size();
 
         String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nDocter: " + docterSize + "\nEngineer: " + engineerSize;
         updateText(GameText.Stat, str);

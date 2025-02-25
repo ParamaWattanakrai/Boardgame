@@ -10,12 +10,12 @@ public class Civilian extends Entity {
     protected boolean contacted = false;
     protected boolean armed = false;
 
-    public Civilian(Block block) {
-        super(block, EntityType.CIVILIAN);
+    public Civilian(Block block, int blockWidth, int blockHeight, int entitySize) {
+        super(block, EntityType.CIVILIAN, blockWidth, blockHeight, entitySize);
     }
 
-    public Civilian(Block block, EntityType entityType) {
-        super(block, entityType);
+    public Civilian(Block block, EntityType entityType, int blockWidth, int blockHeight, int entitySize) {
+        super(block, entityType, blockWidth, blockHeight, entitySize);
     }
 
     public boolean validateMove(Direction direction) {

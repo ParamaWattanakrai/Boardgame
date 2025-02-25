@@ -5,6 +5,9 @@ public class MetaSettings {
 
     private int fieldWidth;
     private int fieldHeight;
+    private int blockWidth;
+    private int blockHeight;
+    private int entitySize;
 
     private int hospitalNum;
     private int storeNum;
@@ -16,12 +19,15 @@ public class MetaSettings {
     private int mechanicNum;
     private int civilianNum;
 
-    public MetaSettings(int turnLimit, int fieldWidth, int fieldHeight, int hospitalNum,
-                        int storeNum, int policeStationNum, int powerPlantNum, int soldierNum,
-                        int medicNum, int mechanicNum, int civilianNum) {
+    public MetaSettings(int turnLimit, int fieldWidth, int fieldHeight, int blockWidth, int blockHeight, int entitySize,
+                        int hospitalNum, int storeNum, int policeStationNum, int powerPlantNum,
+                        int soldierNum, int medicNum, int mechanicNum, int civilianNum) {
         this.turnLimit = turnLimit;
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
+        this.blockWidth = blockWidth;
+        this.blockHeight = blockHeight;
+        this.entitySize = entitySize;
         this.hospitalNum = hospitalNum;
         this.storeNum = storeNum;
         this.policeStationNum = policeStationNum;
@@ -40,6 +46,15 @@ public class MetaSettings {
     }
     public int getFieldHeight() {
         return fieldHeight;
+    }
+    public int getBlockWidth() {
+        return blockWidth;
+    }
+    public int getBlockHeight() {
+        return blockHeight;
+    }
+    public int getEntitySize() {
+        return entitySize;
     }
     public int getHospitalNum() {
         return hospitalNum;

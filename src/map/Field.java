@@ -95,7 +95,7 @@ public class Field {
         int index = rand.nextInt(4);
         while (soldierNum > 0) {
             Block block = field[spawnCoords.get(index).getB()][spawnCoords.get(index).getA()];
-            new Soldier(block);
+            new Soldier(block, metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
             index = (index + 1) % spawnCoords.size();
             soldierNum--;
         }
@@ -103,19 +103,19 @@ public class Field {
         index = rand.nextInt(4);
         while (medicNum > 0) {
             Block block = field[spawnCoords.get(index).getB()][spawnCoords.get(index).getA()];
-            new Medic(block);
+            new Medic(block, metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
             index = (index + 1) % spawnCoords.size();
             medicNum--;
         }
 
         while (mechanicNum > 0) {
             Block block = field[rand.nextInt(fieldHeight)][rand.nextInt(fieldWidth)];
-            new Mechanic(block);
+            new Mechanic(block, metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
             mechanicNum--;
         }
         while (civilianNum > 0) {
             Block block = field[rand.nextInt(fieldHeight)][rand.nextInt(fieldWidth)];
-            new Civilian(block);
+            new Civilian(block, metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
             civilianNum--;
         }
     }
@@ -140,12 +140,12 @@ public class Field {
 
     public void occupyAlgorithm(Block block) {
         if (block.getBlockType() == BlockType.POWERPLANT) {
-            if (block.getAllEntity(EntityType.MECHANIC).size() > 0) {
+            if (block.getAllEntityOfType(EntityType.MECHANIC).size() > 0) {
                 block.occupy();
                 return;
             }
         } else if (block.getBlockType() == BlockType.HOSPITAL) {
-            if (block.getAllEntity(EntityType.MEDIC).size() > 0) {
+            if (block.getAllEntityOfType(EntityType.MEDIC).size() > 0) {
                 block.occupy();
                 return;
             }
@@ -231,11 +231,11 @@ public class Field {
         return occupiedLandmarks;
     }
 
-    public List<Entity> getAllEntity(EntityType entityType) {
+    public List<Entity> getAllEntityOfType(EntityType entityType) {
         List<Entity> entities = new ArrayList<>();
         for (Block[] row : field) {
             for (Block block : row) {
-                entities.addAll(block.getAllEntity(entityType));
+                entities.addAll(block.getAllEntityOfType(entityType));
             }
         }
         return entities;

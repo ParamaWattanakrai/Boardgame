@@ -70,8 +70,8 @@ public class ImageDrawer {
                     default -> civilianImage;
                 };
     
-                int posX = new Random().nextInt(width - ENTITY_SIZE);
-                int posY = new Random().nextInt(height - ENTITY_SIZE);
+                int posX = population.getPixelCoordinate().getA();
+                int posY = population.getPixelCoordinate().getB();
                 g.drawImage(image, posX, posY, ENTITY_SIZE, ENTITY_SIZE, null);
             }
         }
