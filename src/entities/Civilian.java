@@ -20,13 +20,14 @@ public class Civilian extends Entity {
 
     public boolean validateMove(Direction direction) {
         if (!isContacted() && vitality == Vitality.ALIVE) {
+            System.out.println("not contact or not alive bro");
             return false;
         }
         Block neighborBlock = block.getNeighborBlock(direction);
         System.out.println("trying to move from " + block.getCoordinate() + " to " + neighborBlock.getCoordinate());
         return (neighborBlock != block &&
                 block.getPath(direction).doesExist() &&
-                neighborBlock.getPath(direction).doesExist());
+                neighborBlock.getPath(direction.getOpposite()).doesExist());
     }
 
     @Override

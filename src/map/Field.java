@@ -121,6 +121,7 @@ public class Field {
     }
 
     public void endTurn() {
+        printAction();
         for (Block[] row : field) {
             for (Block block : row) {
                 block.shootDog();
@@ -135,6 +136,7 @@ public class Field {
             for (Runnable runnable : actionRunnables) {
                 runnable.run();
             }
+            actionMap = new HashMap<>();
         }
     }
 
@@ -162,6 +164,12 @@ public class Field {
 
     public void removeAction(CivilianAction action, Runnable actionRunnable) {
         actionMap.get(action).remove(actionRunnable);
+    }
+
+    public void printAction() {
+        for (CivilianAction action : actionMap.keySet()) {
+            System.out.println(actionMap.get(action));
+        }
     }
 
     public void addLandmark(BlockType blockType, Block block) {

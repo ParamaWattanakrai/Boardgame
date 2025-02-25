@@ -44,12 +44,14 @@ public class GridMouseListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         System.out.println("clicked on (" + x + ", " + y + ")");
         if (game.getMode() == Mode.Action && map.getSelect() != null && map.getAction() != null) {
+            System.out.println("Previously (" + map.getSelect().getA() + ", " + map.getSelect().getB() +")");
             if (nearBlock(x, y)) {
                 int startX = map.getSelect().getA();
                 int startY = map.getSelect().getB();
                 int dx = x - startX;
                 int dy = y - startY;
 
+                System.out.println("Difference " + dx + ", " + dy);
                 Direction direction = Direction.offsetToDirection(new Tuple(dx, dy));
 
                 Civilian civilian = mainFrame.getField().getBlock(new Tuple(startX, startY)).getAllAlive().get(map.getAlive());
