@@ -12,14 +12,14 @@ public class Mechanic extends Civilian {
         if (!isContacted() && vitality == Vitality.ALIVE) {
             return false;
         }
-        return true;
+        Block neighborBlock = block.getNeighborBlock(direction);
+        return (neighborBlock != block &&
+                !block.getPath(direction).isBarricaded());
     }
 
-    public boolean buildBarricade(Direction direction) {
-        Block neighborBlock = block.getNeighborBlock(direction);
-        if (neighborBlock != block && block.getPath(direction).buildBarricade()) {
-            return true;
+    public void buildBarricade(Direction direction) {
+        if (validateBuildBarricade(direction)) {
+            block.getPath(direction).buildBarricade();
         }
-        return false;
     }
 }
