@@ -4,12 +4,11 @@ import gui.MainFrame;
 import gui.components.Button;
 import gui.data.GameData;
 import gui.enums.GameScreen;
+import gui.enums.ImageResource;
 import gui.enums.buttons.MainButton;
 import gui.interfaces.ButtonActions;
-import gui.utils.ImageLoader;
 import gui.utils.SoundManager;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import src.map.Field;
 import src.map.MetaSettings;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
-    private final Image backgroundImage = ImageLoader.loadImage("MainBg.png");;
     private HashMap<MainButton, Button> buttons;
 
     public MainMenu(MainFrame mainFrame) {
@@ -28,14 +26,12 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     @Override
     protected void initializeUI() {
         setLayout(null);
-
         createButton();
         setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
-
-        setVisible(true);
         SoundManager.playMainMenuMusic();
+        setVisible(true);
     }
 
     @Override
@@ -44,7 +40,6 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         for (MainButton button : MainButton.values()) {
             buttons.put(button, new Button(button.name()));
         }
-
         buttons.get(MainButton.RULE).setPop(false);
     }
 
@@ -101,6 +96,6 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(ImageResource.MENU_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 }

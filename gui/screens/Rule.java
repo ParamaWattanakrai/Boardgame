@@ -2,12 +2,11 @@ package gui.screens;
 
 import gui.MainFrame;
 import gui.components.Button;
+import gui.enums.ImageResource;
 import gui.enums.GameScreen;
 import gui.enums.buttons.RuleButton;
 import gui.interfaces.ButtonActions;
-import gui.utils.ImageLoader;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     public void createButton() {
         buttons = new HashMap<>();
         buttons.put(RuleButton.BACK, new Button(""));
-        buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageLoader.loadImage("settingRule.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageResource.SETTING_RULE.getScaledImage(80, 80)));
     }
 
     @Override
@@ -61,7 +60,6 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image backgroundImage = ImageLoader.loadImage("RuleBg.png");
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(ImageResource.RULE_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 }

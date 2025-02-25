@@ -1,11 +1,11 @@
 package gui.utils;
 
 import gui.MainFrame;
+import gui.enums.ImageResource;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.List;
-
 import src.entities.Entity;
 import src.entities.EntityType;
 import src.map.Block;
@@ -18,41 +18,23 @@ public class ImageDrawer {
     private final int LANDMARK_SIZE = 75;
     private final int BARRICADE_SIZE = 30;
 
-    private final Image dogImage = ImageLoader.loadImage("entities/dog.png");
-    private final Image civilianImage = ImageLoader.loadImage("entities/civilian.png");
-    private final Image medicImage = ImageLoader.loadImage("entities/medic.png");
-    private final Image soldierImage = ImageLoader.loadImage("entities/soldier.png");
-    private final Image mechanicImage = ImageLoader.loadImage("entities/mechanic.png");
-
-    private final Image fourwayRoad = ImageLoader.loadImage("map/fourway.png");
-    private final Image threewayRoad = ImageLoader.loadImage("map/threeway.png");
-    private final Image curvedRoad = ImageLoader.loadImage("map/curved.png");
-    private final Image straightRoad = ImageLoader.loadImage("map/straight.png");
-
-    private final Image policeStation = ImageLoader.loadImage("landmark/1.png");
-    private final Image nuclearPlant = ImageLoader.loadImage("landmark/2.png");
-    private final Image hospital = ImageLoader.loadImage("landmark/3.png");
-    private final Image store = ImageLoader.loadImage("landmark/4.png");
-
-    private final Image barricadImage = ImageLoader.loadImage("Barricade.png");
-
     public void drawRoad(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {
         Block block = mainFrame.getField().getBlock(new Tuple(x, y));
         int orientation = block.getOrientation();
         Graphics2D g2d = (Graphics2D) g.create();
             switch (block.getPathType()) {
-                case FOURWAY -> g2d.drawImage(fourwayRoad, 0, 0, width, height, null);
+                case FOURWAY -> g2d.drawImage(ImageResource.FOURWAY_ROAD.getImage(), 0, 0, width, height, null);
                 case THREEWAY, CURVED -> {
                     switch (orientation) {
                         case 1 -> g2d.rotate(Math.toRadians(90), width / 2, height / 2);
                         case 2 -> g2d.rotate(Math.toRadians(180), width / 2, height / 2);
                         case 3 -> g2d.rotate(Math.toRadians(270), width / 2, height / 2);
                     }
-                    g2d.drawImage(block.getPathType() == PathType.THREEWAY ? threewayRoad : curvedRoad, 0, 0, width, height, null);
+                    g2d.drawImage(block.getPathType() == PathType.THREEWAY ? ImageResource.THREEWAY_ROAD.getImage() : ImageResource.CURVED_ROAD.getImage(), 0, 0, width, height, null);
                 }
                 case STRAIGHT -> {
                     if (orientation % 2 != 0) g2d.rotate(Math.toRadians(90), width / 2, height / 2);
-                    g2d.drawImage(straightRoad, 0, 0, width, height, null);
+                    g2d.drawImage(ImageResource.STRAIGHT_ROAD.getImage(), 0, 0, width, height, null);
                 }
             }
             g2d.dispose();
@@ -63,11 +45,11 @@ public class ImageDrawer {
         for (Entity entity : entityList) {
             if (entity != null) {
                 Image image = switch (entity.getEntityType()) {
-                    case EntityType.DOG -> dogImage;
-                    case EntityType.MECHANIC -> mechanicImage;
-                    case EntityType.MEDIC -> medicImage;
-                    case EntityType.SOLDIER -> soldierImage;
-                    default -> civilianImage;
+                    case EntityType.DOG -> ImageResource.DOG.getImage();
+                    case EntityType.MECHANIC -> ImageResource.MECHANIC.getImage();
+                    case EntityType.MEDIC -> ImageResource.MEDIC.getImage();
+                    case EntityType.SOLDIER -> ImageResource.SOLDIER.getImage();
+                    default -> ImageResource.CIVILIAN.getImage();
                 };
     
                 int posX = entity.getPixelCoordinate().getA();
@@ -79,10 +61,10 @@ public class ImageDrawer {
     
     public void drawLandmark(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {    
         Image image = switch (mainFrame.getField().getBlock(new Tuple(x, y)).getBlockType()) {
-            case STORE -> store;
-            case HOSPITAL -> hospital;
-            case POLICESTATION -> policeStation;
-            case POWERPLANT -> nuclearPlant;
+            case STORE -> ImageResource.STORE.getImage();
+            case HOSPITAL -> ImageResource.HOSPITAL.getImage();
+            case POLICESTATION -> ImageResource.POLICE_STATION.getImage();
+            case POWERPLANT -> ImageResource.NUCLEAR_PLANT.getImage();
             default -> null;
         };
     
@@ -97,17 +79,17 @@ public class ImageDrawer {
         int Y = (height - BARRICADE_SIZE);
 
         Block block = mainFrame.getField().getBlock(new Tuple(x, y));
-        if(block.getPath(Direction.NORTH).isBarricaded()) g.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
-        if(block.getPath(Direction.SOUTH).isBarricaded()) g.drawImage(barricadImage, centerX, Y, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.NORTH).isBarricaded()) g.drawImage(ImageResource.BARRICADE.getImage(), centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.SOUTH).isBarricaded()) g.drawImage(ImageResource.BARRICADE.getImage(), centerX, Y, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
         
         g2d = (Graphics2D) g.create();
         g2d.rotate(Math.toRadians(90), width / 2, height / 2);
-        if(block.getPath(Direction.EAST).isBarricaded()) g2d.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.EAST).isBarricaded()) g2d.drawImage(ImageResource.BARRICADE.getImage(), centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
         g2d.dispose();
 
         g2d = (Graphics2D) g.create();
         g2d.rotate(Math.toRadians(270), width / 2, height / 2);
-        if(block.getPath(Direction.WEST).isBarricaded()) g2d.drawImage(barricadImage, centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
+        if(block.getPath(Direction.WEST).isBarricaded()) g2d.drawImage(ImageResource.BARRICADE.getImage(), centerX, 0, BARRICADE_SIZE*5, BARRICADE_SIZE, null);
         g2d.dispose();
     }
 }

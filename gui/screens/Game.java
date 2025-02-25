@@ -6,6 +6,7 @@ import gui.components.Road;
 import gui.components.TextArea;
 import gui.components.WorldMap;
 import gui.enums.GameScreen;
+import gui.enums.ImageResource;
 import gui.enums.Mode;
 import gui.enums.buttons.GameButton;
 import gui.enums.texts.GameText;
@@ -291,8 +292,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image backgroundImage = ImageLoader.loadImage("GameBg.png");
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(ImageResource.GAME_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
         int dogSize = mainFrame.getField().getAllEntityOfType(EntityType.DOG).size();
         int CivilianSize = mainFrame.getField().getAllEntityOfType(EntityType.CIVILIAN).size();
         int SoldierSize = mainFrame.getField().getAllEntityOfType(EntityType.SOLDIER).size();

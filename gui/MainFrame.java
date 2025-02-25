@@ -2,47 +2,53 @@ package gui;
 
 import gui.data.GameData;
 import gui.enums.GameScreen;
+import gui.enums.ImageResource;
+import gui.screens.BaseScreen;
 import gui.screens.Game;
 import gui.screens.MainMenu;
 import gui.screens.Rule;
-import gui.utils.ImageLoader;
-import java.awt.*;
+import java.awt.CardLayout;
 import java.util.HashMap;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import src.map.Field;
 
 public class MainFrame extends JFrame {
-    private HashMap<GameScreen, JPanel> screens;
+    private final String TITLE = "Out Bark";
+    private Field field; private GameData gamaData;
+    private HashMap<GameScreen, BaseScreen> screens;
     private JPanel mainPanel;
-    private Field field;
-    private GameData gamaData;
+
+    public MainFrame() {
+        this(null, new GameData());
+    }
 
     public MainFrame(Field field, GameData gamaData) {
         this.field = field;
         this.gamaData = gamaData;
+        this.screens = new HashMap<>();
+        this.mainPanel = new JPanel(new CardLayout());
 
-        createScreen();
-        addScreen();
         initializeUI();
     }
 
     private void initializeUI() {
-        setTitle("Out Bark");
+        setTitle(TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
-        setIconImage(ImageLoader.loadImage("logo.png"));
+        setIconImage(ImageResource.LOGO.getImage());
+        createScreen();
+        addScreen();
     }
 
     private void createScreen() {
-        screens = new HashMap<>();
         screens.put(GameScreen.MAIN_MENU, new MainMenu(this));
         screens.put(GameScreen.GAME, new Game(this));
         screens.put(GameScreen.RULE, new Rule(this));
     }
 
     private void addScreen() {
-        mainPanel = new JPanel(new CardLayout());
         screens.forEach((screen, panel) -> mainPanel.add(panel, screen.name()));
         add(mainPanel);
         showScreen(GameScreen.MAIN_MENU);
@@ -69,11 +75,11 @@ public class MainFrame extends JFrame {
         this.gamaData = gamaData;
     }
 
-    public HashMap<GameScreen, JPanel> getScreens() {
+    public HashMap<GameScreen, BaseScreen> getScreens() {
         return screens;
     }
 
-    public void setScreens(HashMap<GameScreen, JPanel> screens) {
+    public void setScreens(HashMap<GameScreen, BaseScreen> screens) {
         this.screens = screens;
     }
 }
