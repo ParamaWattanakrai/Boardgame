@@ -3,6 +3,7 @@ package src.entities;
 import src.map.Block;
 import src.utils.Direction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dog extends Entity {
@@ -16,7 +17,7 @@ public class Dog extends Entity {
             bite(block.getAllAlive().get(0));
             return;
         }
-        Direction[] moveDirectionCandidates = new Direction[2];
+        List<Direction> moveDirectionCandidates = new ArrayList<>();
         int x1 = block.getCoordinate().getA();
         int y1 = block.getCoordinate().getB();
         Block targetBlock = block;
@@ -43,22 +44,22 @@ public class Dog extends Entity {
 
         if (xDifference != 0) {
             if (xDifference > 0) {
-                moveDirectionCandidates[0] = Direction.EAST;
+                moveDirectionCandidates.add(Direction.EAST);
             } else {
-                moveDirectionCandidates[0] = Direction.WEST;
+                moveDirectionCandidates.add(Direction.WEST);
             }
         }
 
         if (yDifference != 0) {
             if (yDifference > 0) {
-                moveDirectionCandidates[1] = Direction.SOUTH;
+                moveDirectionCandidates.add(Direction.SOUTH);
             } else {
-                moveDirectionCandidates[1] = Direction.NORTH;
+                moveDirectionCandidates.add(Direction.NORTH);
             }
         }
 
-        System.out.println("Dog moving " + moveDirectionCandidates[0] + " or " + moveDirectionCandidates[1]);
-        move(moveDirectionCandidates[(int) (Math.random() * 2)]);
+        System.out.println("Dog moving " + moveDirectionCandidates);
+        move(moveDirectionCandidates.get((int) (Math.random() * 2) % (moveDirectionCandidates.size())));
 
         if (block.getAllAlive().size() > 0) {
             bite(block.getAllAlive().get(0));
