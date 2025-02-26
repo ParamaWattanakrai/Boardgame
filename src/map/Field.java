@@ -309,6 +309,22 @@ public class Field {
         return entities;
     }
 
+    public List<Entity> getAllEntityOfType(EntityType entityType, Vitality vitality) {
+        List<Entity> entities = new ArrayList<>();
+        for (Block[] row : field) {
+            for (Block block : row) {
+                List<Entity> getAll = block.getAllEntityOfType(entityType);
+                for (Entity entity : getAll) {
+                    Civilian civilian = (Civilian) entity;
+                    if (civilian.getVitality() == vitality) {
+                        entities.add(entity);
+                    }
+                }
+            }
+        }
+        return entities;
+    }
+
     public List<Civilian> getAllCivilians() {
         List<Civilian> civilians = new ArrayList<>();
         for (Block[] row : field) {
