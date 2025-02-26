@@ -46,11 +46,10 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         super(mainFrame);
         initialize();
     }
-
+    
     @Override
     protected void initializeUI() {
         setLayout(null);
-
         createTextPanel(); setTextPanelBounds();
         createButton(); setButtonBounds();
         createMap();setMapPosition();
@@ -74,6 +73,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         scrollEntityButton.getVerticalScrollBar().setOpaque(false);
         scrollEntityButton.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollEntityButton.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollEntityButton.getVerticalScrollBar().setUnitIncrement(20);
 
         scrollActionButton = new JScrollPane(actionPanel);
         scrollActionButton.setOpaque(false);
@@ -84,6 +84,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         scrollActionButton.getVerticalScrollBar().setOpaque(false);
         scrollActionButton.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollActionButton.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollActionButton.getVerticalScrollBar().setUnitIncrement(20);
 
         add(scrollEntityButton);
         add(scrollActionButton);
@@ -99,8 +100,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.put(GameText.StatTitle, new TextArea("Stat",60f));
         textPanels.put(GameText.TaskTitle, new TextArea("Task",60f));
         textPanels.put(GameText.DataTitle, new TextArea("Data",60f));
-        textPanels.put(GameText.SelectTitle, new TextArea("Select",60f));
-        textPanels.put(GameText.Action, new TextArea("Action",60f));
+        textPanels.put(GameText.SelectTitle, new TextArea("Select",50f));
+        textPanels.put(GameText.Action, new TextArea("Action",50f));
 
         textPanels.put(GameText.DatNight, new TextArea(60f));
         textPanels.put(GameText.Stat, new TextArea(30f));
@@ -125,8 +126,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.Data).setBounds(1600, 470, 220, 500);
         textPanels.get(GameText.Data).setVisible(false);
 
-        textPanels.get(GameText.SelectTitle).setBounds(1610, 360, 250, 70);
-        textPanels.get(GameText.Action).setBounds(1610, 675, 250, 70);
+        textPanels.get(GameText.SelectTitle).setBounds(1630, 360, 250, 70);
+        textPanels.get(GameText.Action).setBounds(1630, 675, 250, 70);
     }
     
     @Override

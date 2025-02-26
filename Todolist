@@ -2,7 +2,7 @@
 shoot select
 บัค barricade ไม่หาย (หมาเข้ามาแล้วแต่ยังแสดงว่ายังมี barricade อยู่) ImageDrawer:139
 coma ไม่ตาย
-หน้า Rule
+
 Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException
         at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1096)
         at java.base/java.util.ArrayList$Itr.next(ArrayList.java:1050)
