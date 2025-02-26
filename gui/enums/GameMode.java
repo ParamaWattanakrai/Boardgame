@@ -1,5 +1,5 @@
 package gui.enums;
 
-public enum Mode {
+public enum GameMode {
     Default, Action
 }

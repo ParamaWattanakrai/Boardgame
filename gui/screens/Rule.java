@@ -2,18 +2,17 @@ package gui.screens;
 
 import gui.MainFrame;
 import gui.components.Button;
-import gui.enums.ImageResource;
 import gui.enums.GameScreen;
-import gui.enums.buttons.RuleButton;
+import gui.enums.ImageResource;
+import gui.enums.RuleButton;
 import gui.interfaces.ButtonActions;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import javax.swing.ImageIcon;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.swing.ImageIcon;
 
 public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     private HashMap<RuleButton, Button> buttons;
@@ -39,9 +38,9 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     public void createButton() {
         buttons = new HashMap<>();
         buttons.put(RuleButton.BACK, new Button(""));
+        buttons.put(RuleButton.NEXTPAGE, new Button("NEXT"));
         buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageResource.SETTING_RULE.getScaledImage(80, 80)));
 
-        buttons.put(RuleButton.NEXTPAGE, new Button("NEXT"));
         images = new ArrayList<>();
         images.add(ImageResource.RULEPAGE1.getImage());
         images.add(ImageResource.RULEPAGE2.getImage());
@@ -57,8 +56,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
 
     @Override
     public void addButtonListener(RuleButton button) {
-        ActionListener actionListener = (ActionEvent e) -> {
-            System.out.println(e.getActionCommand());
+        ActionListener actionListener = (_) -> {
             switch (button) {
                 case BACK -> backButton();
                 case NEXTPAGE -> NextPage();

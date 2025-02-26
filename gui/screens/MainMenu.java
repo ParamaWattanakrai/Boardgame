@@ -5,7 +5,7 @@ import gui.components.Button;
 import gui.data.GameData;
 import gui.enums.GameScreen;
 import gui.enums.ImageResource;
-import gui.enums.buttons.MainButton;
+import gui.enums.MainButton;
 import gui.interfaces.ButtonActions;
 import gui.utils.SoundManager;
 import java.awt.Graphics;
@@ -16,10 +16,11 @@ import src.map.Field;
 import src.map.MetaSettings;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
-    private HashMap<MainButton, Button> buttons;
+    private final HashMap<MainButton, Button> buttons;
 
     public MainMenu(MainFrame mainFrame) {
         super(mainFrame);
+        this.buttons = new HashMap<>();
         initialize();
     }
 
@@ -36,7 +37,6 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
 
     @Override
     public void createButton() {
-        buttons = new HashMap<>();
         for (MainButton button : MainButton.values()) {
             buttons.put(button, new Button(button.name()));
         }
@@ -66,15 +66,14 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     }
 
     private void startButton() {
-        mainFrame.setGamaData(new GameData());
         MetaSettings metaSettings = new MetaSettings(30, 5, 5, 180, 180, 50, 1, 2, 1, 1, 5, 3, 2, 12);
         mainFrame.setField(new Field(metaSettings));
+        mainFrame.setGamaData(new GameData());
         mainFrame.getField().printField();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetButton();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().setSelect(null);
         mainFrame.showScreen(GameScreen.GAME);
-
     }
 
     private void resumeButton() {

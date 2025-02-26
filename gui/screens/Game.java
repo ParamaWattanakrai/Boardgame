@@ -2,14 +2,13 @@ package gui.screens;
 
 import gui.MainFrame;
 import gui.components.Button;
-import gui.components.Road;
 import gui.components.TextArea;
 import gui.components.WorldMap;
+import gui.enums.GameButton;
+import gui.enums.GameMode;
 import gui.enums.GameScreen;
+import gui.enums.GameText;
 import gui.enums.ImageResource;
-import gui.enums.Mode;
-import gui.enums.buttons.GameButton;
-import gui.enums.texts.GameText;
 import gui.interfaces.ButtonActions;
 import gui.interfaces.TextDisplay;
 import gui.utils.MinimalScrollBarUI;
@@ -41,7 +40,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     private Boolean day  = true;
 
-    private Mode mode  = Mode.Default;
+    private GameMode mode  = GameMode.Default;
 
     public Game(MainFrame mainFrame) {
         super(mainFrame);
@@ -138,7 +137,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     public void resetText() {
         updateText(GameText.Task, "Police station\nNuclear plant\nHospital\nStore");
-
         if (mainFrame.getField() != null) {
             if (day) {
                 updateText(GameText.DatNightTitle , "Day");
@@ -227,7 +225,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     int o = i;
                     Button btn = new Button(allAlive.get(i).getEntityType().name(), 30);
                     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    btn.addActionListener(_ ->  entityButton(map.getRoad(x, y), o, allAlive));
+                    btn.addActionListener(_ ->  entityButton(o, allAlive));
                     entityPanel.add(btn);
                 }
             }
@@ -237,12 +235,12 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         rePaints();
     }
 
-    private void entityButton(Road road, int alive, List<Civilian>allAlive){
-        loadActionButton(road, alive, allAlive);
+    private void entityButton(int alive, List<Civilian>allAlive){
+        loadActionButton(alive, allAlive);
     }
 
     //-------- Action button --------//
-    private void loadActionButton(Road road, int alive, List<Civilian> allAlive) {
+    private void loadActionButton(int alive, List<Civilian> allAlive) {
         textPanels.get(GameText.SelectTitle).setText("Action");
         entityPanel.removeAll();
         List<ActionType> actions = new ArrayList<>();
@@ -262,7 +260,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         for (ActionType action : actions) {
             Button btn = new Button(action.name(), 30);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btn.addActionListener(_ ->  actionButton(road, action, alive));
+            btn.addActionListener(_ ->  actionButton(action, alive));
             entityPanel.add(btn);
         }
         
@@ -270,46 +268,46 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         rePaints();
     }
 
-    private void actionButton(Road road, ActionType action, int alive){
+    private void actionButton(ActionType action, int alive){
         List<Direction> directions = new ArrayList<>();
-        int x = map.getSelect().getA();
-        int y = map.getSelect().getB();
+        int x = map.getSelect().getGridX();
+        int y = map.getSelect().getGridY();
 
         if (null == action) {
-            if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
-            if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
-            if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
-            if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+            if (x + 1 < 5) map.getRoad(x + 1, y).setIsCanMove(true);
+            if (y + 1 < 5) map.getRoad(x, y + 1).setIsCanMove(true);
+            if (x - 1 >= 0) map.getRoad(x - 1, y).setIsCanMove(true);
+            if (y - 1 >= 0) map.getRoad(x, y - 1).setIsCanMove(true);
         } else switch (action) {
             case MOVE -> {
                 if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.NORTH)) {
                     directions.add(Direction.NORTH);
-                    if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+                    if (y - 1 >= 0) map.getRoad(x, y - 1).setIsCanMove(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.SOUTH)) {
                     directions.add(Direction.SOUTH);
-                    if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
+                    if (y + 1 < 5) map.getRoad(x, y + 1).setIsCanMove(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.WEST)) {
                     directions.add(Direction.WEST);
-                    if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
+                    if (x - 1 >= 0) map.getRoad(x - 1, y).setIsCanMove(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.EAST)) {
                     directions.add(Direction.EAST);
-                    if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
+                    if (x + 1 < 5) map.getRoad(x + 1, y).setIsCanMove(true);
                 }
                 textPanels.get(GameText.SelectTitle).setText("Move !!!!");
             }
             case SHOOT -> {
                 if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.NORTH)) {
                     directions.add(Direction.NORTH);
-                    if (y - 1 >= 0) map.getRoad(x, y - 1).setShoot(true);
+                    if (y - 1 >= 0) map.getRoad(x, y - 1).setIsCanShot(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.SOUTH)) {
                     directions.add(Direction.SOUTH);
-                    if (y + 1 < 5) map.getRoad(x, y + 1).setShoot(true);
+                    if (y + 1 < 5) map.getRoad(x, y + 1).setIsCanShot(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.WEST)) {
                     directions.add(Direction.WEST);
-                    if (x - 1 >= 0) map.getRoad(x - 1, y).setShoot(true);
+                    if (x - 1 >= 0) map.getRoad(x - 1, y).setIsCanShot(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.EAST)) {
                     directions.add(Direction.EAST);
-                    if (x + 1 < 5) map.getRoad(x + 1, y).setShoot(true);
+                    if (x + 1 < 5) map.getRoad(x + 1, y).setIsCanShot(true);
                 }
                 textPanels.get(GameText.SelectTitle).setText("Pew pew pew");
             }
@@ -328,10 +326,10 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 break;
             }
             default -> {
-                if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
-                if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
-                if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
-                if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+                if (x + 1 < 5) map.getRoad(x + 1, y).setIsCanMove(true);
+                if (y + 1 < 5) map.getRoad(x, y + 1).setIsCanMove(true);
+                if (x - 1 >= 0) map.getRoad(x - 1, y).setIsCanMove(true);
+                if (y - 1 >= 0) map.getRoad(x, y - 1).setIsCanMove(true);
             }
         }
         entityPanel.removeAll();
@@ -343,7 +341,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
        
         map.setAction(action);
         map.setAlive(alive);
-        setMode(Mode.Action);
+        setMode(GameMode.Action);
         rePaints();
     }
 
@@ -405,11 +403,11 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         this.map = map;
     }
 
-    public Mode getMode() {
+    public GameMode getMode() {
         return mode;
     }
 
-    public void setMode(Mode mode) {
+    public void setMode(GameMode mode) {
         this.mode = mode;
     }
 }

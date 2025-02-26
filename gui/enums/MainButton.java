@@ -1,4 +1,4 @@
-package gui.enums.buttons;
+package gui.enums;
 
 public enum MainButton {
     NEW_GAME, RESUME, QUIT, RULE

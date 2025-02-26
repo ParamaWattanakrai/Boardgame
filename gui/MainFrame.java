@@ -8,16 +8,15 @@ import gui.screens.Game;
 import gui.screens.MainMenu;
 import gui.screens.Rule;
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import src.map.Field;
 
 public class MainFrame extends JFrame {
-    private final String TITLE = "Out Bark";
     private Field field; private GameData gamaData;
-    private HashMap<GameScreen, BaseScreen> screens;
+    private final String TITLE = "Out Bark";
+    private final HashMap<GameScreen, BaseScreen> screens;
     private JPanel mainPanel;
 
     public MainFrame() {
@@ -35,11 +34,13 @@ public class MainFrame extends JFrame {
 
     private void initializeUI() {
         setTitle(TITLE);
-        setPreferredSize(new Dimension(1920, 1080));
-        setSize(1920, 1080);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(true);
         setLocationRelativeTo(null);
+        
+        setSize(1920, 1080);
         setIconImage(ImageResource.LOGO.getImage());
         createScreen();
         addScreen();
@@ -80,9 +81,5 @@ public class MainFrame extends JFrame {
 
     public HashMap<GameScreen, BaseScreen> getScreens() {
         return screens;
-    }
-
-    public void setScreens(HashMap<GameScreen, BaseScreen> screens) {
-        this.screens = screens;
     }
 }
