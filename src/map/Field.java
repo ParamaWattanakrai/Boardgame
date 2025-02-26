@@ -138,6 +138,9 @@ public class Field {
 
         shootEveryBlock();
 
+        System.out.println("passed shooting");
+        printAction();
+
         doCivilianActions();
 
         doDogActions();
