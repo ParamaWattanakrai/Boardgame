@@ -2,6 +2,7 @@ package src.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import src.entities.*;
 import src.utils.*;
@@ -223,20 +224,21 @@ public class Block {
 
     public int shootDog() {
         int dogShot = 0;
-        List<Entity> dogs = getAllEntityOfType(EntityType.DOG);
+        List<Dog> dogs = getAllDogs();
         if (dogs == null) {
             return dogShot;
         }
-        for (Entity dog : dogs) {
-            for (Entity shooterEntity : shooters) {
-                Civilian shooter = (Civilian) shooterEntity;
+        for (Dog dog : dogs) {
+            for (Civilian shooter : shooters) {
+                System.out.println(shooter);
                 boolean shot = Math.random() > shooter.getHitRate() ? false : true;
                 if (shot) {
                     dog.kill();
                     dogShot++;
+                    shooters.remove(shooter);
                     break;
                 }
-                shooters.remove(shooterEntity);
+                shooters.remove(shooter);
             }
         }
         return dogShot;
