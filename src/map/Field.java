@@ -31,7 +31,12 @@ public class Field {
         fieldHeight = metaSettings.getFieldHeight();
         fieldWidth = metaSettings.getFieldWidth();
         field = new Block[fieldHeight][fieldWidth];
-        BlockType[][] typeField = new BlockType[fieldHeight][fieldWidth];
+
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                field[i][j] = getRandomBlock(j, i, BlockType.DEFAULT, allPathTypes);
+            }
+        }
 
         spawnCoords.add(new Tuple(rand.nextInt(fieldWidth - 3) + 1,
                                   rand.nextInt(fieldHeight - 3) + 1));
@@ -39,8 +44,8 @@ public class Field {
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA(), spawnCoords.get(0).getB() + 1));
         spawnCoords.add(new Tuple(spawnCoords.get(0).getA() + 1, spawnCoords.get(0).getB() + 1));
         for (Tuple coordinate : spawnCoords) {
+            field[coordinate.getB()][coordinate.getA()].setBlockType(BlockType.SPAWN);
             addLandmark(BlockType.SPAWN, field[coordinate.getB()][coordinate.getA()]);
-            typeField[coordinate.getB()][coordinate.getA()] = BlockType.SPAWN;
         }
 
         int remainingHospital = metaSettings.getHospitalNum();
@@ -51,51 +56,45 @@ public class Field {
         while (remainingHospital > 0) {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
-            if (typeField[randY][randX] == null) {
+            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
+                field[randY][randX].setBlockType(BlockType.HOSPITAL);
                 addLandmark(BlockType.HOSPITAL, field[randY][randX]);
-                typeField[randY][randX] = BlockType.HOSPITAL;
                 remainingHospital--;
             }
         }
         while (remainingStore > 0) {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
-            if (typeField[randY][randX] == null) {
+            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
+                field[randY][randX].setBlockType(BlockType.STORE);
                 addLandmark(BlockType.STORE, field[randY][randX]);
-                typeField[randY][randX] = BlockType.STORE;
                 remainingStore--;
             }
         }
         while (remainingPoliceStation > 0) {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
-            if (typeField[randY][randX] == null) {
+            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
+                field[randY][randX].setBlockType(BlockType.POLICESTATION);
                 addLandmark(BlockType.POLICESTATION, field[randY][randX]);
-                typeField[randY][randX] = BlockType.POLICESTATION;
                 remainingPoliceStation--;
             }
         }
         while (remainingPowerPlant > 0) {
             int randX = rand.nextInt(fieldWidth);
             int randY = rand.nextInt(fieldHeight);
-            if (typeField[randY][randX] == null) {
+            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
+                field[randY][randX].setBlockType(BlockType.POWERPLANT);
                 addLandmark(BlockType.POWERPLANT, field[randY][randX]);
-                typeField[randY][randX] = BlockType.POWERPLANT;
                 remainingPowerPlant--;
             }
         }
+
 
         int soldierNum = metaSettings.getSoldierNum();
         int medicNum = metaSettings.getMedicNum();
         int mechanicNum = metaSettings.getMechanicNum();
         int civilianNum = metaSettings.getCivilianNum();
-
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                BlockType blockType = typeField[i][j] == null ? BlockType.DEFAULT : typeField[i][j];
-                field[i][j] = getRandomBlock(j, i, blockType, allPathTypes);
-            }
-        }
 
         int index = rand.nextInt(4);
         while (soldierNum > 0) {
@@ -124,7 +123,13 @@ public class Field {
             civilianNum--;
         }
 
-        
+        for (Block[] row : field) {
+            for (Block block : row) {
+                block.resetGunToBeLooted();
+                occupyAlgorithm(block);
+                block.contact();
+            }
+        }
         nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
     }
 
@@ -158,7 +163,7 @@ public class Field {
             for (Block block : row) {
                 block.resetGunToBeLooted();
                 occupyAlgorithm(block);
-                block.occupy();
+                block.contact();
             }
         }
 

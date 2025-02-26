@@ -338,6 +338,10 @@ public class Block {
         return coma;
     }
 
+    public void setBlockType(BlockType blockType) {
+        this.blockType = blockType;
+    }
+
     public BlockType getBlockType() {
         return blockType;
     }

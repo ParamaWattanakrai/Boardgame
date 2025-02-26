@@ -48,15 +48,6 @@ public class ImageDrawer {
     public void drawPopulation(Graphics g, int x, int y, int width, int height, MainFrame mainFrame) {
         List<Civilian> civilianList = mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilians();
         mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilians().forEach(Civilian::arm);
-
-        for (Civilian civilian : civilianList) {
-            if (civilian != null) {
-                if (civilian.isContacted()) {
-                    mainFrame.getField().getBlock(new Tuple(x, y)).getAllCivilians().forEach(Civilian::contact);
-                    break;
-                }
-            }
-        }
         
         for (Civilian civilian : civilianList) {
             if (civilian != null && (civilian.getVitality() == Vitality.COMA || civilian.getVitality() == Vitality.ALIVE)) {
