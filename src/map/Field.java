@@ -157,12 +157,13 @@ public class Field {
     
     public void doCivilianActions() {
         for (ActionType actionType : ActionType.values()) {
-            System.out.println("plese");
+            System.out.println(actionType);
             List<ActorActionPair> actionRunnables = actionMap.get(actionType);
             if (actionRunnables == null) {
                 continue;
             }
             for (ActorActionPair actorActionPair : actionRunnables) {
+                System.out.println(actorActionPair);
                 System.out.println(actorActionPair.getCivilian() + "is doing");
                 actorActionPair.getRunnable().run();
             }
@@ -270,8 +271,11 @@ public class Field {
     }
 
     public void printAction() {
-        for (ActionType action : actionMap.keySet()) {
-            System.out.println(actionMap.get(action));
+        for (ActionType actionType : actionMap.keySet()) {
+            System.out.println(actionType);
+            for (ActorActionPair pair : actionMap.get(actionType)) {
+                System.out.println(pair.getCivilian() + " " + pair.getRunnable());
+            }
         }
     }
 

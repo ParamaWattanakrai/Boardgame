@@ -94,9 +94,9 @@ public class GridMouseListener implements MouseListener {
                             mainFrame.getField().addAction(ActionType.ARM, civilian, () -> civilian.arm());
                         }
                     }
-
                     default -> System.out.print("");
                 }
+                civilian.getBlock().getField().printAction();
             }
 
             int selectX = map.getSelect().getA();
