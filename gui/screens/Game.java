@@ -211,7 +211,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     private void setMapPosition() {
-        map.setBounds(482, 54, 959, 900);
+        map.setBounds(500, 50, 900, 900);
     }
 
      //-------- Entity button --------//

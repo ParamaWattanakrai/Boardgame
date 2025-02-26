@@ -10,6 +10,7 @@ public enum ImageResource {
     RULE_BACKGROUND("RuleBg.png"),
     GAME_BACKGROUND("GameBg.png"),
 
+    MAP("Map.png"),
     DOG("entities/dog.png"),
 
     CIVILIAN("entities/civilian.png"),

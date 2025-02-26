@@ -110,7 +110,7 @@ public class ImageDrawer {
         for (Dog dog : dogList) {
             if (dog != null) {
                 int posX = dog.getPixelCoordinate().getA();
-                int posY = dog.getPixelCoordinate().getB();
+                int posY = dog.getPixelCoordinate().getB();                
                 g.drawImage(ImageResource.DOG.getImage(), posX, posY, ENTITY_SIZE, ENTITY_SIZE, null);
             }
         }

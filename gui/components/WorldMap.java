@@ -1,9 +1,12 @@
 package gui.components;
 
 import gui.MainFrame;
+import gui.enums.ImageResource;
 import gui.screens.Game;
+import java.awt.AlphaComposite;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import src.entities.ActionType;
 
@@ -16,13 +19,13 @@ public class WorldMap extends JPanel {
     private ActionType action;
     private int alive;
 
-    public WorldMap( Game game, MainFrame mainFrame){
+    public WorldMap(Game game, MainFrame mainFrame){
         this.mainFrame = mainFrame;
         this.game = game;
         createBlock();
         setLayout(new GridLayout(5, 5));
-        setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         setOpaque(false);
+       
     }
 
     private void createBlock() {
@@ -75,5 +78,10 @@ public class WorldMap extends JPanel {
         this.alive = alive;
     }
 
-    
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+        g2d.drawImage(ImageResource.MAP.getImage(), 0, 0, getWidth(), getHeight(), null);
+    }
 }

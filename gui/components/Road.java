@@ -9,6 +9,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class Road extends JPanel {
@@ -27,6 +28,7 @@ public class Road extends JPanel {
         this.game = game;
         this.map = map;
         addMouseListener(new GridMouseListener(this, x, y, game, mainFrame, map));
+        setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 150), 1));
         setOpaque(false);
     }
     
