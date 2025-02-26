@@ -7,13 +7,18 @@ import gui.enums.GameScreen;
 import gui.enums.buttons.RuleButton;
 import gui.interfaces.ButtonActions;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     private HashMap<RuleButton, Button> buttons;
+    private List<Image> images;
+    private int imageIndex = 0;
 
     public Rule(MainFrame mainFrame) {
         super(mainFrame);
@@ -23,8 +28,8 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     @Override
     protected void initializeUI() {
         setLayout(null);
-                
-        createButton(); setButtonBounds();
+        createButton(); 
+        setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
         setVisible(true);
@@ -35,11 +40,19 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
         buttons = new HashMap<>();
         buttons.put(RuleButton.BACK, new Button(""));
         buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageResource.SETTING_RULE.getScaledImage(80, 80)));
+
+        buttons.put(RuleButton.NEXTPAGE, new Button("NEXT"));
+        images = new ArrayList<>();
+        images.add(ImageResource.RULEPAGE1.getImage());
+        images.add(ImageResource.RULEPAGE2.getImage());
+        images.add(ImageResource.RULEPAGE3.getImage());
+        images.add(ImageResource.RULEPAGE4.getImage());
     }
 
     @Override
     public void setButtonBounds() {
         buttons.get(RuleButton.BACK).setBounds(1820, 20, 80, 80);
+        buttons.get(RuleButton.NEXTPAGE).setBounds(1550, 900, 500, 70);
     }
 
     @Override
@@ -48,6 +61,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
             System.out.println(e.getActionCommand());
             switch (button) {
                 case BACK -> backButton();
+                case NEXTPAGE -> NextPage();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -57,9 +71,18 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
         mainFrame.showScreen(GameScreen.MAIN_MENU);
     }
 
+    private void NextPage() {
+        imageIndex++;
+        if (imageIndex >= images.size()) {
+            imageIndex = 0;
+        }
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(ImageResource.RULE_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(images.get(imageIndex), 0, 0, getWidth(), getHeight(), null);
     }
 }

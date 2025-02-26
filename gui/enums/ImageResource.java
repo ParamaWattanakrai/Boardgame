@@ -42,7 +42,12 @@ public enum ImageResource {
 
     SETTING_RULE("settingRule.png"),
 
-    SHOOT("shoot.png");
+    SHOOT("shoot.png"),
+
+    RULEPAGE1("RulePage/21.png"),
+    RULEPAGE2("RulePage/22.png"),
+    RULEPAGE3("RulePage/23.png"),
+    RULEPAGE4("RulePage/24.png");
 
     private final String path;
     private Image image;
