@@ -2,7 +2,6 @@ package src.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import src.entities.*;
 import src.utils.*;
@@ -238,6 +237,7 @@ public class Block {
                     shooters.remove(shooter);
                     break;
                 }
+                System.out.println("Survived!");
                 shooters.remove(shooter);
             }
         }

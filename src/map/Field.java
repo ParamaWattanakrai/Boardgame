@@ -25,6 +25,8 @@ public class Field {
 
     private HashMap<ActionType, List<ActorActionPair>> actionMap = new HashMap<>();
 
+    private HashMap<BlockType, Boolean> occupationMap = new HashMap<>();
+
     public Field(MetaSettings metaSettings) {
         this.metaSettings = metaSettings;
 
@@ -123,30 +125,45 @@ public class Field {
             civilianNum--;
         }
 
-        for (Block[] row : field) {
-            for (Block block : row) {
-                block.resetGunToBeLooted();
-                occupyAlgorithm(block);
-                block.contact();
-            }
+        for (BlockType blockType : BlockType.values()) {
+            occupationMap.put(blockType, false);
         }
+
+        updateField();
         nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
     }
 
     public void endTurn(int dogIncoming) {
         printAction();
+
+        shootEveryBlock();
+
+        doCivilianActions();
+
+        doDogActions();
+
+        updateField();
+
+        spawnDogs(dogIncoming);
+    }
+
+    public void shootEveryBlock() {
         for (Block[] row : field) {
             for (Block block : row) {
                 block.shootDog();
             }
         }
-
+    }
+    
+    public void doCivilianActions() {
         for (ActionType actionType : ActionType.values()) {
+            System.out.println("plese");
             List<ActorActionPair> actionRunnables = actionMap.get(actionType);
             if (actionRunnables == null) {
                 continue;
             }
             for (ActorActionPair actorActionPair : actionRunnables) {
+                System.out.println(actorActionPair.getCivilian() + "is doing");
                 actorActionPair.getRunnable().run();
             }
             actionMap = new HashMap<>();
@@ -154,11 +171,15 @@ public class Field {
                 civilian.nullAction();
             }
         }
+    }
 
+    public void doDogActions() {
         for (Dog dog : getAllDog()) {
             dog.algorithm();
         }
+    }
 
+    public void updateField() {
         for (Block[] row : field) {
             for (Block block : row) {
                 block.resetGunToBeLooted();
@@ -167,6 +188,22 @@ public class Field {
             }
         }
 
+        for (BlockType blockType : occupationMap.keySet()) {
+            if (landmarkMap.get(blockType) == null) {
+                occupationMap.put(blockType, false);
+                continue;
+            }
+            for (Block block : landmarkMap.get(blockType)) {
+                if (block.getOccupationLevel() > 1) {
+                    occupationMap.put(blockType, true);
+                    break;
+                }
+                occupationMap.put(blockType, false);
+            }
+        }
+    }
+
+    public void spawnDogs(int dogIncoming) {
         for (Tuple coordinate : nextRoundDogCoordinates) {
             new Dog(field[coordinate.getB()][coordinate.getA()], metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
         }
@@ -177,6 +214,7 @@ public class Field {
             dogIncoming--;
         }
     }
+
 
     public Tuple getRandomEdgeCoordinate() {
         Random rand = new Random();
@@ -357,6 +395,10 @@ public class Field {
 
     public int getFieldWidth() {
         return fieldWidth;
+    }
+
+    public HashMap<BlockType, Boolean> getOccupationMap() {
+        return occupationMap;
     }
 
     public void printField() {

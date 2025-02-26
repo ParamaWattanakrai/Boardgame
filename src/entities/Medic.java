@@ -1,5 +1,6 @@
 package src.entities;
 import src.map.Block;
+import src.map.BlockType;
 
 public class Medic extends Civilian {
     protected EntityType entityType = EntityType.MEDIC;
@@ -13,7 +14,7 @@ public class Medic extends Civilian {
         if (vitality != Vitality.ALIVE) {
             return false;
         }
-        return (block.getField().getOccupiedHospitals().size() > 0 &&
+        return (block.getField().getOccupationMap().get(BlockType.HOSPITAL) &&
                 block.getAllComa().size() > 0);
     }
 
