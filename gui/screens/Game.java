@@ -321,6 +321,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 } else{
                     textPanels.get(GameText.SelectTitle).setText("Can't Heal");
                 }
+                entityPanel.removeAll();
+                loadEntityButton(x, y);
+                loadInActionButton();
                 rePaints();
                 break;
             }

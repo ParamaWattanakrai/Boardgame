@@ -40,13 +40,22 @@ public class Road extends JPanel {
         new ImageDrawer().drawPopulation(g, x, y, getWidth(), getHeight(), mainFrame);
         new ImageDrawer().drawDog(g, x, y, getWidth(), getHeight(), mainFrame);
         new ImageDrawer().drawBarricade(g, x, y, getWidth(), getHeight(), mainFrame);
+        new ImageDrawer().drawBarricade(g, x, y, getWidth(), getHeight(), mainFrame);
+
         Graphics2D g2d = (Graphics2D) g.create();
+
+        // if (mainFrame.getField().getBlock(new Tuple(x, y))) {
+        //     g2d.setColor(new Color(255, 0, 0, 50));
+        //     g2d.fillRect(0, 0, getWidth(), getHeight());
+        // }
+
         if (map.getSelect() == this) {
             g2d.setColor(new Color(0, 255, 0, 50));
             g2d.fillRect(0, 0, getWidth(), getHeight());
         }
+
         if (isHighlight) {
-            g2d.setColor(new Color( 255, 0, 0,50));
+            g2d.setColor(new Color(255, 255, 0, 50));
             g2d.fillRect(0, 0, getWidth(), getHeight());
         }
 
