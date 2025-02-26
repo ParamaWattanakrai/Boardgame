@@ -57,6 +57,7 @@ public class ImageDrawer {
                 }
             }
         }
+        
         for (Civilian civilian : civilianList) {
             if (civilian != null && (civilian.getVitality() == Vitality.COMA || civilian.getVitality() == Vitality.ALIVE)) {
                 Image image = switch (civilian.getEntityType()) {

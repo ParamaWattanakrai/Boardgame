@@ -12,7 +12,6 @@ import gui.enums.buttons.GameButton;
 import gui.enums.texts.GameText;
 import gui.interfaces.ButtonActions;
 import gui.interfaces.TextDisplay;
-import gui.utils.ImageLoader;
 import gui.utils.MinimalScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -168,7 +167,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     public void createButton() {
         buttons = new HashMap<>();
         buttons.put(GameButton.Setting, new Button(""));
-        buttons.get(GameButton.Setting).setIcon(new ImageIcon(ImageLoader.loadImage("settings.png").getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        buttons.get(GameButton.Setting).setIcon(ImageResource.SETTING_GAME.getScaledIcon(80, 80));
         buttons.put(GameButton.EndButton, new Button("END TURN", 50));
     }
 
@@ -273,32 +272,35 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         int x = map.getSelect().getA();
         int y = map.getSelect().getB();
 
-        if (action == ActionType.MOVE) {
-            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.NORTH)) {
-                if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
-            }
-    
-            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.SOUTH)) {
-                if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
-            }
-    
-            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.WEST)) {
-                if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
-            }         
-    
-            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.EAST)) {
-                if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
-            }    
-        } else if(action == ActionType.SHOOT){
-            if (x + 1 < 5) map.getRoad(x + 1, y).setShoot(true);
-            if (y + 1 < 5) map.getRoad(x, y + 1).setShoot(true);
-            if (x - 1 >= 0) map.getRoad(x - 1, y).setShoot(true);
-            if (y - 1 >= 0) map.getRoad(x, y - 1).setShoot(true);
-        } else{
+        if (null == action) {
             if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
             if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
             if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
             if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+        } else switch (action) {
+            case MOVE -> {
+                if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.NORTH)) {
+                    if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+                }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.SOUTH)) {
+                    if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
+                }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.WEST)) {
+                    if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
+                }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.EAST)) {
+                    if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
+                }
+            }
+            case SHOOT -> {
+                if (x + 1 < 5) map.getRoad(x + 1, y).setShoot(true);
+                if (y + 1 < 5) map.getRoad(x, y + 1).setShoot(true);
+                if (x - 1 >= 0) map.getRoad(x - 1, y).setShoot(true);
+                if (y - 1 >= 0) map.getRoad(x, y - 1).setShoot(true);
+            }
+            default -> {
+                if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
+                if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
+                if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
+                if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+            }
         }
        
         map.setAction(action);

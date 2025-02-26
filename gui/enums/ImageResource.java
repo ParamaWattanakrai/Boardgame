@@ -2,6 +2,7 @@ package gui.enums;
 
 import gui.utils.ImageLoader;
 import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public enum ImageResource {
     LOGO("logo.png"),
@@ -38,15 +39,17 @@ public enum ImageResource {
     HOSPITAL("landmark/3.png"),
     STORE("landmark/4.png"),
 
-    BARRICADE("barricade.png"),
+    BARRICADE("Barricade.png"),
 
-    SETTING_RULE("settingRule.png"),
+    SETTING_GAME("GameSetting.png"),
+    SETTING_RULE("RuleSetting.png"),
 
     SHOOT("shoot.png");
 
     private final String path;
     private Image image;
-    
+    private ImageIcon imageIcon;
+
     ImageResource(String path) {
         this.path = path;
         this.image = null;
@@ -58,8 +61,19 @@ public enum ImageResource {
         }
         return image;
     }
+
+    public ImageIcon getIcon() {
+        if (imageIcon == null) {
+            imageIcon = ImageLoader.loadIcon(path);
+        }
+        return imageIcon;
+    }
     
     public Image getScaledImage(int width, int height) {
         return getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    }
+
+    public ImageIcon getScaledIcon(int width, int height) {
+        return new ImageIcon(getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
     }
 }

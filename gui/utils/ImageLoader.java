@@ -7,4 +7,7 @@ public class ImageLoader {
     public static Image loadImage(String imagePath) {
         return new ImageIcon(ImageLoader.class.getResource("../assets/img/"+imagePath)).getImage();
     }
+    public static ImageIcon loadIcon(String imagePath) {
+        return new ImageIcon(ImageLoader.class.getResource("../assets/img/"+imagePath));
+    }
 }
