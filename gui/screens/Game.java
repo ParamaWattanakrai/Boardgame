@@ -23,6 +23,7 @@ import javax.swing.*;
 import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.EntityType;
+import src.entities.Medic;
 import src.entities.Vitality;
 import src.utils.Direction;
 import src.utils.Tuple;
@@ -216,11 +217,11 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
      //-------- Entity button --------//
     public void loadEntityButton(int x, int y) {
-        textPanels.get(GameText.SelectTitle).setText("Entity");
         entityPanel.removeAll();
         List<Civilian> allAlive = mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive(); 
         
         if (!allAlive.isEmpty()) {
+            textPanels.get(GameText.SelectTitle).setText("Entity");
             for (int i = 0; i < allAlive.size(); i++) {
                 if (allAlive.get(i).getActionRunnable() == null && allAlive.get(i).isContacted()) {
                     int o = i;
@@ -230,7 +231,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     entityPanel.add(btn);
                 }
             }
-        }
+        } 
         
         entityPanel.setPreferredSize(new Dimension(400, Math.max(allAlive.size()*70, 300)));
         rePaints();
@@ -270,6 +271,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     private void actionButton(Road road, ActionType action, int alive){
+        List<Direction> directions = new ArrayList<>();
         int x = map.getSelect().getA();
         int y = map.getSelect().getB();
 
@@ -281,20 +283,46 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         } else switch (action) {
             case MOVE -> {
                 if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.NORTH)) {
+                    directions.add(Direction.NORTH);
                     if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.SOUTH)) {
+                    directions.add(Direction.SOUTH);
                     if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.WEST)) {
+                    directions.add(Direction.WEST);
                     if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
                 }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.EAST)) {
+                    directions.add(Direction.EAST);
                     if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
                 }
+                textPanels.get(GameText.SelectTitle).setText("Move !!!!");
             }
             case SHOOT -> {
-                if (x + 1 < 5) map.getRoad(x + 1, y).setShoot(true);
-                if (y + 1 < 5) map.getRoad(x, y + 1).setShoot(true);
-                if (x - 1 >= 0) map.getRoad(x - 1, y).setShoot(true);
-                if (y - 1 >= 0) map.getRoad(x, y - 1).setShoot(true);
+                if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.NORTH)) {
+                    directions.add(Direction.NORTH);
+                    if (y - 1 >= 0) map.getRoad(x, y - 1).setShoot(true);
+                }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.SOUTH)) {
+                    directions.add(Direction.SOUTH);
+                    if (y + 1 < 5) map.getRoad(x, y + 1).setShoot(true);
+                }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.WEST)) {
+                    directions.add(Direction.WEST);
+                    if (x - 1 >= 0) map.getRoad(x - 1, y).setShoot(true);
+                }   if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateShoot(Direction.EAST)) {
+                    directions.add(Direction.EAST);
+                    if (x + 1 < 5) map.getRoad(x + 1, y).setShoot(true);
+                }
+                textPanels.get(GameText.SelectTitle).setText("Pew pew pew");
+            }
+            case HEAL -> {
+                 Medic medic = (Medic) mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive);
+                if (medic.validateCure()) {
+                    mainFrame.getField().addAction(ActionType.HEAL, medic, () -> medic.cure());
+                    textPanels.get(GameText.SelectTitle).setText("Heal");
+                } else{
+                    textPanels.get(GameText.SelectTitle).setText("Can't Heal");
+                }
+                rePaints();
+                break;
             }
             default -> {
                 if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
@@ -303,13 +331,16 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
             }
         }
+        entityPanel.removeAll();
+        for (Direction direction : directions) {
+            Button btn = new Button(direction.name(), 30);
+            btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+            entityPanel.add(btn);
+        }
        
         map.setAction(action);
         map.setAlive(alive);
         setMode(Mode.Action);
-
-        textPanels.get(GameText.SelectTitle).setText("Select");
-        entityPanel.removeAll();
         rePaints();
     }
 
@@ -342,7 +373,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     private void inActionButton(Civilian civilian){        
         mainFrame.getField().removeAction(civilian.getActionType(), civilian, civilian.getActionRunnable());
         loadInActionButton();
-        resetText();
+        rePaints();
     }
 
     public void rePaints(){

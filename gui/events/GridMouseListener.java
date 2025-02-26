@@ -114,6 +114,7 @@ public class GridMouseListener implements MouseListener {
             game.setMode(Mode.Default);
 
         } else{
+            game.repaint();
             selectBlock(x, y);
         }
 

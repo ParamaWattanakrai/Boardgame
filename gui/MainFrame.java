@@ -8,6 +8,7 @@ import gui.screens.Game;
 import gui.screens.MainMenu;
 import gui.screens.Rule;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,6 +35,8 @@ public class MainFrame extends JFrame {
 
     private void initializeUI() {
         setTitle(TITLE);
+        setPreferredSize(new Dimension(1920, 1080));
+        setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);

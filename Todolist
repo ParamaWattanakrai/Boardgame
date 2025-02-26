@@ -1,5 +1,7 @@
 GUI
-shoot select
+ทิศทางการเดิน
+animetion ตอน end endTurn
+ออกกแบบ GUI ใหม่
 
 Logic
 -ทำระบบตา
@@ -13,3 +15,6 @@ Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException
         at java.base/java.util.ArrayList$Itr.next(ArrayList.java:1050)
         at src.map.Block.shootDog(Block.java:232)
         at src.map.Field.endTurn(Field.java:135)
+
+-เก็บปืน ตำรวจ
+-ปืนล่วง
