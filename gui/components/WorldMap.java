@@ -34,6 +34,15 @@ public class WorldMap extends JPanel {
         }
     }
 
+    public void repaintAllRoads() {
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                road[x][y].revalidate();
+                road[x][y].repaint();
+            }
+        }
+    }    
+
     public Road getRoad(int x, int y) {
         return road[x][y];
     }

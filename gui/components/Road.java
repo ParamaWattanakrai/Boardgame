@@ -1,9 +1,11 @@
 package gui.components;
 
 import gui.MainFrame;
+import gui.enums.ImageResource;
 import gui.events.GridMouseListener;
 import gui.screens.Game;
 import gui.utils.ImageDrawer;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,7 +18,8 @@ public class Road extends JPanel {
     private int x;
     private int y;
     private boolean isHighlight = false;
-    
+    private boolean isShoot = false;
+
     public Road(int x, int y, WorldMap map, Game game, MainFrame mainFrame) {
         this.x = x;
         this.y = y;
@@ -33,6 +36,8 @@ public class Road extends JPanel {
         new ImageDrawer().drawRoad(g, x, y, getWidth(), getHeight(), mainFrame);
         new ImageDrawer().drawLandmark(g, x, y, getWidth(), getHeight(), mainFrame);
         new ImageDrawer().drawPopulation(g, x, y, getWidth(), getHeight(), mainFrame);
+        new ImageDrawer().drawDog(g, x, y, getWidth(), getHeight(), mainFrame);
+        new ImageDrawer().drawBarricade(g, x, y, getWidth(), getHeight(), mainFrame);
         Graphics2D g2d = (Graphics2D) g.create();
         if (map.getSelect() == this) {
             g2d.setColor(new Color(0, 255, 0, 50));
@@ -41,6 +46,14 @@ public class Road extends JPanel {
         if (isHighlight) {
             g2d.setColor(new Color( 255, 0, 0,50));
             g2d.fillRect(0, 0, getWidth(), getHeight());
+        }
+
+        if (isShoot) {
+            g2d.setColor(new Color( 255, 0, 0,50));
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            g2d.drawImage(ImageResource.SHOOT.getImage(), 0, 0, getHeight(), getHeight(), null);
         }
         g2d.dispose();
     }
@@ -67,5 +80,13 @@ public class Road extends JPanel {
 
     public void setHighlight(boolean isHighlight) {
         this.isHighlight = isHighlight;
+    }
+
+    public boolean isShoot() {
+        return isShoot;
+    }
+
+    public void setShoot(boolean isShoot) {
+        this.isShoot = isShoot;
     }
 }

@@ -17,12 +17,15 @@ import gui.utils.MinimalScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.*;
-import src.entities.Civilian;
 import src.entities.ActionType;
+import src.entities.Civilian;
 import src.entities.EntityType;
+import src.entities.Vitality;
+import src.utils.Direction;
 import src.utils.Tuple;
 
 public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
@@ -35,6 +38,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     private JScrollPane scrollActionButton;
     private JPanel actionPanel  = new JPanel();
+
+    private Boolean day  = true;
 
     private Mode mode  = Mode.Default;
 
@@ -91,14 +96,14 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     public void createTextPanel() {
         textPanels = new HashMap<>();
 
-        textPanels.put(GameText.NightTitle, new TextArea("Night",60f));
+        textPanels.put(GameText.DatNightTitle, new TextArea("Day",60f));
         textPanels.put(GameText.StatTitle, new TextArea("Stat",60f));
         textPanels.put(GameText.TaskTitle, new TextArea("Task",60f));
         textPanels.put(GameText.DataTitle, new TextArea("Data",60f));
         textPanels.put(GameText.SelectTitle, new TextArea("Select",60f));
         textPanels.put(GameText.Action, new TextArea("Action",60f));
 
-        textPanels.put(GameText.Night, new TextArea(60f));
+        textPanels.put(GameText.DatNight, new TextArea(60f));
         textPanels.put(GameText.Stat, new TextArea(30f));
         textPanels.put(GameText.Task, new TextArea(30f));
         textPanels.put(GameText.Data, new TextArea(20f));
@@ -107,8 +112,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     
     @Override
     public void setTextPanelBounds() {
-        textPanels.get(GameText.NightTitle).setBounds(60, 25, 220, 200);
-        textPanels.get(GameText.Night).setBounds(60, 95, 220, 200);
+        textPanels.get(GameText.DatNightTitle).setBounds(60, 25, 220, 200);
+        textPanels.get(GameText.DatNight).setBounds(60, 95, 220, 200);
 
         textPanels.get(GameText.StatTitle).setBounds(60, 220, 220, 200);
         textPanels.get(GameText.Stat).setBounds(60, 305, 220, 200);
@@ -131,9 +136,31 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     public void resetText() {
-        updateText(GameText.Night , mainFrame.getGamaData().getNight() + "/15");
-        updateText(GameText.Stat ,"Noting here");
         updateText(GameText.Task, "Police station\nNuclear plant\nHospital\nStore");
+
+        if (mainFrame.getField() != null) {
+            if (day) {
+                updateText(GameText.DatNightTitle , "Day");
+                updateText(GameText.DatNight , mainFrame.getGamaData().getNight() + "/15");
+                mainFrame.getGamaData().setDay(mainFrame.getGamaData().getDay()+1);
+                day = false;
+            } else{
+                updateText(GameText.DatNightTitle , "Night");
+                updateText(GameText.DatNight , mainFrame.getGamaData().getNight() + "/15");
+                mainFrame.getGamaData().setNight(mainFrame.getGamaData().getNight()+1);
+                day = true;
+            }
+
+            int dogSize = mainFrame.getField().getAllDog().size();
+            int CivilianSize = mainFrame.getField().getAllEntityOfType(EntityType.CIVILIAN, Vitality.ALIVE).size();
+            int SoldierSize = mainFrame.getField().getAllEntityOfType(EntityType.SOLDIER, Vitality.ALIVE).size();
+            int medicSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC, Vitality.ALIVE).size();
+            int engineerSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
+            String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: " + medicSize + "\nEngineer: " + engineerSize;
+            updateText(GameText.Stat, str);
+        } else{
+            updateText(GameText.Stat ,"Noting here");
+        }
     }
 
     //-------- Button --------//
@@ -169,14 +196,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     private void endButton(){
         mainFrame.getField().endTurn(1);
-        map.repaint();
-        map.setSelect(null);
         textPanels.get(GameText.SelectTitle).setText("Select");
+        map.setSelect(null);
 
         entityPanel.removeAll();
         actionPanel.removeAll();
-        entityPanel.repaint();
-        actionPanel.repaint();
+        rePaints();
+        resetText();
     }
 
     //-------- Map --------//
@@ -195,61 +221,93 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         List<Civilian> allAlive = mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive(); 
         
         if (!allAlive.isEmpty()) {
-            for (int i = 0; i < allAlive.size();i++) {
-                int o = i;
-                Button btn = new Button(allAlive.get(i).getEntityType().name(), 30);
-                btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-                btn.addActionListener(_ ->  entityButton(map.getRoad(x, y), o));
-                entityPanel.add(btn);
+            for (int i = 0; i < allAlive.size(); i++) {
+                if (allAlive.get(i).getActionRunnable() == null && allAlive.get(i).isContacted()) {
+                    int o = i;
+                    Button btn = new Button(allAlive.get(i).getEntityType().name(), 30);
+                    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    btn.addActionListener(_ ->  entityButton(map.getRoad(x, y), o, allAlive));
+                    entityPanel.add(btn);
+                }
             }
         }
         
         entityPanel.setPreferredSize(new Dimension(400, Math.max(allAlive.size()*70, 300)));
-        entityPanel.revalidate();
-        entityPanel.repaint();
+        rePaints();
     }
 
-    private void entityButton(Road road, int alive){
-        int x = road.getA();
-        int y = road.getB();
-        System.out.println(mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).getEntityType());
-        loadActionButton(road, alive);
+    private void entityButton(Road road, int alive, List<Civilian>allAlive){
+        loadActionButton(road, alive, allAlive);
     }
 
     //-------- Action button --------//
-    private void loadActionButton(Road road, int alive) {
+    private void loadActionButton(Road road, int alive, List<Civilian> allAlive) {
         textPanels.get(GameText.SelectTitle).setText("Action");
         entityPanel.removeAll();
+        List<ActionType> actions = new ArrayList<>();
+        actions.add(ActionType.MOVE);
 
-        for (ActionType action : ActionType.values()) {
+        if (allAlive.get(alive).isArmed()) {
+            actions.add(ActionType.SHOOT);
+        }
+
+        switch (allAlive.get(alive).getEntityType()) {
+            case MECHANIC -> actions.add(ActionType.BUILD);
+            case MEDIC -> actions.add(ActionType.HEAL);
+            case SOLDIER -> actions.add(ActionType.SHOOT);
+            default -> {}
+        }
+
+        for (ActionType action : actions) {
             Button btn = new Button(action.name(), 30);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
             btn.addActionListener(_ ->  actionButton(road, action, alive));
             entityPanel.add(btn);
         }
         
-        entityPanel.setPreferredSize(new Dimension(400, Math.max(ActionType.values().length*70, 300)));
-        entityPanel.revalidate();
-        entityPanel.repaint();        
+        entityPanel.setPreferredSize(new Dimension(400, Math.max(ActionType.values().length*70, 300)));  
+        rePaints();
     }
 
     private void actionButton(Road road, ActionType action, int alive){
-        int x = road.getA();
-        int y = road.getB();
-        if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
-        if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
-        if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
-        if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+        int x = map.getSelect().getA();
+        int y = map.getSelect().getB();
+
+        if (action == ActionType.MOVE) {
+            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.NORTH)) {
+                if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+            }
+    
+            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.SOUTH)) {
+                if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
+            }
+    
+            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.WEST)) {
+                if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
+            }         
+    
+            if (mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive().get(alive).validateMove(Direction.EAST)) {
+                if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
+            }    
+        } else if(action == ActionType.SHOOT){
+            if (x + 1 < 5) map.getRoad(x + 1, y).setShoot(true);
+            if (y + 1 < 5) map.getRoad(x, y + 1).setShoot(true);
+            if (x - 1 >= 0) map.getRoad(x - 1, y).setShoot(true);
+            if (y - 1 >= 0) map.getRoad(x, y - 1).setShoot(true);
+        } else{
+            if (x + 1 < 5) map.getRoad(x + 1, y).setHighlight(true);
+            if (y + 1 < 5) map.getRoad(x, y + 1).setHighlight(true);
+            if (x - 1 >= 0) map.getRoad(x - 1, y).setHighlight(true);
+            if (y - 1 >= 0) map.getRoad(x, y - 1).setHighlight(true);
+        }
+       
         map.setAction(action);
         map.setAlive(alive);
         setMode(Mode.Action);
 
         textPanels.get(GameText.SelectTitle).setText("Select");
         entityPanel.removeAll();
-        entityPanel.revalidate();
-        entityPanel.repaint();
-        map.revalidate();
-        map.repaint();
+        rePaints();
     }
 
     public void resetButton(){
@@ -266,7 +324,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         if (allAlive != null) {
             for (Civilian civilian : allAlive) {
                 if (civilian.getActionRunnable() != null) {
-                    System.out.println("wow");
                     Button btn = new Button(civilian.getEntityType().name(), 30);
                     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
                     btn.addActionListener(_ ->  inActionButton(civilian));
@@ -275,32 +332,32 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 } 
             }
         }
-        
         actionPanel.setPreferredSize(new Dimension(400, Math.max(cont*70, 300)));
-        actionPanel.revalidate();
-        actionPanel.repaint();        
+        rePaints();
     }
 
     private void inActionButton(Civilian civilian){        
         mainFrame.getField().removeAction(civilian.getActionType(), civilian, civilian.getActionRunnable());
-        actionPanel.removeAll();
         loadInActionButton();
+        resetText();
+    }
+
+    public void rePaints(){
+        map.repaintAllRoads();
+        entityPanel.revalidate();
+        entityPanel.repaint();
         actionPanel.revalidate();
         actionPanel.repaint();   
+        scrollActionButton.repaint();
+        scrollActionButton.revalidate();
+        scrollEntityButton.repaint();
+        scrollEntityButton.revalidate();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(ImageResource.GAME_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
-        int dogSize = mainFrame.getField().getAllEntityOfType(EntityType.DOG).size();
-        int CivilianSize = mainFrame.getField().getAllEntityOfType(EntityType.CIVILIAN).size();
-        int SoldierSize = mainFrame.getField().getAllEntityOfType(EntityType.SOLDIER).size();
-        int docterSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC).size();
-        int engineerSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC).size();
-
-        String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nDocter: " + docterSize + "\nEngineer: " + engineerSize;
-        updateText(GameText.Stat, str);
     }
 
     public WorldMap getMap() {

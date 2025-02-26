@@ -24,6 +24,7 @@ public class Path {
             return false;
         }
         barricaded = false;
+        System.out.println("hm");
         return true;
     }
 

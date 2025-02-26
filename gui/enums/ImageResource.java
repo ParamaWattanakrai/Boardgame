@@ -10,10 +10,23 @@ public enum ImageResource {
     GAME_BACKGROUND("GameBg.png"),
 
     DOG("entities/dog.png"),
+
     CIVILIAN("entities/civilian.png"),
     MEDIC("entities/medic.png"),
     SOLDIER("entities/soldier.png"),
     MECHANIC("entities/mechanic.png"),
+
+    CIVILIAN_COMA("entities/civilian_coma.png"),
+    MEDIC_COMA("entities/medic_coma.png"),
+    SOLDIER_COMA("entities/soldier_coma.png"),
+    MECHANIC_COMA("entities/mechanic_coma.png"),
+
+    CIVILIAN_NO_CONTACT("entities/civilian_no.png"),
+    MECHANIC_NO_CONTACT("entities/mechanic_no.png"),
+
+    CIVILIAN_ARM("entities/civilian_arm.png"),
+    MEDIC_ARM("entities/medic_arm.png"),
+    MECHANIC_ARM("entities/mechanic_arm.png"),
 
     FOURWAY_ROAD("map/fourway.png"),
     THREEWAY_ROAD("map/threeway.png"),
@@ -25,9 +38,11 @@ public enum ImageResource {
     HOSPITAL("landmark/3.png"),
     STORE("landmark/4.png"),
 
-    BARRICADE("Barricade.png"),
+    BARRICADE("barricade.png"),
 
-    SETTING_RULE("settingRule.png");
+    SETTING_RULE("settingRule.png"),
+
+    SHOOT("shoot.png");
 
     private final String path;
     private Image image;

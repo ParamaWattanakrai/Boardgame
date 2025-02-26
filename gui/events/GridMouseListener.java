@@ -8,10 +8,10 @@ import gui.screens.Game;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
+import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.Mechanic;
 import src.entities.Medic;
-import src.entities.ActionType;
 import src.utils.Direction;
 import src.utils.Tuple;
 
@@ -65,7 +65,7 @@ public class GridMouseListener implements MouseListener {
                     case SHOOT -> {
                         if (civilian.validateShoot(direction)) {
                             mainFrame.getField().addAction(ActionType.SHOOT, civilian, () -> civilian.shoot());
-                            civilian.getBlock().getNeighborBlock(direction).addShooter(civilian);;
+                            civilian.getBlock().getNeighborBlock(direction).addShooter(civilian);
                         }
                     }
                     case BUILD -> {
@@ -105,18 +105,21 @@ public class GridMouseListener implements MouseListener {
             if (selectY + 1 < 5) map.getRoad(selectX, selectY + 1).setHighlight(false);
             if (selectX - 1 >= 0) map.getRoad(selectX - 1, selectY).setHighlight(false);
             if (selectY - 1 >= 0) map.getRoad(selectX, selectY - 1).setHighlight(false);
+
+            if (selectX + 1 < 5) map.getRoad(selectX + 1, selectY).setShoot(false);
+            if (selectY + 1 < 5) map.getRoad(selectX, selectY + 1).setShoot(false);
+            if (selectX - 1 >= 0) map.getRoad(selectX - 1, selectY).setShoot(false);
+            if (selectY - 1 >= 0) map.getRoad(selectX, selectY - 1).setShoot(false);
             map.setSelect(null);
             game.setMode(Mode.Default);
+
         } else{
             selectBlock(x, y);
         }
 
         game.loadEntityButton(x, y);
         game.loadInActionButton();
-        game.repaint();
-        map.repaint();
-        map.revalidate();
-
+        game.rePaints();
     }
 
     public boolean nearBlock(int x, int y) {
