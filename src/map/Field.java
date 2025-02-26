@@ -158,6 +158,7 @@ public class Field {
             for (Block block : row) {
                 block.resetGunToBeLooted();
                 occupyAlgorithm(block);
+                block.occupy();
             }
         }
 

@@ -142,16 +142,14 @@ public class Block {
         return false;
     }
 
-    public boolean contact() {
-        boolean contactFlag = false;
-        if (getAllEntityOfType(EntityType.SOLDIER).size() > 0 && getAllCivilians().size() > 0) {
-            for (Civilian person : getAllCivilians()) {
-                if (!person.isContacted()) {
-                    contactFlag = true;
-                }
-            }
+    public void contact() {
+        if (getAllEntityOfType(EntityType.SOLDIER) == null || getAllEntityOfType(EntityType.SOLDIER).size() < 1) {
+            return;
         }
-        return contactFlag;
+        List<Civilian> civilians = getAllCivilians();
+        for (Civilian civilian : civilians) {
+            civilian.contact();
+        }
     }
 
     public void occupy() {
