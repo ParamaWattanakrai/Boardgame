@@ -10,6 +10,8 @@ import src.utils.*;
 public class Field {
     MetaSettings metaSettings;
 
+    int turn = 1;
+
     Random rand = new Random();
     int fieldHeight;
     int fieldWidth;
@@ -170,13 +172,13 @@ public class Field {
             if (actionType == ActionType.SHOOT) {
                 continue;
             }
-            if (actionMap.get(actionType) != null){
+            if (actionMap.get(actionType) != null) {
                 for (ActorActionPair pair : actionMap.get(actionType)) {
                     System.out.println("- " + pair);
                     System.out.println("- " +  pair.getCivilian() + "is doing");
                     pair.getRunnable().run();
                 }
-            } else{
+            } else {
                 System.out.println("- null");
             }
             System.out.println();
@@ -188,8 +190,17 @@ public class Field {
     }
 
     public void doDogActions() {
-        for (Dog dog : getAllDog()) {
-            dog.algorithm();
+        for (Block[] row : field) {
+            for (Block block : row) {
+                List<Dog> dogs = block.getAllDogs();
+                if (dogs == null) {
+                    continue;
+                }
+                boolean canBiteBarricade = true;
+                for (Dog dog : dogs) {
+                    canBiteBarricade = !dog.algorithm(canBiteBarricade);
+                }
+            }
         }
     }
 

@@ -12,10 +12,12 @@ public class Dog extends Entity {
         super(block, EntityType.DOG, blockWidth, blockHeight, entitySize);
     }
 
-    public void algorithm() {
+    public boolean algorithm(boolean canBiteBarricade) {
+        boolean hasBittenBarricade = false;
+
         if (block.getAllAlive().size() > 0) {
             bite(block.getAllAlive().get(0));
-            return;
+            return hasBittenBarricade;
         }
         List<Direction> moveDirectionCandidates = new ArrayList<>();
         int x1 = block.getCoordinate().getA();
@@ -34,7 +36,7 @@ public class Dog extends Entity {
         }
 
         if (targetBlock == block) {
-            return;
+            return hasBittenBarricade;
         }
 
         int x2 = targetBlock.getCoordinate().getA();
@@ -59,15 +61,19 @@ public class Dog extends Entity {
         }
 
         System.out.println("Dog moving " + moveDirectionCandidates);
-        move(moveDirectionCandidates.get((int) (Math.random() * 2) % (moveDirectionCandidates.size())));
+        Direction moveDirection = moveDirectionCandidates.get((int) (Math.random() * 2) % (moveDirectionCandidates.size()));
+        if (!block.getPath(moveDirection).isBarricaded()) {
+            move(moveDirection);
+        } else if (canBiteBarricade) {
+            block.biteBarricade(moveDirection);
+            hasBittenBarricade = true;
+            return hasBittenBarricade;
+        }
 
         if (block.getAllAlive().size() > 0) {
             bite(block.getAllAlive().get(0));
-        }        
-    }
-
-    public boolean pathBarricaded(Direction direction) {
-        return block.getPath(direction).isBarricaded();
+        }
+        return hasBittenBarricade;
     }
 
     @Override

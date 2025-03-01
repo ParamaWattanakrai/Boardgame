@@ -3,6 +3,7 @@ package src.map;
 public class Path {
     private boolean exist = false;
     private boolean barricaded = false;
+    private boolean weak = false;
     
     public void build() {
         exist = true;
@@ -11,21 +12,21 @@ public class Path {
         exist = false;
     }
 
-    public boolean buildBarricade() {
-        if (barricaded) {
-            return false;
-        }
+    public void buildBarricade() {
         barricaded = true;
-        return true;
     }
 
-    public boolean destroyBarricade() {
-        if (!barricaded) {
-            return false;
+    public void biteBarricade() {
+        if (weak) {
+            destroyBarricade();
+        } else {
+            weak = true;
         }
+    }
+
+    public void destroyBarricade() {
         barricaded = false;
-        System.out.println("hm");
-        return true;
+        weak = false;
     }
 
     public boolean doesExist() {

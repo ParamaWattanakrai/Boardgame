@@ -259,6 +259,11 @@ public class Block {
         return new Path();
     }
 
+    public void biteBarricade(Direction direction) {
+        getPath(direction).biteBarricade();
+        getPath(direction.getOpposite()).biteBarricade();
+    }
+
     public Field getField() {
         return field;
     }

@@ -126,7 +126,6 @@ public class WorldMap extends JPanel {
                             Civilian civilian = map.getAlive();
                             System.out.println(civilian.getEntityType());
 
-                            civilian.contact();
                             switch (map.getAction()) {
                                 case MOVE -> {
                                     if (civilian.validateMove(direction)) {
