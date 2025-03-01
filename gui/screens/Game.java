@@ -206,6 +206,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         map.setSelect(null);
 
         map.resetAllRoads();
+        List<Tuple> next = mainFrame.getField().getNextRoundDogCoordinates();
         next.forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
 
         entityPanel.removeAll();
