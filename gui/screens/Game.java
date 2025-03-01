@@ -350,12 +350,12 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 yield true;
             }
             case ARM -> {
-                if (alive.validateArm()) mainFrame.getField().addAction(ActionType.ARM, alive, alive::validateArm);
+                if (alive.validateArm()) {mainFrame.getField().addAction(ActionType.ARM, alive, alive::arm);}
                 yield false;
             }
             case HEAL -> {
                 Medic medic = (Medic) alive;
-                if (medic.validateCure()) mainFrame.getField().addAction(ActionType.HEAL, medic, medic::cure);
+                if (medic.validateCure()) {mainFrame.getField().addAction(ActionType.HEAL, medic, medic::cure);}
                 yield false;
             }
         };

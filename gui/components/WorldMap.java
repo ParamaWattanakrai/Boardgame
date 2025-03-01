@@ -181,6 +181,7 @@ public class WorldMap extends JPanel {
                                     if (civilian.validateArm()) {
                                         civilian.getBlock().addGunToBeLooted();
                                         mainFrame.getField().addAction(ActionType.ARM, civilian, () -> civilian.arm());
+                                        mainFrame.getField().printAction();
                                     }
                                 }
                                 default -> System.out.print("");
