@@ -34,13 +34,10 @@ public class MainFrame extends JFrame {
 
     private void initializeUI() {
         setTitle(TITLE);
-        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setUndecorated(true);
         setLocationRelativeTo(null);
         
-        setSize(1920, 1080);
         setIconImage(ImageResource.LOGO.getImage());
         createScreen();
         addScreen();

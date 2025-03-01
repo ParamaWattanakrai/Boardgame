@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
 import src.entities.*;
 import src.utils.*;
 
@@ -134,19 +133,27 @@ public class Field {
     }
 
     public void endTurn(int dogIncoming) {
+        System.out.println("--------------------");
+        System.out.println("----- Action!!");
         printAction();
+        System.out.println();
 
+        System.out.println("--------------------");
+        System.out.println("----- Shot!!!!!!");
         shootEveryBlock();
+        System.out.println();
 
-        System.out.println("passed shooting");
-        printAction();
-
+        System.out.println("--------------------");
+        System.out.println("----- Civilian Action!!");
         doCivilianActions();
+        System.out.println();
 
+        System.out.println("--------------------");
+        System.out.println("----- Dog Action!!");
         doDogActions();
+        System.out.println();
 
         updateField();
-
         spawnDogs(dogIncoming);
     }
 
@@ -159,6 +166,7 @@ public class Field {
     }
     
     public void doCivilianActions() {
+        actionMap.remove(ActionType.SHOOT);
         for (ActionType actionType : ActionType.values()) {
             System.out.println(actionType);
             List<ActorActionPair> actionRunnables = actionMap.get(actionType);

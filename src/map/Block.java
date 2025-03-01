@@ -225,29 +225,25 @@ public class Block {
     public int shootDog() {
         int dogShot = 0;
         List<Dog> dogs = getAllDogs();
-        if (dogs == null) {
-            return dogShot;
-        }
-        Iterator<Dog> dogIterator = dogs.iterator();
-        while (dogIterator.hasNext()) {
-            Dog dog = dogIterator.next();
+        if (dogs == null) { return dogShot;}
+        for (Dog dog : dogs) {
             Iterator<Civilian> shooterIterator = shooters.iterator();
             while (shooterIterator.hasNext()) {
                 Civilian shooter = shooterIterator.next();
-                boolean shot = Math.random() > shooter.getHitRate() ? false : true;
+                boolean shot = Math.random() <= shooter.getHitRate();
                 if (shot) {
                     dog.kill();
                     dogShot++;
-                    shooterIterator.remove();
+                    shooterIterator.remove(); 
                     break;
                 }
                 System.out.println("Survived Miraculously!");
-                shooters.remove(shooter);
+                shooterIterator.remove();  
             }
         }
         return dogShot;
     }
-
+    
     public Path getPath(Direction direction) {
         switch (direction) {
             case NORTH:
