@@ -36,4 +36,9 @@ public class Path {
     public boolean isBarricaded() {
         return barricaded;
     }
+
+    @Override
+    public String toString() {
+        return "barricaded: " + barricaded + ", weak: " + weak;
+    }
 }

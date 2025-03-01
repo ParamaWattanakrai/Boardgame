@@ -16,6 +16,7 @@ import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.Mechanic;
 import src.entities.Medic;
+import src.map.Block;
 import src.utils.Direction;
 import src.utils.Tuple;
 
@@ -114,7 +115,11 @@ public class WorldMap extends JPanel {
             addMouseListener(new java.awt.event.MouseListener() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent e) {
-                    System.out.println("X:" + gridX + ", Y:" + gridY);
+                    Block block = mainFrame.getField().getBlock(new Tuple(gridX, gridY));
+                    System.out.println(block.getCoordinate());
+                    for (Direction direction : Direction.values()) {
+                        System.out.println(direction + ", " + block.getPath(direction));
+                    }
                     if (game.getMode() == GameMode.Action && map.getSelect() != null && map.getAction() != null) {
                         if (nearBlock(gridX, gridY)) {
                             game.resetButton();

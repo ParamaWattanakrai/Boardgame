@@ -261,7 +261,7 @@ public class Block {
 
     public void biteBarricade(Direction direction) {
         getPath(direction).biteBarricade();
-        getPath(direction.getOpposite()).biteBarricade();
+        getNeighborBlock(direction).getPath(direction.getOpposite()).biteBarricade();
     }
 
     public Field getField() {
