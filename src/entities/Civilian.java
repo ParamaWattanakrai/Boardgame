@@ -6,6 +6,7 @@ import src.utils.Direction;
 public class Civilian extends Entity {
     protected double hitRate = 0.75;
     protected Vitality vitality = Vitality.ALIVE;
+    protected int comaTime = 0;
     protected boolean contacted = false;
     protected boolean armed = false;
 
@@ -87,6 +88,7 @@ public class Civilian extends Entity {
     public void disinfect() {
         teleport(block.getField().getOccupiedHospitals().get(0));
         vitality = Vitality.ALIVE;
+        comaTime = 0;
     }
 
     public void contact() {
@@ -112,6 +114,13 @@ public class Civilian extends Entity {
     }
     public Runnable getActionRunnable() {
         return actionRunnable;
+    }
+
+    public void comaTime() {
+        comaTime++;
+    }
+    public int getComaTime() {
+        return comaTime;
     }
 
     public Vitality getVitality() {

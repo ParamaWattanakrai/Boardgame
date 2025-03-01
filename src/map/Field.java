@@ -158,6 +158,8 @@ public class Field {
         doDogActions();
         System.out.println();
 
+        death();
+
         updateField();
         spawnDogs(dogIncoming);
     }
@@ -205,6 +207,20 @@ public class Field {
                 }
             }
         }
+    }
+
+    public int death() {
+        int death = 0;
+        List<Civilian> comaCivilian = getAllComa();
+        if (comaCivilian == null) {return death;}
+        for (Civilian civilian : comaCivilian) {
+            if (civilian.getComaTime() >= 2) {
+                civilian.kill();
+            } else {
+                civilian.comaTime();
+            }
+        }
+        return death;
     }
 
     public void updateField() {
@@ -399,6 +415,16 @@ public class Field {
             }
         }
         return entities;
+    }
+
+    public List<Civilian> getAllComa() {
+        List<Civilian> civilians = new ArrayList<>();
+        for (Block[] row : field) {
+            for (Block block : row) {
+                civilians.addAll(block.getAllComa());
+            }
+        }
+        return civilians;
     }
 
     public List<Civilian> getAllCivilians() {
