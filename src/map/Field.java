@@ -80,6 +80,9 @@ public class Field {
             if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
                 field[randY][randX].setBlockType(BlockType.POLICESTATION);
                 addLandmark(BlockType.POLICESTATION, field[randY][randX]);
+                for (int i = 0; i < 6; i++) {
+                    field[randY][randX].addGunAmount();
+                }
                 remainingPoliceStation--;
             }
         }
@@ -428,6 +431,10 @@ public class Field {
 
     public HashMap<BlockType, Boolean> getOccupationMap() {
         return occupationMap;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public void printField() {
