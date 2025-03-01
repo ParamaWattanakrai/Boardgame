@@ -20,6 +20,7 @@ public class Mechanic extends Civilian {
     public void buildBarricade(Direction direction) {
         if (validateBuildBarricade(direction)) {
             block.getPath(direction).buildBarricade();
+            block.getNeighborBlock(direction).getPath(direction.getOpposite()).buildBarricade();
         }
     }
 }

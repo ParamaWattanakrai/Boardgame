@@ -166,9 +166,10 @@ public class Field {
     }
     
     public void doCivilianActions() {
-        actionMap.remove(ActionType.SHOOT);
         for (ActionType actionType : ActionType.values()) {
-            System.out.println(actionType);
+            if (actionType == ActionType.SHOOT) {
+                continue;
+            }
             if (actionMap.get(actionType) != null){
                 for (ActorActionPair pair : actionMap.get(actionType)) {
                     System.out.println("- " + pair);
