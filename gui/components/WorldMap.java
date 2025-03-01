@@ -26,7 +26,7 @@ public class WorldMap extends JPanel {
 
     private Road select = null;
     private ActionType action;
-    private int alive;
+    private Civilian alive;
 
     public WorldMap(Game game, MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -78,11 +78,11 @@ public class WorldMap extends JPanel {
         this.action = action;
     }
 
-    public int getAlive() {
+    public Civilian getAlive() {
         return alive;
     }
 
-    public void setAlive(int alive) {
+    public void setAlive(Civilian alive) {
         this.alive = alive;
     }
 
@@ -122,8 +122,7 @@ public class WorldMap extends JPanel {
                             int dy = gridY - startY;
 
                             Direction direction = Direction.offsetToDirection(new Tuple(dx, dy));
-                            Civilian civilian = mainFrame.getField().getBlock(new Tuple(startX, startY)).getAllAlive()
-                                    .get(map.getAlive());
+                            Civilian civilian = map.getAlive();
                             System.out.println(civilian.getEntityType());
 
                             civilian.contact();

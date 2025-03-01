@@ -169,19 +169,20 @@ public class Field {
         actionMap.remove(ActionType.SHOOT);
         for (ActionType actionType : ActionType.values()) {
             System.out.println(actionType);
-            List<ActorActionPair> actionRunnables = actionMap.get(actionType);
-            if (actionRunnables == null) {
-                continue;
+            if (actionMap.get(actionType) != null){
+                for (ActorActionPair pair : actionMap.get(actionType)) {
+                    System.out.println("- " + pair);
+                    System.out.println("- " +  pair.getCivilian() + "is doing");
+                    pair.getRunnable().run();
+                }
+            } else{
+                System.out.println("- null");
             }
-            for (ActorActionPair actorActionPair : actionRunnables) {
-                System.out.println(actorActionPair);
-                System.out.println(actorActionPair.getCivilian() + "is doing");
-                actorActionPair.getRunnable().run();
-            }
-            actionMap = new HashMap<>();
-            for (Civilian civilian : getAllCivilians()) {
-                civilian.nullAction();
-            }
+            System.out.println();
+        }
+        actionMap = new HashMap<>();
+        for (Civilian civilian : getAllCivilians()) {
+            civilian.nullAction();
         }
     }
 
@@ -285,8 +286,9 @@ public class Field {
         for (ActionType actionType : actionMap.keySet()) {
             System.out.println(actionType);
             for (ActorActionPair pair : actionMap.get(actionType)) {
-                System.out.println(pair.getCivilian() + " " + pair.getRunnable());
+                System.out.println("- " + pair.getCivilian());
             }
+            System.out.println();
         }
     }
 

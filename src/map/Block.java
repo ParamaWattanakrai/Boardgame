@@ -235,6 +235,7 @@ public class Block {
                     dog.kill();
                     dogShot++;
                     shooterIterator.remove(); 
+                    System.out.println("- the dog is dead xxx");
                     break;
                 }
                 System.out.println("Survived Miraculously!");

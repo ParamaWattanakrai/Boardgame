@@ -1,16 +1,14 @@
 GUI
-ทิศทางการเดิน
-animetion ตอน endTurn
-ออกกแบบ GUI ใหม่
-จัดระเบียบ
+- ทิศทางการเดิน
+- animetion ตอน endTurn
+- ออกกแบบ GUI ใหม่
+- จัดระเบียบ
 
 Logic
--ทำระบบตา
- -ทำ barricade
- -ทำตาย
-
-Bugs
-- เพิ่ม Game data
--เก็บปืน ตำรวจ
--ปืนล่วง
+- validate BUILD plsss
+- ทำระบบตา
+- ทำ barricade
+- ทำตาย
+- เก็บปืน ตำรวจ
+- ปืนล่วง
 - proview dog 
