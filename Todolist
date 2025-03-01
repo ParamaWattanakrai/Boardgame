@@ -10,13 +10,7 @@ Logic
  -ทำตาย
 
 Bugs
--shootDog
-Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException
-        at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1096)
-        at java.base/java.util.ArrayList$Itr.next(ArrayList.java:1050)
-        at src.map.Block.shootDog(Block.java:232)
-        at src.map.Field.endTurn(Field.java:135)
-
+- เพิ่ม Game data
 -เก็บปืน ตำรวจ
 -ปืนล่วง
 - proview dog 
