@@ -309,19 +309,14 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
     
     private void actionButton(ActionType action, Civilian alive) {
-        resetButton();
-        int x = map.getSelect().getGridX();
-        int y = map.getSelect().getGridY();
-
         BiConsumer<Function<Direction, Boolean>, ActionType> validateAction = (validate, actionType) -> {
             int newX;
             int newY;
- 
             for (Direction dir : Direction.values()) {
                 if (validate.apply(dir)) {
                     Tuple offset = dir.getOffset();
-                    newX = x + offset.getA();
-                    newY = y + offset.getB();
+                    newX = map.getSelect().getGridX() + offset.getA();
+                    newY = map.getSelect().getGridY() + offset.getB();
                     switch (actionType) {
                         case MOVE -> map.getRoad(newX, newY).setIsCanMove(true); 
                         case SHOOT -> map.getRoad(newX, newY).setIsCanShot(true); 
@@ -331,7 +326,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 }
             } 
         };
-        
+
+        resetButton();
         boolean selectBlock = switch (action) {
             case MOVE -> {
                 validateAction.accept(alive::validateMove, ActionType.MOVE);
@@ -346,12 +342,12 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 yield true;
             }
             case ARM -> {
-                if (alive.validateArm()) {mainFrame.getField().addAction(ActionType.ARM, alive, alive::arm);}
+                mainFrame.getField().addAction(ActionType.ARM, alive, alive::arm);
                 yield false;
             }
             case HEAL -> {
                 Medic medic = (Medic) alive;
-                if (medic.validateCure()) {mainFrame.getField().addAction(ActionType.HEAL, medic, medic::cure);}
+                mainFrame.getField().addAction(ActionType.HEAL, medic, medic::cure);
                 yield false;
             }
         };
@@ -361,7 +357,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             map.setAlive(alive);
             setMode(GameMode.Action);
         } else {
-            loadEntityButton(x, y);
+            loadEntityButton(map.getSelect().getGridX(), map.getSelect().getGridY());
             loadInActionButton();
         }
         rePaints();

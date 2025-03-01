@@ -61,7 +61,11 @@ public class ImageDrawer {
                                 yield ImageResource.MECHANIC.getImage();
                             }
                         } else {
-                            yield ImageResource.MECHANIC_NO_CONTACT.getImage();
+                            if (civilian.getVitality() == Vitality.COMA) {
+                                yield ImageResource.CIVILIAN_NO_CONTACT_COMA.getImage();
+                            } else{
+                                yield ImageResource.MECHANIC_NO_CONTACT.getImage();
+                            }
                         }
                     }
 
@@ -91,7 +95,11 @@ public class ImageDrawer {
                                 yield ImageResource.CIVILIAN.getImage();
                             }
                         } else {
-                            yield ImageResource.CIVILIAN_NO_CONTACT.getImage();
+                            if (civilian.getVitality() == Vitality.COMA) {
+                                yield ImageResource.CIVILIAN_NO_CONTACT_COMA.getImage();
+                            } else {
+                                yield ImageResource.CIVILIAN_NO_CONTACT.getImage();
+                            }
                         }
                     }
                 };
