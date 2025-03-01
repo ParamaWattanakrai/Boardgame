@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.ImageIcon;
 
-public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
+public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     private HashMap<RuleButton, Button> buttons;
     private List<Image> images;
     private int imageIndex = 0;
@@ -27,13 +27,13 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
     @Override
     protected void initializeUI() {
         setLayout(null);
-        createButton(); 
+        createButton();
         setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
         setVisible(true);
     }
-    
+
     @Override
     public void createButton() {
         buttons = new HashMap<>();
@@ -46,6 +46,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton>{
         images.add(ImageResource.RULEPAGE2.getImage());
         images.add(ImageResource.RULEPAGE3.getImage());
         images.add(ImageResource.RULEPAGE4.getImage());
+        images.add(ImageResource.RULEPAGE5.getImage());
     }
 
     @Override
