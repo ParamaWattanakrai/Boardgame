@@ -114,6 +114,7 @@ public class WorldMap extends JPanel {
             addMouseListener(new java.awt.event.MouseListener() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent e) {
+                    System.out.println("X:" + gridX + ", Y:" + gridY);
                     if (game.getMode() == GameMode.Action && map.getSelect() != null && map.getAction() != null) {
                         if (nearBlock(gridX, gridY)) {
                             game.resetButton();
