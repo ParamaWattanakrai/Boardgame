@@ -22,6 +22,7 @@ public enum ImageResource {
     MEDIC_COMA("entities/medic_coma.png"),
     SOLDIER_COMA("entities/soldier_coma.png"),
     MECHANIC_COMA("entities/mechanic_coma.png"),
+    CIVILIAN_NO_CONTACT_COMA("entities/civilian_no_coma.png"),
 
     CIVILIAN_NO_CONTACT("entities/civilian_no.png"),
     MECHANIC_NO_CONTACT("entities/mechanic_no.png"),
