@@ -69,6 +69,7 @@ public class Civilian extends Entity {
     public void arm() {
         if (validateArm()) {
             armed = true;
+            block.removeGunAmount();
         }
     }
 
