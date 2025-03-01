@@ -12,8 +12,10 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import src.map.Field;
 import src.map.MetaSettings;
+import src.utils.Tuple;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private final HashMap<MainButton, Button> buttons;
@@ -73,6 +75,12 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetButton();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().setSelect(null);
+
+        List<Tuple> next = mainFrame.getField().getNextRoundDogCoordinates();
+        next.forEach((dog) -> {
+            ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().getRoad(dog.getA(), dog.getB()).setPreviewDog(true);
+        });
+
         mainFrame.showScreen(GameScreen.GAME);
     }
 

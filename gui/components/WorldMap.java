@@ -22,6 +22,7 @@ import src.utils.Tuple;
 
 public class WorldMap extends JPanel {
     private Road[][] road = new Road[5][5];
+
     private final MainFrame mainFrame;
     private final Game game;
 
@@ -51,6 +52,14 @@ public class WorldMap extends JPanel {
             for (int gridX = 0; gridX < 5; gridX++) {
                 road[gridX][gridY].revalidate();
                 road[gridX][gridY].repaint();
+            }
+        }
+    }
+
+    public void resetAllRoads() {
+        for (int gridY = 0; gridY < 5; gridY++) {
+            for (int gridX = 0; gridX < 5; gridX++) {
+                road[gridX][gridY].setPreviewDog(false);;
             }
         }
     }
@@ -101,6 +110,7 @@ public class WorldMap extends JPanel {
         private final int gridY;
         private boolean isCanMove = false;
         private boolean isCanShot = false;
+        private boolean previewDog = false;
 
         public Road(int gridX, int gridY, WorldMap map) {
             this.gridX = gridX;
@@ -270,8 +280,15 @@ public class WorldMap extends JPanel {
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
                 g2d.drawImage(ImageResource.SHOOT.getImage(), 0, 0, getHeight(), getHeight(), null);
             }
+
+            if (previewDog) {
+                g2d.setColor(new Color(255, 0, 0, 50));
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
             g2d.dispose();
         }
+
+        
 
         public int getGridX() {
             return gridX;
@@ -295,6 +312,14 @@ public class WorldMap extends JPanel {
 
         public void setIsCanShot(boolean isCanShot) {
             this.isCanShot = isCanShot;
+        }
+
+        public boolean isPreviewDog() {
+            return previewDog;
+        }
+
+        public void setPreviewDog(boolean previewDog) {
+            this.previewDog = previewDog;
         }
     }
 }

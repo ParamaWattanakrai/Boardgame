@@ -205,6 +205,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.SelectTitle).setText("Select");
         map.setSelect(null);
 
+        map.resetAllRoads();
+        next.forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
+
         entityPanel.removeAll();
         actionPanel.removeAll();
         rePaints();
