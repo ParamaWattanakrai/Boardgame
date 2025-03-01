@@ -205,7 +205,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         textPanels.get(GameText.SelectTitle).setText("Select");
         map.setSelect(null);
 
-        map.resetAllRoads();
+        map.resetPerRoads();
         List<Tuple> next = mainFrame.getField().getNextRoundDogCoordinates();
         next.forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
 
@@ -245,8 +245,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     // -------- Action button --------//
     private void loadActionButton(Civilian alive) {
         resetButton();
-        textPanels.get(GameText.SelectTitle).setText("Action");
-
         List<ActionType> actions = new ArrayList<>();
 
         if (checkValidateAction(ActionType.SHOOT, alive) && alive.isArmed()) {
@@ -277,9 +275,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     actions.add(ActionType.SHOOT);
                 }
             }
-            default -> {
-
-            }
+            default -> {}
         }
 
         actions.forEach(action -> {
@@ -350,12 +346,12 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 yield true;
             }
             case ARM -> {
-                if (alive.validateArm()) mainFrame.getField().addAction(ActionType.ARM, alive, alive::validateArm);
+                mainFrame.getField().addAction(ActionType.ARM, alive, alive::validateArm);
                 yield false;
             }
             case HEAL -> {
                 Medic medic = (Medic) alive;
-                if (medic.validateCure()) mainFrame.getField().addAction(ActionType.HEAL, medic, medic::cure);
+                mainFrame.getField().addAction(ActionType.HEAL, medic, medic::cure);
                 yield false;
             }
         };
