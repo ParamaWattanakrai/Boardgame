@@ -24,6 +24,7 @@ import javax.swing.*;
 import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.EntityType;
+import src.entities.Mechanic;
 import src.entities.Medic;
 import src.entities.Vitality;
 import src.utils.Direction;
@@ -301,13 +302,14 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         return switch (action) {
             case MOVE -> validateAction.apply(alive::validateMove);
             case SHOOT -> validateAction.apply(alive::validateShoot);
-            case BUILD -> true;
+            case BUILD -> validateAction.apply(((Mechanic)alive)::validateBuildBarricade);
             case ARM -> alive.validateArm();
             case HEAL -> ((Medic) alive).validateCure();
         };
     }
     
     private void actionButton(ActionType action, Civilian alive) {
+        resetButton();
         int x = map.getSelect().getGridX();
         int y = map.getSelect().getGridY();
 
@@ -340,7 +342,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 yield true;
             }
             case BUILD -> {
-                validateAction.accept(alive::validateMove, ActionType.MOVE);
+                validateAction.accept(((Mechanic) alive)::validateBuildBarricade, ActionType.BUILD);
                 yield true;
             }
             case ARM -> {
@@ -353,7 +355,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             }
         };
 
-        resetButton();
         if (selectBlock) {
             map.setAction(action);
             map.setAlive(alive);
