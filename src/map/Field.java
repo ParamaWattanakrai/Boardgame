@@ -459,6 +459,10 @@ public class Field {
         return occupationMap;
     }
 
+    public List<Tuple> getNextRoundDogCoordinates() {
+        return nextRoundDogCoordinates;
+    }
+
     public int getTurn() {
         return turn;
     }
