@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.Mechanic;
-import src.entities.Medic;
 import src.map.Block;
 import src.utils.Direction;
 import src.utils.Tuple;
@@ -56,10 +55,20 @@ public class WorldMap extends JPanel {
         }
     }
 
-    public void resetAllRoads() {
+    public void resetActionRoads() {
         for (int gridY = 0; gridY < 5; gridY++) {
             for (int gridX = 0; gridX < 5; gridX++) {
-                road[gridX][gridY].setPreviewDog(false);;
+                road[gridX][gridY].setIsCanMove(false);
+                road[gridX][gridY].setIsCanShot(false);
+
+            }
+        }
+    }
+
+    public void resetPerRoads() {
+        for (int gridY = 0; gridY < 5; gridY++) {
+            for (int gridX = 0; gridX < 5; gridX++) {
+                road[gridX][gridY].setPreviewDog(false);
             }
         }
     }
@@ -167,47 +176,12 @@ public class WorldMap extends JPanel {
                                                 () -> mechanic.buildBarricade(direction));
                                     }
                                 }
-                                case HEAL -> {
-                                    if (!(civilian instanceof Medic)) {
-                                        System.out.println("Not a medic!");
-                                        break;
-                                    }
-                                    Medic medic = (Medic) civilian;
-                                    if (medic.validateCure()) {
-                                        mainFrame.getField().addAction(ActionType.HEAL, medic, () -> medic.cure());
-                                    }
-                                }
-                                case ARM -> {
-                                    if (civilian.validateArm()) {
-                                        civilian.getBlock().addGunToBeLooted();
-                                        mainFrame.getField().addAction(ActionType.ARM, civilian, () -> civilian.arm());
-                                        mainFrame.getField().printAction();
-                                    }
-                                }
-                                default -> System.out.print("");
+                                default -> {}
                             }
                             civilian.getBlock().getField().printAction();
                         }
 
-                        int selectX = map.getSelect().getGridX();
-                        int selectY = map.getSelect().getGridY();
-                        if (selectX + 1 < 5)
-                            map.getRoad(selectX + 1, selectY).setIsCanMove(false);
-                        if (selectY + 1 < 5)
-                            map.getRoad(selectX, selectY + 1).setIsCanMove(false);
-                        if (selectX - 1 >= 0)
-                            map.getRoad(selectX - 1, selectY).setIsCanMove(false);
-                        if (selectY - 1 >= 0)
-                            map.getRoad(selectX, selectY - 1).setIsCanMove(false);
-
-                        if (selectX + 1 < 5)
-                            map.getRoad(selectX + 1, selectY).setIsCanShot(false);
-                        if (selectY + 1 < 5)
-                            map.getRoad(selectX, selectY + 1).setIsCanShot(false);
-                        if (selectX - 1 >= 0)
-                            map.getRoad(selectX - 1, selectY).setIsCanShot(false);
-                        if (selectY - 1 >= 0)
-                            map.getRoad(selectX, selectY - 1).setIsCanShot(false);
+                        resetActionRoads();
                         map.setSelect(null);
                         game.setMode(GameMode.Default);
 
@@ -257,7 +231,6 @@ public class WorldMap extends JPanel {
             drawer.drawPopulation(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
             drawer.drawDog(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
             drawer.drawBarricade(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
-
             Graphics2D g2d = (Graphics2D) g.create();
 
             // if (mainFrame.getField().getBlock(new Tuple(x, y))) {

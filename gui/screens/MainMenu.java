@@ -75,7 +75,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetButton();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().setSelect(null);
-        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().resetAllRoads();
+        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().resetPerRoads();
         List<Tuple> next = mainFrame.getField().getNextRoundDogCoordinates();
         next.forEach((dog) -> {
             ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().getRoad(dog.getA(), dog.getB()).setPreviewDog(true);
