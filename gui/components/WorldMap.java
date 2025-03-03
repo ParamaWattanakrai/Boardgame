@@ -192,7 +192,7 @@ public class WorldMap extends JPanel {
 
                     game.loadEntityButton(gridX, gridY);
                     game.loadInActionButton();
-                    game.rePaints();
+                    map.repaintAllRoads();
                 }
 
                 @Override

@@ -1,9 +1,12 @@
 GUI
 - จัดระเบียบ
+    
+GUI อาจทำถ้ามีเวลา 
+- animetion turn ต่อไป
 
 Logic
 - ทำระบบตา
 
 Known Bugs
-- Arming not working
-- Medic shenanigans
+- Medic shenanigans แปลว่าเหี้ยไร
+- ไม่ contact แต่ยึด Landmark ได้

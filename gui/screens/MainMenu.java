@@ -6,8 +6,9 @@ import gui.data.GameData;
 import gui.enums.GameScreen;
 import gui.enums.ImageResource;
 import gui.enums.MainButton;
+import gui.enums.SoundResource;
 import gui.interfaces.ButtonActions;
-import gui.utils.SoundManager;
+import gui.utils.SoundPlayer;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         setButtonBounds();
         buttons.values().forEach(this::add);
         buttons.keySet().forEach(this::addButtonListener);
-        SoundManager.playMainMenuMusic();
+        SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
         setVisible(true);
     }
 
@@ -72,15 +73,12 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         mainFrame.setField(new Field(metaSettings));
         mainFrame.setGamaData(new GameData());
         mainFrame.getField().printField();
-        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetButton();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().setSelect(null);
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().resetPerRoads();
+        ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         List<Tuple> next = mainFrame.getField().getNextRoundDogCoordinates();
-        next.forEach((dog) -> {
-            ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().getRoad(dog.getA(), dog.getB()).setPreviewDog(true);
-        });
-
+        next.forEach((dog) -> {((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().getRoad(dog.getA(), dog.getB()).setPreviewDog(true);});
         mainFrame.showScreen(GameScreen.GAME);
     }
 
@@ -88,7 +86,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         if (mainFrame.getField() != null) {
             mainFrame.showScreen(GameScreen.GAME);
         } else {
-            SoundManager.playIncorrectSound();
+            SoundPlayer.playSound(SoundResource.Incorrect.getSound());
         }
     }
 

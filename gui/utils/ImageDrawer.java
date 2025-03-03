@@ -53,9 +53,9 @@ public class ImageDrawer {
                 Image image = switch (civilian.getEntityType()) {
                     case MECHANIC -> {
                         if (civilian.isContacted()) {
-                            if (civilian.isArmed()) {
-                                yield ImageResource.MECHANIC_ARM.getImage();
-                            } else if (civilian.getVitality() == Vitality.COMA) {
+                            if (civilian.getVitality() == Vitality.COMA) {
+                                yield ImageResource.MECHANIC_COMA.getImage();
+                            } else if (civilian.isArmed()) {
                                 yield ImageResource.MECHANIC_COMA.getImage();
                             }else {
                                 yield ImageResource.MECHANIC.getImage();
@@ -70,10 +70,10 @@ public class ImageDrawer {
                     }
 
                     case MEDIC -> {
-                        if (civilian.isArmed()) {
-                            yield ImageResource.MEDIC_ARM.getImage();
-                        } else if (civilian.getVitality() == Vitality.COMA) {
+                        if (civilian.getVitality() == Vitality.COMA) {
                             yield ImageResource.MEDIC_COMA.getImage();
+                        } else if (civilian.isArmed()) {
+                            yield ImageResource.MEDIC_ARM.getImage();
                         } else {
                             yield ImageResource.MEDIC.getImage();
                         }
@@ -87,10 +87,10 @@ public class ImageDrawer {
                     }
                     default -> {
                         if (civilian.isContacted()) {
-                            if (civilian.isArmed()) {
-                                yield ImageResource.CIVILIAN_ARM.getImage();
-                            } else if (civilian.getVitality() == Vitality.COMA) {
+                            if (civilian.getVitality() == Vitality.COMA) {
                                 yield ImageResource.CIVILIAN_COMA.getImage();
+                            } else if (civilian.isArmed()) {
+                                yield ImageResource.CIVILIAN_ARM.getImage();
                             }else {
                                 yield ImageResource.CIVILIAN.getImage();
                             }

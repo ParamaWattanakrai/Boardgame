@@ -1,7 +1,9 @@
 package gui.components;
 
+import gui.enums.SoundResource;
 import gui.utils.FontLoader;
-import gui.utils.SoundManager;
+import gui.utils.SoundPlayer;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -49,7 +51,7 @@ public class Button extends JButton {
                 if (pop) {
                     setFont(font.deriveFont(fontSize + 5));
                 }
-                SoundManager.playSelectSound();
+                SoundPlayer.playSound(SoundResource.Select.getSound());
             }
 
             @Override
@@ -62,7 +64,7 @@ public class Button extends JButton {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                SoundManager.playButtonClickSound();
+                SoundPlayer.playSound(SoundResource.Press.getSound());
             }
         });
     }
