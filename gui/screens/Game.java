@@ -140,8 +140,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             int CivilianSize = mainFrame.getField().getAllEntityOfType(EntityType.CIVILIAN, Vitality.ALIVE).size();
             int SoldierSize = mainFrame.getField().getAllEntityOfType(EntityType.SOLDIER, Vitality.ALIVE).size();
             int medicSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC, Vitality.ALIVE).size();
-            int engineerSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
-            String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: " + medicSize + "\nEngineer: " + engineerSize;
+            int mechanicSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
+            String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: " + medicSize + "\nMechanic: " + mechanicSize;
             updateText(GameText.Stat, str);
         } else {
             updateText(GameText.Stat, "Noting here");
