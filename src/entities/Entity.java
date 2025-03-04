@@ -1,7 +1,6 @@
 package src.entities;
 
 import java.util.Random;
-
 import src.map.Block;
 import src.utils.Direction;
 import src.utils.Tuple;
@@ -10,11 +9,13 @@ public abstract class Entity {
     protected EntityType entityType;
     protected Block block;
 
+    protected Tuple previousCoordinate;
     protected Tuple pixelCoordinate;
 
     public Entity(Block block, EntityType entityType, int blockWidth, int blockHeight, int entitySize) {
         this.entityType = entityType;
         this.block = block;
+        previousCoordinate = null;
         block.addEntity(this);
         assignPixelCoordinate(blockWidth, blockHeight, entitySize);
     }
@@ -49,7 +50,17 @@ public abstract class Entity {
         return pixelCoordinate;
     }
 
+    public Tuple getPreviousCoordinate() {
+        return previousCoordinate;
+    }
+
+    public void setPreviousCoordinate(Tuple previousCoordinate) {
+        this.previousCoordinate = previousCoordinate;
+    }
+
     public EntityType getEntityType() {
         return entityType;
     }
+
+    
 }
