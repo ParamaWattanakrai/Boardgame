@@ -1,5 +1,5 @@
 package gui.enums;
 
 public enum MainButton {
-    NEW_GAME, RESUME, QUIT, RULE
+    NEW_GAME, RESUME, QUIT, RULE, SOUND
 }

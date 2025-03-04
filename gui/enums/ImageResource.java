@@ -12,7 +12,6 @@ public enum ImageResource {
 
     GUN_ANI("animation/gun.gif"),
 
-
     MAP("Map.png"),
     DOG("entities/dog.png"),
 
@@ -54,7 +53,8 @@ public enum ImageResource {
     RULEPAGE1("RulePage/21.png"),
     RULEPAGE2("RulePage/22.png"),
     RULEPAGE3("RulePage/23.png"),
-    RULEPAGE4("RulePage/24.png");
+    RULEPAGE4("RulePage/24.png"),
+    RULEPAGE5("RulePage/27.png");
 
     private final String path;
     private Image image;
@@ -64,7 +64,7 @@ public enum ImageResource {
         this.path = path;
         this.image = null;
     }
-    
+
     public Image getImage() {
         if (image == null) {
             image = ImageLoader.loadImage(path);
@@ -78,7 +78,7 @@ public enum ImageResource {
         }
         return imageIcon;
     }
-    
+
     public Image getScaledImage(int width, int height) {
         return getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
     }
