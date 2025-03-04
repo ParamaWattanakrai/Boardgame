@@ -39,6 +39,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         buttons = new HashMap<>();
         buttons.put(RuleButton.BACK, new Button(""));
         buttons.put(RuleButton.NEXTPAGE, new Button("NEXT"));
+        buttons.put(RuleButton.BACKPAGE, new Button("BACK"));
         buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageResource.SETTING_RULE.getScaledImage(80, 80)));
 
         images = new ArrayList<>();
@@ -52,7 +53,8 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     @Override
     public void setButtonBounds() {
         buttons.get(RuleButton.BACK).setBounds(1820, 20, 80, 80);
-        buttons.get(RuleButton.NEXTPAGE).setBounds(1550, 900, 500, 70);
+        buttons.get(RuleButton.NEXTPAGE).setBounds(1470, 900, 500, 70);
+        buttons.get(RuleButton.BACKPAGE).setBounds(-40, 900, 500, 70);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
             switch (button) {
                 case BACK -> backButton();
                 case NEXTPAGE -> NextPage();
+                case BACKPAGE -> BackPage();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -74,6 +77,14 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         imageIndex++;
         if (imageIndex >= images.size()) {
             imageIndex = 0;
+        }
+        repaint();
+    }
+
+    private void BackPage() {
+        imageIndex--;
+        if (imageIndex < 0) {
+            imageIndex = images.size() - 1;
         }
         repaint();
     }
