@@ -196,7 +196,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         for (GameScroll scroll : GameScroll.values()) {
             scrollPanes.put(scroll, new ScrollPane());
         }
-
     }
 
     public void setScrollPaneBounds(){

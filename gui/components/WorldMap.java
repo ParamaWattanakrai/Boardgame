@@ -24,7 +24,7 @@ public class WorldMap extends JPanel {
 
     private final MainFrame mainFrame;
     private final Game game;
-
+    private boolean draw = true;
     private Road select = null;
     private ActionType action;
     private Civilian alive;
@@ -60,7 +60,6 @@ public class WorldMap extends JPanel {
             for (int gridX = 0; gridX < 5; gridX++) {
                 road[gridX][gridY].setIsCanMove(false);
                 road[gridX][gridY].setIsCanShot(false);
-
             }
         }
     }
@@ -71,6 +70,10 @@ public class WorldMap extends JPanel {
                 road[gridX][gridY].setPreviewDog(false);
             }
         }
+    }
+
+    public Road[][] getAllRoad() {
+        return road;
     }
 
     public Road getRoad(int gridX, int gridY) {
@@ -105,12 +108,28 @@ public class WorldMap extends JPanel {
         this.alive = alive;
     }
 
+    public boolean isDraw() {
+        return draw;
+    }
+
+    public void setDraw(boolean draw) {
+        this.draw = draw;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
         g2d.drawImage(ImageResource.MAP.getImage(), 0, 0, getWidth(), getHeight(), null);
         g2d.dispose();
+
+        ImageDrawer drawer = new ImageDrawer();
+        drawer.drawRoad(g, this, mainFrame);
+        drawer.drawBarricade(g, this, mainFrame);
+        drawer.drawLandmark(g, this, mainFrame);
+        drawer.drawPopulation(g, this, mainFrame);
+        drawer.drawDog(g, this, mainFrame);        
     }
 
     public class Road extends JPanel {
@@ -176,7 +195,8 @@ public class WorldMap extends JPanel {
                                                 () -> mechanic.buildBarricade(direction));
                                     }
                                 }
-                                default -> {}
+                                default -> {
+                                }
                             }
                             civilian.getBlock().getField().printAction();
                         }
@@ -196,26 +216,28 @@ public class WorldMap extends JPanel {
                 }
 
                 @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {}
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                }
 
                 @Override
-                public void mouseReleased(java.awt.event.MouseEvent e) {}
+                public void mouseReleased(java.awt.event.MouseEvent e) {
+                }
 
                 @Override
-                public void mouseEntered(java.awt.event.MouseEvent e) {}
+                public void mouseEntered(java.awt.event.MouseEvent e) {
+                }
 
                 @Override
-                public void mouseExited(java.awt.event.MouseEvent e) {}
+                public void mouseExited(java.awt.event.MouseEvent e) {
+                }
             });
         }
 
         public boolean nearBlock(int x, int y) {
-            int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-            for (int[] direction : directions) {
-                int newX = x + direction[0];
-                int newY = y + direction[1];
-                if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5 &&
-                    map.getSelect() == map.getRoad(newX, newY)) {
+            for (Direction direction : Direction.values()) {
+                int newX = x + direction.getOffset().getA();
+                int newY = y + direction.getOffset().getB();
+                if (newX >= 0 && newX < 5 && newY >= 0 && newY < 5 && map.getSelect() == map.getRoad(newX, newY)) {
                     return true;
                 }
             }
@@ -225,19 +247,7 @@ public class WorldMap extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            ImageDrawer drawer = new ImageDrawer();
-            drawer.drawRoad(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
-            drawer.drawLandmark(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
-            drawer.drawPopulation(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
-            drawer.drawDog(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
-            drawer.drawBarricade(g, gridX, gridY, getWidth(), getHeight(), mainFrame);
             Graphics2D g2d = (Graphics2D) g.create();
-
-            // if (mainFrame.getField().getBlock(new Tuple(x, y))) {
-            // g2d.setColor(new Color(255, 0, 0, 50));
-            // g2d.fillRect(0, 0, getWidth(), getHeight());
-            // }
-
             if (map.getSelect() == this) {
                 g2d.setColor(new Color(0, 255, 0, 50));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -261,8 +271,6 @@ public class WorldMap extends JPanel {
             }
             g2d.dispose();
         }
-
-        
 
         public int getGridX() {
             return gridX;
