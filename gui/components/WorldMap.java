@@ -259,6 +259,13 @@ public class WorldMap extends JPanel {
                 g2d.drawImage(ImageResource.SHOOT.getImage(), 0, 0, getHeight(), getHeight(), null);
             }
 
+            if (previewDog) {
+                g2d.setColor(new Color(255, 0, 0, a));
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                repaint();
+            }
+
+
             if (a >= 80) {
                 num = -1;  
             } else if (a <= 10) {
