@@ -11,11 +11,13 @@ public abstract class Entity {
 
     protected Tuple previousCoordinate;
     protected Tuple pixelCoordinate;
+    protected float alpha;
 
     public Entity(Block block, EntityType entityType, int blockWidth, int blockHeight, int entitySize) {
         this.entityType = entityType;
         this.block = block;
-        previousCoordinate = null;
+        this.previousCoordinate = null;
+        this.alpha = 0f;
         block.addEntity(this);
         assignPixelCoordinate(blockWidth, blockHeight, entitySize);
     }
@@ -62,5 +64,11 @@ public abstract class Entity {
         return entityType;
     }
 
-    
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+    }
 }

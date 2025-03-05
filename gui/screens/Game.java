@@ -184,10 +184,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         mainFrame.getField().endTurn(1);
         mainFrame.getField().getNextRoundDogCoordinates().forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
         scrollPanes.values().forEach((action)-> action.removeAllPanel());
+        // SoundPlayer.playSound(SoundResource.NEXTTURN.getSound());
+
         map.setSelect(null);
         map.resetActionRoads();
         map.repaintAllRoads();
         resetText();
+
     }
 
     // -------- Scroll Panel --------//
@@ -306,9 +309,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     newX = map.getSelect().getGridX() + offset.getA();
                     newY = map.getSelect().getGridY() + offset.getB();
                     switch (actionType) {
-                        case MOVE -> map.getRoad(newX, newY).setIsCanMove(true); 
-                        case SHOOT -> map.getRoad(newX, newY).setIsCanShot(true); 
-                        case BUILD -> map.getRoad(newX, newY).setIsCanMove(true); 
+                        case MOVE -> map.getRoad(newX, newY).setCanMove(true); 
+                        case SHOOT -> map.getRoad(newX, newY).setCanShot(true); 
+                        case BUILD -> map.getRoad(newX, newY).setCanMove(true); 
                         default -> {}
                     }
                 }
