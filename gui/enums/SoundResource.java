@@ -5,8 +5,7 @@ public enum SoundResource {
     Incorrect("Incorrect.wav"),
     MainMenu("MainMenu.wav"),
     Select("Select.wav"),
-    Shot("shot.wav"),
-    Heal("heal.wav");
+    NEXTTURN("nextturn.wav");
 
     private final String path;
     

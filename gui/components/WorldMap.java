@@ -24,7 +24,6 @@ public class WorldMap extends JPanel {
 
     private final MainFrame mainFrame;
     private final Game game;
-    private boolean draw = true;
     private Road select = null;
     private ActionType action;
     private Civilian alive;
@@ -58,8 +57,8 @@ public class WorldMap extends JPanel {
     public void resetActionRoads() {
         for (int gridY = 0; gridY < 5; gridY++) {
             for (int gridX = 0; gridX < 5; gridX++) {
-                road[gridX][gridY].setIsCanMove(false);
-                road[gridX][gridY].setIsCanShot(false);
+                road[gridX][gridY].setCanMove(false);
+                road[gridX][gridY].setCanShot(false);
             }
         }
     }
@@ -108,14 +107,6 @@ public class WorldMap extends JPanel {
         this.alive = alive;
     }
 
-    public boolean isDraw() {
-        return draw;
-    }
-
-    public void setDraw(boolean draw) {
-        this.draw = draw;
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -136,9 +127,12 @@ public class WorldMap extends JPanel {
         private final WorldMap map;
         private final int gridX;
         private final int gridY;
-        private boolean isCanMove = false;
-        private boolean isCanShot = false;
+        private boolean canMove = false;
+        private boolean canShot = false;
         private boolean previewDog = false;
+
+        private int a = 50;
+        private int num = -1;
 
         public Road(int gridX, int gridY, WorldMap map) {
             this.gridX = gridX;
@@ -253,22 +247,32 @@ public class WorldMap extends JPanel {
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
 
-            if (isCanMove) {
-                g2d.setColor(new Color(255, 255, 0, 50));
+            if (canMove) {
+                g2d.setColor(new Color(255, 255, 0, a));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
 
-            if (isCanShot) {
-                g2d.setColor(new Color(255, 0, 0, 50));
+            if (canShot) {
+                g2d.setColor(new Color(255, 0, 0, a));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
                 g2d.drawImage(ImageResource.SHOOT.getImage(), 0, 0, getHeight(), getHeight(), null);
             }
 
             if (previewDog) {
-                g2d.setColor(new Color(255, 0, 0, 50));
+                g2d.setColor(new Color(255, 0, 0, a));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
+                repaint();
             }
+
+
+            if (a >= 80) {
+                num = -1;  
+            } else if (a <= 10) {
+                num = 1; 
+            }
+
+            a += num;
             g2d.dispose();
         }
 
@@ -281,19 +285,19 @@ public class WorldMap extends JPanel {
         }
 
         public boolean isCanMove() {
-            return isCanMove;
+            return canMove;
         }
 
-        public void setIsCanMove(boolean isCanMove) {
-            this.isCanMove = isCanMove;
+        public void setCanMove(boolean canMove) {
+            this.canMove = canMove;
         }
 
         public boolean isCanShot() {
-            return isCanShot;
+            return canShot;
         }
 
-        public void setIsCanShot(boolean isCanShot) {
-            this.isCanShot = isCanShot;
+        public void setCanShot(boolean canShot) {
+            this.canShot = canShot;
         }
 
         public boolean isPreviewDog() {

@@ -24,14 +24,15 @@ public class ImageDrawer {
         for (Road[] roads : maps.getAllRoad()) {
             for (Road road : roads) {
                 Block block = mainFrame.getField().getBlock(new Tuple(road.getGridX(), road.getGridY()));
-                int x = road.getX(); int y = road.getY();
+                int x = road.getX();
+                int y = road.getY();
                 int orientation = block.getOrientation();
 
                 double rotationAngle = 0;
                 boolean rotate = false;
 
                 Graphics2D g2d = (Graphics2D) g.create();
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
                 switch (block.getPathType()) {
                     case FOURWAY -> g2d.drawImage(ImageResource.FOURWAY_ROAD.getImage(), x, y, WIDTH, HEIGHT, null);
                     case THREEWAY, CURVED -> {
@@ -50,7 +51,8 @@ public class ImageDrawer {
                     }
                 }
 
-                if (rotate) g2d.rotate(rotationAngle, x + WIDTH / 2, y + HEIGHT / 2);
+                if (rotate)
+                    g2d.rotate(rotationAngle, x + WIDTH / 2, y + HEIGHT / 2);
                 g2d.drawImage(switch (block.getPathType()) {
                     case THREEWAY -> ImageResource.THREEWAY_ROAD.getImage();
                     case CURVED -> ImageResource.CURVED_ROAD.getImage();
@@ -63,7 +65,7 @@ public class ImageDrawer {
     }
 
     public void drawPopulation(Graphics g, WorldMap maps, MainFrame mainFrame) {
-        mainFrame.getField().getAllCivilians().forEach((civilian)->{
+        mainFrame.getField().getAllCivilians().forEach((civilian) -> {
             if (civilian.getVitality() == Vitality.COMA || civilian.getVitality() == Vitality.ALIVE) {
                 Image image = switch (civilian.getEntityType()) {
                     case MECHANIC -> {
@@ -119,7 +121,8 @@ public class ImageDrawer {
                     }
                 };
 
-                Road road = maps.getRoad(civilian.getBlock().getCoordinate().getA(), civilian.getBlock().getCoordinate().getB());
+                Road road = maps.getRoad(civilian.getBlock().getCoordinate().getA(),
+                        civilian.getBlock().getCoordinate().getB());
                 int posX = civilian.getPixelCoordinate().getA() + road.getX();
                 int posY = civilian.getPixelCoordinate().getB() + road.getY();
                 Tuple previouPos = civilian.getPreviousCoordinate();
@@ -146,18 +149,24 @@ public class ImageDrawer {
             int posX = dog.getPixelCoordinate().getA() + road.getX();
             int posY = dog.getPixelCoordinate().getB() + road.getY();
             Tuple previousPos = dog.getPreviousCoordinate();
-            Tuple currentPos = new Tuple(posX, posY);
-    
-            if (previousPos != null && !previousPos.equals(currentPos)) {
+            if (previousPos == null) {
+                if (dog.getAlpha() < 0.9f) {
+                    Graphics2D g2d = (Graphics2D) g.create();
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, dog.getAlpha()));
+                    g2d.drawImage(ImageResource.DOG.getImage(), posX, posY, ENTITY_SIZE, ENTITY_SIZE, null);
+                    dog.setAlpha(dog.getAlpha()+0.05f);
+                    g2d.dispose();
+                    maps.repaint();
+                } else {
+                    dog.setPreviousCoordinate(new Tuple(posX, posY));
+                }
+            } else {
                 double speed = 0.1;
                 int newPrevX = (int) (previousPos.getA() + (posX - previousPos.getA()) * speed);
                 int newPrevY = (int) (previousPos.getB() + (posY - previousPos.getB()) * speed);
                 g.drawImage(ImageResource.DOG.getImage(), newPrevX, newPrevY, ENTITY_SIZE, ENTITY_SIZE, null);
                 dog.setPreviousCoordinate(new Tuple(newPrevX, newPrevY));
                 maps.repaint();
-            } else {
-                g.drawImage(ImageResource.DOG.getImage(), posX, posY, ENTITY_SIZE, ENTITY_SIZE, null);
-                dog.setPreviousCoordinate(new Tuple(posX, posY));
             }
         });
     }
@@ -165,7 +174,8 @@ public class ImageDrawer {
     public void drawLandmark(Graphics g, WorldMap maps, MainFrame mainFrame) {
         for (Road[] Roads : maps.getAllRoad()) {
             for (Road Road : Roads) {
-                Image image = switch (mainFrame.getField().getBlock(new Tuple(Road.getGridX(), Road.getGridY())).getBlockType()) {
+                Image image = switch (mainFrame.getField().getBlock(new Tuple(Road.getGridX(), Road.getGridY()))
+                        .getBlockType()) {
                     case STORE -> ImageResource.STORE.getImage();
                     case HOSPITAL -> ImageResource.HOSPITAL.getImage();
                     case POLICESTATION -> ImageResource.POLICE_STATION.getImage();
@@ -183,7 +193,8 @@ public class ImageDrawer {
     public void drawBarricade(Graphics g, WorldMap maps, MainFrame mainFrame) {
         for (Road[] Roads : maps.getAllRoad()) {
             for (Road Road : Roads) {
-                int x = Road.getX(); int y = Road.getY();
+                int x = Road.getX();
+                int y = Road.getY();
                 int Y = (HEIGHT - BARRICADE_SIZE);
 
                 Block block = mainFrame.getField().getBlock(new Tuple(Road.getGridX(), Road.getGridY()));
@@ -197,7 +208,7 @@ public class ImageDrawer {
                 if (block.getPath(Direction.EAST).isBarricaded()) {
                     Graphics2D g2d;
                     g2d = (Graphics2D) g.create();
-                    g2d.rotate(Math.toRadians(90), x + WIDTH/2, y + HEIGHT / 2);
+                    g2d.rotate(Math.toRadians(90), x + WIDTH / 2, y + HEIGHT / 2);
                     g2d.drawImage(ImageResource.BARRICADE.getImage(), x, y, WIDTH, BARRICADE_SIZE, null);
                     g2d.dispose();
                 }
