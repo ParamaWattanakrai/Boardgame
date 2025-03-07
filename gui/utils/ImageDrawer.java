@@ -121,8 +121,7 @@ public class ImageDrawer {
                     }
                 };
 
-                Road road = maps.getRoad(civilian.getBlock().getCoordinate().getA(),
-                        civilian.getBlock().getCoordinate().getB());
+                Road road = maps.getRoad(civilian.getBlock().getCoordinate().getA(), civilian.getBlock().getCoordinate().getB());
                 int posX = civilian.getPixelCoordinate().getA() + road.getX();
                 int posY = civilian.getPixelCoordinate().getB() + road.getY();
                 Tuple previouPos = civilian.getPreviousCoordinate();

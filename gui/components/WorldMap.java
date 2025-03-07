@@ -148,10 +148,10 @@ public class WorldMap extends JPanel {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent e) {
                     Block block = mainFrame.getField().getBlock(new Tuple(gridX, gridY));
-                    System.out.println(block.getCoordinate());
-                    for (Direction direction : Direction.values()) {
-                        System.out.println(direction + ", " + block.getPath(direction));
-                    }
+                    // System.out.println(block.getCoordinate());
+                    // for (Direction direction : Direction.values()) {
+                    //     System.out.println(direction + ", " + block.getPath(direction));
+                    // }
                     if (game.getMode() == GameMode.Action && map.getSelect() != null && map.getAction() != null) {
                         if (nearBlock(gridX, gridY)) {
                             game.resetButton();

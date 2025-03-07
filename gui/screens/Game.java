@@ -309,9 +309,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     newX = map.getSelect().getGridX() + offset.getA();
                     newY = map.getSelect().getGridY() + offset.getB();
                     switch (actionType) {
-                        case MOVE -> map.getRoad(newX, newY).setCanMove(true); 
+                        case MOVE, BUILD -> map.getRoad(newX, newY).setCanMove(true); 
                         case SHOOT -> map.getRoad(newX, newY).setCanShot(true); 
-                        case BUILD -> map.getRoad(newX, newY).setCanMove(true); 
                         default -> {}
                     }
                 }

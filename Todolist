@@ -1,7 +1,5 @@
 GUI
-- จัดระเบียบ
-- animetion turn ต่อไป
-- animetion Action
+- Clean code 
 
 Logic
 - ทำระบบตา
@@ -9,3 +7,4 @@ Logic
 Known Bugs
 - Medic shenanigans แปลว่าเหี้ยไร
 - ไม่ contact แต่ยึด Landmark ได้
+- โรงบาลรู้ตัวว่ามีผู้ป่วยอยู่ แต่ผู้ป่วยไม่รู้ตัวว่าอยู่โรงบาล
