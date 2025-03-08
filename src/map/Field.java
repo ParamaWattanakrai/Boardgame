@@ -3,6 +3,7 @@ package src.map;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -183,7 +184,7 @@ public class Field {
         int unexploredCount = unexplored.isEmpty() ? 0 : random.nextInt(unexplored.size()) + 1;
         int requirementCount = requirement.isEmpty() ? 0 : random.nextInt(requirement.size()) + 1;
     
-        List<Direction> nextDirections = unexplored.subList(0, unexploredCount);
+        List<Direction> connectFuture = unexplored.subList(0, unexploredCount);
         List<Direction> connectPast = requirement.subList(0, requirementCount);
 
         System.out.println(unexploredCount);
@@ -191,15 +192,23 @@ public class Field {
         System.out.println("req:"+requirement); //r
         System.out.println("une:"+unexplored);
 
-        if (nextDirections.size() == 1 && connectPast.size() == 0) {
-            nextDirections = unexplored.subList(0, 2);
+        Set<Direction> notPastSet = EnumSet.allOf(Direction.class);
+        notPastSet.removeAll(requirement);
+
+        List<Direction> notPast = new ArrayList<>(notPastSet);
+
+        if (connectFuture.size() == 1 && connectPast.size() == 0) {
+            connectFuture = notPast.subList(0, 2);
         }
-        if (nextDirections.size() == 0 && connectPast.size() == 1) {
+        if (connectFuture.size() == 0 && connectPast.size() == 1) {
             connectPast = requirement.subList(0, 2);
         }
 
+        Set<Direction> nextDirections = new HashSet<>(connectFuture);
+        nextDirections.retainAll(unexplored);
+
         Set<Direction> connected = new HashSet<>();
-        connected.addAll(nextDirections);
+        connected.addAll(connectFuture);
         connected.addAll(connectPast);
 
         System.out.println("---");
@@ -209,7 +218,7 @@ public class Field {
         System.out.println(requirementCount);
         System.out.println("req:"+requirement); //r
         System.out.println("une:"+unexplored);
-        System.out.println("nex:"+nextDirections);
+        System.out.println("nex:"+connectFuture);
         System.out.println("pas:"+connectPast);
         System.out.println(connected);
         System.out.println("-a-");
@@ -560,7 +569,7 @@ public class Field {
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathType() + field[i][j].getAllCivilians().size() + ")");
+                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilians().size() + ")");
             }
             System.out.println();
         }
