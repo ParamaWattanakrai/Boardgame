@@ -1,9 +1,7 @@
 package src.map;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -153,7 +151,6 @@ public class Field {
     }
 
     public void generatePath(List<Block> blockCandidates) {
-        printField();
         if (blockCandidates.isEmpty()) return;
     
         Set<Block> nextBlockCandidateSet = new HashSet<>(blockCandidates);
@@ -162,10 +159,9 @@ public class Field {
         Block block = blockCandidates.get(random.nextInt(blockCandidates.size()));
         nextBlockCandidateSet.remove(block);
 
-        System.out.println(block.getCoordinate());
-    
         List<Direction> requirement = new ArrayList<>();
         List<Direction> unexplored = new ArrayList<>();
+        List<Direction> notPast = new ArrayList<>();
     
         for (Direction direction : Direction.values()) {
             Block neighbor = block.getNeighborBlock(direction);
@@ -176,31 +172,31 @@ public class Field {
             if (neighbor != block && neighbor.getPathString() == null) {
                 unexplored.add(direction);
             }
+            if (neighbor != block) {
+                notPast.add(direction);
+            }
         }
     
         Collections.shuffle(requirement);
         Collections.shuffle(unexplored);
+        Collections.shuffle(notPast);
     
-        int unexploredCount = unexplored.isEmpty() ? 0 : random.nextInt(unexplored.size()) + 1;
+        int notPastCount = notPast.isEmpty() ? 0 : random.nextInt(notPast.size()) + 1;
         int requirementCount = requirement.isEmpty() ? 0 : random.nextInt(requirement.size()) + 1;
     
-        List<Direction> connectFuture = unexplored.subList(0, unexploredCount);
         List<Direction> connectPast = requirement.subList(0, requirementCount);
 
-        System.out.println(unexploredCount);
-        System.out.println(requirementCount);
-        System.out.println("req:"+requirement); //r
-        System.out.println("une:"+unexplored);
-
-        Set<Direction> notPastSet = EnumSet.allOf(Direction.class);
-        notPastSet.removeAll(requirement);
-
-        List<Direction> notPast = new ArrayList<>(notPastSet);
+        Set<Direction> connectFutureSet = new HashSet<>();
+        if (!unexplored.isEmpty()) connectFutureSet.add(unexplored.get(0));
+        for (Direction direction : notPast.subList(0, notPastCount)) {
+            connectFutureSet.add(direction);
+        }
+        List<Direction> connectFuture = new ArrayList<>(connectFutureSet);
 
         if (connectFuture.size() == 1 && connectPast.size() == 0) {
             connectFuture = notPast.subList(0, 2);
         }
-        if (connectFuture.size() == 0 && connectPast.size() == 1) {
+        if (connectFuture.size() == 0 && connectPast.size() == 1) {;
             connectPast = requirement.subList(0, 2);
         }
 
@@ -211,31 +207,18 @@ public class Field {
         connected.addAll(connectFuture);
         connected.addAll(connectPast);
 
-        System.out.println("---");
-        System.out.println(block.getPathString());
-        System.out.println(block.getCoordinate() + "is selected");
-        System.out.println(unexploredCount);
-        System.out.println(requirementCount);
-        System.out.println("req:"+requirement); //r
-        System.out.println("une:"+unexplored);
-        System.out.println("nex:"+connectFuture);
-        System.out.println("pas:"+connectPast);
-        System.out.println(connected);
-        System.out.println("-a-");
-
         PathCombination pathCombination = new PathCombination(connected);
         block.setPath(pathCombination.getPathType(), pathCombination.getOrientation());
     
         for (Direction direction : nextDirections) {
             Block neighbor = block.getNeighborBlock(direction);
-            if (neighbor != null) {
+            if (neighbor != block) {
                 nextBlockCandidateSet.add(neighbor);
             }
         }
     
         if (!nextBlockCandidateSet.isEmpty()) {
             List<Block> nextBlockCandidates = new ArrayList<>(nextBlockCandidateSet);
-            System.out.println(nextBlockCandidates);
             generatePath(nextBlockCandidates);
         }
     }

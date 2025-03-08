@@ -21,8 +21,6 @@ public class PathCombination {
             directionString += direction.getChar();
         }
 
-        System.out.println(directionString);
-
         switch (directionString) {
             case "NESW":
                 pathType = PathType.FOURWAY;
