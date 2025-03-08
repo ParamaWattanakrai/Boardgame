@@ -19,7 +19,7 @@ public class Block {
     private Path westPath = new Path();
     private Path southPath = new Path();
 
-    private int occupationLevel;
+    private int occupationLevel = 0;
 
     private String blockTypeString;
     private String pathString;
@@ -30,12 +30,10 @@ public class Block {
     private int gunAmount = 0;
     private int gunToBeLooted = 0;
 
-    public Block(Field field, int x, int y, BlockType blockType, PathType pathType, int orientation, int occupationLevel) {
+    public Block(Field field, int x, int y, BlockType blockType) {
 
         this.field = field;
         coordinate = new Tuple(x, y);
-
-        this.occupationLevel = occupationLevel;
 
         this.blockType = blockType;
         switch (blockType) {
@@ -60,14 +58,16 @@ public class Block {
             default:
                 break;
         }
+    }
 
-        this.pathType = pathType;
-        this.orientation = orientation;
-
+    public void setPath(PathType pathType, int orientation) {
         northPath.build();
         eastPath.build();
         southPath.build();
         westPath.build();
+
+        this.pathType = pathType;
+        this.orientation = orientation;
 
         pathString = "╬";
 
@@ -377,10 +377,14 @@ public class Block {
         return pathString;
     }
 
+    // @Override
+    // public String toString() {
+    //     return "Block=" + getCoordinate() + ", Path" + getPathType() + getOrientation() + ", soldier=" + getAllEntityOfType(EntityType.SOLDIER).size() + ", civilian="
+    //             + getAllEntityOfType(EntityType.CIVILIAN).size() + ", medic=" + getAllEntityOfType(EntityType.MEDIC).size() + ", mechanic=" + getAllEntityOfType(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
+    //             + ", landmark=" + getBlockType() + ", capture=" + false;
+    // }
     @Override
     public String toString() {
-        return "Block=" + getCoordinate() + ", Path" + getPathType() + getOrientation() + ", soldier=" + getAllEntityOfType(EntityType.SOLDIER).size() + ", civilian="
-                + getAllEntityOfType(EntityType.CIVILIAN).size() + ", medic=" + getAllEntityOfType(EntityType.MEDIC).size() + ", mechanic=" + getAllEntityOfType(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
-                + ", landmark=" + getBlockType() + ", capture=" + false;
+         return getCoordinate().toString();
     }
 }

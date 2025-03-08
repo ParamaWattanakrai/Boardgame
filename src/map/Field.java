@@ -1,9 +1,14 @@
 package src.map;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
 import src.entities.*;
 import src.utils.*;
 
@@ -16,7 +21,6 @@ public class Field {
     int fieldHeight;
     int fieldWidth;
 
-    private PathType[] allPathTypes = PathType.values();
     private Block[][] field;
     private List<Tuple> nextRoundDogCoordinates = new ArrayList<>();
 
@@ -37,7 +41,7 @@ public class Field {
 
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                field[i][j] = getRandomBlock(j, i, BlockType.DEFAULT, allPathTypes);
+                field[i][j] = new Block(this, j, i, BlockType.DEFAULT);
             }
         }
 
@@ -96,7 +100,6 @@ public class Field {
             }
         }
 
-
         int soldierNum = metaSettings.getSoldierNum();
         int medicNum = metaSettings.getMedicNum();
         int mechanicNum = metaSettings.getMechanicNum();
@@ -133,9 +136,101 @@ public class Field {
             occupationMap.put(blockType, false);
         }
 
-        updateField();
+        for (int i = 0; i < 3; i++) {
+            updateField();
+        }
+
+        generatePath();
+
         nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
     }
+
+    public void generatePath() {
+        List<Block> blockCandidates = new ArrayList<>();
+        blockCandidates.add(field[0][0]);
+        generatePath(blockCandidates);
+    }
+
+    public void generatePath(List<Block> blockCandidates) {
+        printField();
+        if (blockCandidates.isEmpty()) return;
+    
+        Set<Block> nextBlockCandidateSet = new HashSet<>(blockCandidates);
+        Random random = new Random();
+    
+        Block block = blockCandidates.get(random.nextInt(blockCandidates.size()));
+        nextBlockCandidateSet.remove(block);
+
+        System.out.println(block.getCoordinate());
+    
+        List<Direction> requirement = new ArrayList<>();
+        List<Direction> unexplored = new ArrayList<>();
+    
+        for (Direction direction : Direction.values()) {
+            Block neighbor = block.getNeighborBlock(direction);
+            if (neighbor.getPath(direction.getOpposite()).doesExist()) {
+                requirement.add(direction);
+                continue;
+            }
+            if (neighbor != block && neighbor.getPathString() == null) {
+                unexplored.add(direction);
+            }
+        }
+    
+        Collections.shuffle(requirement);
+        Collections.shuffle(unexplored);
+    
+        int unexploredCount = unexplored.isEmpty() ? 0 : random.nextInt(unexplored.size()) + 1;
+        int requirementCount = requirement.isEmpty() ? 0 : random.nextInt(requirement.size()) + 1;
+    
+        List<Direction> nextDirections = unexplored.subList(0, unexploredCount);
+        List<Direction> connectPast = requirement.subList(0, requirementCount);
+
+        System.out.println(unexploredCount);
+        System.out.println(requirementCount);
+        System.out.println("req:"+requirement); //r
+        System.out.println("une:"+unexplored);
+
+        if (nextDirections.size() == 1 && connectPast.size() == 0) {
+            nextDirections = unexplored.subList(0, 2);
+        }
+        if (nextDirections.size() == 0 && connectPast.size() == 1) {
+            connectPast = requirement.subList(0, 2);
+        }
+
+        Set<Direction> connected = new HashSet<>();
+        connected.addAll(nextDirections);
+        connected.addAll(connectPast);
+
+        System.out.println("---");
+        System.out.println(block.getPathString());
+        System.out.println(block.getCoordinate() + "is selected");
+        System.out.println(unexploredCount);
+        System.out.println(requirementCount);
+        System.out.println("req:"+requirement); //r
+        System.out.println("une:"+unexplored);
+        System.out.println("nex:"+nextDirections);
+        System.out.println("pas:"+connectPast);
+        System.out.println(connected);
+        System.out.println("-a-");
+
+        PathCombination pathCombination = new PathCombination(connected);
+        block.setPath(pathCombination.getPathType(), pathCombination.getOrientation());
+    
+        for (Direction direction : nextDirections) {
+            Block neighbor = block.getNeighborBlock(direction);
+            if (neighbor != null) {
+                nextBlockCandidateSet.add(neighbor);
+            }
+        }
+    
+        if (!nextBlockCandidateSet.isEmpty()) {
+            List<Block> nextBlockCandidates = new ArrayList<>(nextBlockCandidateSet);
+            System.out.println(nextBlockCandidates);
+            generatePath(nextBlockCandidates);
+        }
+    }
+    
 
     public void endTurn(int dogIncoming) {
         System.out.println("--------------------");
@@ -331,15 +426,10 @@ public class Field {
         landmarkMap.get(blockType).remove(block);
     }
 
-    public Block getRandomBlock(int x, int y, BlockType blockType, PathType[] possiblePathTypes) {
-        return new Block(this, x, y, blockType, possiblePathTypes[rand.nextInt(possiblePathTypes.length)], rand.nextInt(4), 0);
-    }
-
     public Block getNextBlock(Block block, Direction direction) {
         int blockX = block.getCoordinate().getA();
         int blockY = block.getCoordinate().getB();
         try {
-            System.out.println(direction.getOffset());
             return field[blockY + direction.getOffset().getB()][blockX + direction.getOffset().getA()];
         } catch (Exception e) {
             System.out.println(String.format("There is no further block %sward", direction.toString().toLowerCase()));
@@ -470,7 +560,7 @@ public class Field {
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilians().size() + ")");
+                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathType() + field[i][j].getAllCivilians().size() + ")");
             }
             System.out.println();
         }
