@@ -313,6 +313,10 @@ public class Field {
     public void updateField() {
         for (Block[] row : field) {
             for (Block block : row) {
+                List<Dog> dogs = block.getAllDogs();
+                for (Dog dog : dogs) {
+                    dog.unActioned();
+                }
                 block.resetGunToBeLooted();
                 occupyAlgorithm(block);
                 block.contact();

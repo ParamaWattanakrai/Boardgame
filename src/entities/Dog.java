@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dog extends Entity {
+    protected boolean actioned = false;
 
     public Dog(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.DOG, blockWidth, blockHeight, entitySize);
     }
 
     public boolean algorithm(boolean canBiteBarricade) {
+        if (actioned) return false;
+
+        System.out.println("ALGORITHM");
+        actioned = true;
         boolean hasBittenBarricade = false;
 
         if (block.getAllAlive().size() > 0) {
@@ -90,5 +95,9 @@ public class Dog extends Entity {
     public void bite(Civilian civilian) {
         civilian.infect();
         System.out.println("I bit" + civilian);
+    }
+
+    public void unActioned() {
+        actioned = false;
     }
 }
