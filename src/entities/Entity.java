@@ -13,16 +13,24 @@ public abstract class Entity {
     protected Tuple pixelCoordinate;
     protected float alpha;
 
+    protected int blockWidth;
+    protected int blockHeight;
+    protected int entitySize;
+
     public Entity(Block block, EntityType entityType, int blockWidth, int blockHeight, int entitySize) {
         this.entityType = entityType;
         this.block = block;
         this.previousCoordinate = null;
         this.alpha = 0f;
         block.addEntity(this);
-        assignPixelCoordinate(blockWidth, blockHeight, entitySize);
+
+        this.blockWidth = blockWidth;
+        this.blockHeight = blockHeight;
+        this.entitySize = entitySize;
+        assignPixelCoordinate();
     }
 
-    public void assignPixelCoordinate(int blockWidth, int blockHeight, int entitySize) {
+    public void assignPixelCoordinate() {
         int loop = 0;
         int posX = new Random().nextInt(blockWidth - entitySize);
         int posY = new Random().nextInt(blockHeight - entitySize);
@@ -40,6 +48,7 @@ public abstract class Entity {
     public void teleport(Block toBlock) {
         block.removeEntity(this);
         toBlock.addEntity(this);
+        assignPixelCoordinate();
     }
 
     public abstract void move(Direction direction);

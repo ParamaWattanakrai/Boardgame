@@ -41,6 +41,7 @@ public class Civilian extends Entity {
             block.removeEntity(this);
             block = neighborBlock;
             neighborBlock.addEntity(this);
+            assignPixelCoordinate();
         }
     }
 
