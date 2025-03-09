@@ -317,6 +317,21 @@ public class Block {
         return dogs;
     }
 
+    public List<Civilian> getAllContactedAlive() {
+        List<Civilian> alive = new ArrayList<>();
+        for (EntityType entityType : entityMap.keySet()) {
+            if (entityType != EntityType.DOG) {
+                for (Entity civilianEntity : entityMap.get(entityType)) {
+                    Civilian civilian = (Civilian) civilianEntity;
+                    if (civilian.getVitality() == Vitality.ALIVE && civilian.isContacted() == true) {
+                        alive.add(civilian);
+                    }
+                }
+            }
+        }
+        return alive;
+    }
+
     public List<Civilian> getAllAlive() {
         List<Civilian> alive = new ArrayList<>();
         for (EntityType entityType : entityMap.keySet()) {
@@ -385,6 +400,6 @@ public class Block {
     // }
     @Override
     public String toString() {
-         return getCoordinate().toString();
+         return "(" + blockType + pathString + getAllCivilians().size() + ")";
     }
 }

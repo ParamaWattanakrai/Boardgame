@@ -387,7 +387,7 @@ public class Field {
                 block.occupy();
                 return;
             }
-        } else if (block.getAllAlive().size() > 0) {
+        } else if (block.getAllContactedAlive().size() > 0) {
             block.occupy();
         } else {
             block.unOccupy();
@@ -556,7 +556,7 @@ public class Field {
     public void printField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
-                System.out.print("(" + field[i][j].getBlockTypeString() + field[i][j].getPathString() + field[i][j].getAllCivilians().size() + ")");
+                System.out.print(field[i][j]);
             }
             System.out.println();
         }
