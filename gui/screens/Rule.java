@@ -49,6 +49,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         images.add(ImageResource.RULEPAGE3.getImage());
         images.add(ImageResource.RULEPAGE4.getImage());
         images.add(ImageResource.RULEPAGE5.getImage());
+        images.add(ImageResource.RULEPAGE6.getImage());
     }
 
     @Override
@@ -77,11 +78,11 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     private void NextPage() {
         if (imageIndex < images.size() - 1) {
             imageIndex++;
-    
-            if (imageIndex == images.size() - 1) { 
+
+            if (imageIndex == images.size() - 1) {
                 buttons.get(RuleButton.NEXTPAGE).setVisible(false);
             }
-    
+
             buttons.get(RuleButton.BACKPAGE).setVisible(true);
             repaint();
         }
@@ -90,11 +91,10 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     private void BackPage() {
         if (imageIndex > 0) {
             imageIndex--;
-    
             if (imageIndex == 0) {
                 buttons.get(RuleButton.BACKPAGE).setVisible(false);
             }
-    
+
             buttons.get(RuleButton.NEXTPAGE).setVisible(true);
             repaint();
         }
