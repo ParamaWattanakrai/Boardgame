@@ -401,7 +401,7 @@ public class Field {
 
     public void removeAction(ActionType ActionType, Civilian civilian, Runnable actionRunnable) {
         civilian.nullAction();
-        actionMap.get(ActionType).remove(new ActorActionPair(civilian, actionRunnable));
+        actionMap.get(ActionType).remove(new ActorActionPair(civilian, actionRunnable)); //FAULTY
     }
 
     public void printAction() {
