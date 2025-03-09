@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.Mechanic;
-import src.map.Block;
 import src.utils.Direction;
 import src.utils.Tuple;
 
@@ -147,7 +146,7 @@ public class WorldMap extends JPanel {
             addMouseListener(new java.awt.event.MouseListener() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent e) {
-                    Block block = mainFrame.getField().getBlock(new Tuple(gridX, gridY));
+                    // Block block = mainFrame.getField().getBlock(new Tuple(gridX, gridY));
                     // System.out.println(block.getCoordinate());
                     // for (Direction direction : Direction.values()) {
                     //     System.out.println(direction + ", " + block.getPath(direction));

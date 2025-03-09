@@ -1,5 +1,5 @@
 package gui.enums;
 
 public enum GameScreen {
-    MAIN_MENU, GAME, RULE
+    MAIN_MENU, GAME, RULE, GAMEOVER, GAMEWIN;
 }

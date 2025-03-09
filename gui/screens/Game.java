@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -141,6 +142,16 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             int SoldierSize = mainFrame.getField().getAllEntityOfType(EntityType.SOLDIER, Vitality.ALIVE).size();
             int medicSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC, Vitality.ALIVE).size();
             int mechanicSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
+
+            boolean allOccupied = Arrays.stream(BlockType.values()).allMatch(type -> Boolean.TRUE.equals(mainFrame.getField().getOccupationMap().get(type)));
+            boolean isPopulationLow = CivilianSize < 10 || SoldierSize < 1 || medicSize < 2 || mechanicSize < 1;
+
+            if (isPopulationLow) {
+                mainFrame.showScreen(GameScreen.GAMEOVER);
+            } else if(mainFrame.getGamaData().getNight() >= 15 && allOccupied){
+                mainFrame.showScreen(GameScreen.GAMEWIN);
+            }
+
             String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: " + medicSize + "\nMechanic: " + mechanicSize;
             updateText(GameText.Stat, str);
         } else {

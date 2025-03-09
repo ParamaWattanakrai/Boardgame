@@ -9,6 +9,8 @@ public enum ImageResource {
     MENU_BACKGROUND("MainBg.png"),
     RULE_BACKGROUND("RuleBg.png"),
     GAME_BACKGROUND("GameBg.png"),
+    OVER_BACKGROUND("GameOver.png"),
+    WIN_BACKGROUND("GameWin.png"),
 
     GUN_ANI("animation/gun.gif"),
 

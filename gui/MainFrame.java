@@ -5,6 +5,8 @@ import gui.enums.GameScreen;
 import gui.enums.ImageResource;
 import gui.screens.BaseScreen;
 import gui.screens.Game;
+import gui.screens.GameOver;
+import gui.screens.GameWin;
 import gui.screens.MainMenu;
 import gui.screens.Rule;
 import java.awt.CardLayout;
@@ -47,6 +49,9 @@ public class MainFrame extends JFrame {
         screens.put(GameScreen.MAIN_MENU, new MainMenu(this));
         screens.put(GameScreen.GAME, new Game(this));
         screens.put(GameScreen.RULE, new Rule(this));
+        screens.put(GameScreen.GAMEOVER, new GameOver(this));
+        screens.put(GameScreen.GAMEWIN, new GameWin(this));
+
     }
 
     private void addScreen() {
