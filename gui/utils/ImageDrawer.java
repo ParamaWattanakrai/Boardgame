@@ -73,7 +73,7 @@ public class ImageDrawer {
                             if (civilian.getVitality() == Vitality.COMA) {
                                 yield ImageResource.MECHANIC_COMA.getImage();
                             } else if (civilian.isArmed()) {
-                                yield ImageResource.MECHANIC_COMA.getImage();
+                                yield ImageResource.MECHANIC_ARM.getImage();
                             } else {
                                 yield ImageResource.MECHANIC.getImage();
                             }
