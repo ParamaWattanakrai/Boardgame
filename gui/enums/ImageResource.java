@@ -51,10 +51,10 @@ public enum ImageResource {
     SHOOT("shoot.png"),
 
     RULEPAGE1("RulePage/Operation.png"),
-    RULEPAGE2("RulePage/Role1.png"),
-    RULEPAGE3("RulePage/Role2.png"),
-    RULEPAGE4("RulePage/Facilities.png"),
-    RULEPAGE5("RulePage/WinCondions.png");
+    RULEPAGE2("RulePage/Facilities.png"),
+    RULEPAGE3("RulePage/Role1.png"),
+    RULEPAGE4("RulePage/Role2.png"),
+    RULEPAGE5("RulePage/WinConditions.png");
 
     private final String path;
     private Image image;
