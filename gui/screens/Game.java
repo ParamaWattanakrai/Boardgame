@@ -57,7 +57,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         createMap();
         setMapPosition();
 
-        createScrollPane ();
+        createScrollPane();
         setScrollPaneBounds();
 
         textPanels.values().forEach(this::add);
@@ -118,11 +118,15 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             String STORE = "STORE\n";
             String POWERPLANT = "POWERPLANT\n";
             String POLICESTATION = "POLICESTATION\n";
-            
-            if (mainFrame.getField().getOccupationMap().get(BlockType.HOSPITAL))  HOSPITAL = "\n";
-            if (mainFrame.getField().getOccupationMap().get(BlockType.POLICESTATION)) POLICESTATION = "\n";
-            if (mainFrame.getField().getOccupationMap().get(BlockType.POWERPLANT))  POWERPLANT = "\n";
-            if (mainFrame.getField().getOccupationMap().get(BlockType.STORE)) STORE = "\n";
+
+            if (mainFrame.getField().getOccupationMap().get(BlockType.HOSPITAL))
+                HOSPITAL = "\n";
+            if (mainFrame.getField().getOccupationMap().get(BlockType.POLICESTATION))
+                POLICESTATION = "\n";
+            if (mainFrame.getField().getOccupationMap().get(BlockType.POWERPLANT))
+                POWERPLANT = "\n";
+            if (mainFrame.getField().getOccupationMap().get(BlockType.STORE))
+                STORE = "\n";
 
             updateText(GameText.Task, HOSPITAL + STORE + POWERPLANT + POLICESTATION);
             if (day) {
@@ -143,16 +147,18 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             int medicSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC, Vitality.ALIVE).size();
             int mechanicSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
 
-            boolean allOccupied = Arrays.stream(BlockType.values()).allMatch(type -> Boolean.TRUE.equals(mainFrame.getField().getOccupationMap().get(type)));
+            boolean allOccupied = Arrays.stream(BlockType.values())
+                    .allMatch(type -> Boolean.TRUE.equals(mainFrame.getField().getOccupationMap().get(type)));
             boolean isPopulationLow = CivilianSize < 10 || SoldierSize < 1 || medicSize < 2 || mechanicSize < 1;
 
             if (isPopulationLow) {
                 mainFrame.showScreen(GameScreen.GAMEOVER);
-            } else if(mainFrame.getGamaData().getNight() >= 15 && allOccupied){
+            } else if (mainFrame.getGamaData().getNight() >= 15 && allOccupied) {
                 mainFrame.showScreen(GameScreen.GAMEWIN);
             }
 
-            String str = "Dog: " + dogSize + "\nPerson: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: " + medicSize + "\nMechanic: " + mechanicSize;
+            String str = "Dog: " + dogSize + "\nCivilian: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: "
+                    + medicSize + "\nMechanic: " + mechanicSize;
             updateText(GameText.Stat, str);
         } else {
             updateText(GameText.Stat, "Noting here");
@@ -193,8 +199,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     private void endButton() {
         map.resetPerRoads();
         mainFrame.getField().endTurn(1);
-        mainFrame.getField().getNextRoundDogCoordinates().forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
-        scrollPanes.values().forEach((action)-> action.removeAllPanel());
+        mainFrame.getField().getNextRoundDogCoordinates()
+                .forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
+        scrollPanes.values().forEach((action) -> action.removeAllPanel());
         // SoundPlayer.playSound(SoundResource.NEXTTURN.getSound());
 
         map.setSelect(null);
@@ -205,14 +212,14 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     // -------- Scroll Panel --------//
-    public void createScrollPane (){
+    public void createScrollPane() {
         scrollPanes = new HashMap<>();
         for (GameScroll scroll : GameScroll.values()) {
             scrollPanes.put(scroll, new ScrollPane());
         }
     }
 
-    public void setScrollPaneBounds(){
+    public void setScrollPaneBounds() {
         scrollPanes.get(GameScroll.Entity).setBounds(1580, 440, 300, 150);
         scrollPanes.get(GameScroll.Action).setBounds(1580, 740, 300, 100);
     }
@@ -256,7 +263,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             actions.add(ActionType.MOVE);
         }
 
-        if (checkValidateAction(ActionType.ARM, alive) && alive.getEntityType() != EntityType.SOLDIER) { 
+        if (checkValidateAction(ActionType.ARM, alive) && alive.getEntityType() != EntityType.SOLDIER) {
             actions.add(ActionType.ARM);
         }
 
@@ -267,7 +274,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 }
             }
             case MEDIC -> {
-                if (checkValidateAction(ActionType.HEAL, alive))  {
+                if (checkValidateAction(ActionType.HEAL, alive)) {
                     actions.add(ActionType.HEAL);
                 }
             }
@@ -276,7 +283,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     actions.add(ActionType.SHOOT);
                 }
             }
-            default -> {}
+            default -> {
+            }
         }
 
         actions.forEach(action -> {
@@ -296,19 +304,19 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 if (validate.apply(dir)) {
                     return true;
                 }
-            } 
+            }
             return false;
         };
-    
+
         return switch (action) {
             case MOVE -> validateAction.apply(alive::validateMove);
             case SHOOT -> validateAction.apply(alive::validateShoot);
-            case BUILD -> validateAction.apply(((Mechanic)alive)::validateBuildBarricade);
+            case BUILD -> validateAction.apply(((Mechanic) alive)::validateBuildBarricade);
             case ARM -> alive.validateArm();
             case HEAL -> ((Medic) alive).validateCure();
         };
     }
-    
+
     private void actionButton(ActionType action, Civilian alive) {
         scrollPanes.get(GameScroll.Entity).removeAllPanel();
         BiConsumer<Function<Direction, Boolean>, ActionType> validateAction = (validate, actionType) -> {
@@ -320,12 +328,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     newX = map.getSelect().getGridX() + offset.getA();
                     newY = map.getSelect().getGridY() + offset.getB();
                     switch (actionType) {
-                        case MOVE, BUILD -> map.getRoad(newX, newY).setCanMove(true); 
-                        case SHOOT -> map.getRoad(newX, newY).setCanShot(true); 
-                        default -> {}
+                        case MOVE, BUILD -> map.getRoad(newX, newY).setCanMove(true);
+                        case SHOOT -> map.getRoad(newX, newY).setCanShot(true);
+                        default -> {
+                        }
                     }
                 }
-            } 
+            }
         };
 
         boolean selectBlock = switch (action) {
@@ -370,7 +379,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         List<Civilian> allAlive = mainFrame.getField().getAllCivilians();
 
         if (allAlive != null) {
-            allAlive.forEach((alive)->{
+            allAlive.forEach((alive) -> {
                 if (alive.getActionRunnable() != null) {
                     Button btn = new Button(alive.getEntityType().name(), 30);
                     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
