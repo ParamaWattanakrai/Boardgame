@@ -149,7 +149,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
             boolean allOccupied = Arrays.stream(BlockType.values())
                     .allMatch(type -> Boolean.TRUE.equals(mainFrame.getField().getOccupationMap().get(type)));
-            boolean isPopulationLow = CivilianSize < 10 || SoldierSize < 1 || medicSize < 2 || mechanicSize < 1;
+            boolean isPopulationLow = CivilianSize < 6 || SoldierSize < 1 || medicSize < 1 || mechanicSize < 1;
 
             if (isPopulationLow) {
                 mainFrame.showScreen(GameScreen.GAMEOVER);
