@@ -58,7 +58,10 @@ public enum ImageResource {
     RULEPAGE4("RulePage/Role2.png"),
     RULEPAGE5("RulePage/ActionsMove.png"),
     RULEPAGE6("RulePage/ActionShoot.png"),
-    RULEPAGE7("RulePage/WinConditions.png");
+    RULEPAGE7("RulePage/WinConditions.png"),
+    
+    TOOTH_WOLF("entities/tooth.png")
+    ;
 
     private final String path;
     private Image image;

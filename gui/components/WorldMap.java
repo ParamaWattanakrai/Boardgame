@@ -12,11 +12,15 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import src.entities.ActionType;
 import src.entities.Civilian;
 import src.entities.Mechanic;
 import src.utils.Direction;
 import src.utils.Tuple;
+import src.entities.Dog;
 
 public class WorldMap extends JPanel {
     private Road[][] road = new Road[5][5];
@@ -129,7 +133,10 @@ public class WorldMap extends JPanel {
         private boolean canMove = false;
         private boolean canShot = false;
         private boolean previewDog = false;
-
+        private boolean dogBite = false;
+        private boolean isFading = false;
+        private int fadeAlpha = 255;
+        Timer fadeTimer = null;
         private int a = 50;
         private int num = -1;
 
@@ -241,6 +248,8 @@ public class WorldMap extends JPanel {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g.create();
+            checkDogBiteLocation();
+            
             if (map.getSelect() == this) {
                 g2d.setColor(new Color(0, 255, 0, 50));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -264,7 +273,39 @@ public class WorldMap extends JPanel {
                 repaint();
             }
 
-
+            if (dogBite) {
+                if (!isFading) {
+                    isFading = true;
+            
+                    if (fadeTimer != null && fadeTimer.isRunning()) {
+                        fadeTimer.stop();
+                    }
+                    
+                    fadeAlpha = 255;
+            
+                    fadeTimer = new Timer(50, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (fadeAlpha > 0) {
+                                fadeAlpha -= 15;
+                                repaint();
+                            } else {
+                                isFading = false;
+                                dogBite = false;
+                                Dog.clearBiteLocations();
+                                fadeTimer.stop();
+                            }
+                        }
+                    });
+                    fadeTimer.setRepeats(true);
+                    fadeTimer.start();
+                }
+            
+                g2d.setColor(new Color(255, 0, 0, fadeAlpha));
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                g2d.drawImage(ImageResource.TOOTH_WOLF.getImage(), 0, 0, getHeight(), getHeight(), null);
+            }
+            
             if (a >= 80) {
                 num = -1;  
             } else if (a <= 10) {
@@ -273,6 +314,11 @@ public class WorldMap extends JPanel {
 
             a += num;
             g2d.dispose();
+        }
+
+        private void checkDogBiteLocation() {
+            Tuple location = new Tuple(gridX, gridY);
+            dogBite = Dog.getBiteLocations().stream().anyMatch(loc -> loc.getA() == gridX && loc.getB() == gridY);
         }
 
         public int getGridX() {
@@ -305,6 +351,14 @@ public class WorldMap extends JPanel {
 
         public void setPreviewDog(boolean previewDog) {
             this.previewDog = previewDog;
+        }
+
+        public boolean isDogBite(){
+            return dogBite;
+        }
+
+        public void setDogBite(boolean dogBite){
+            this.dogBite = dogBite;
         }
     }
 }

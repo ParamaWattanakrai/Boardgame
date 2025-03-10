@@ -231,7 +231,7 @@ public class Field {
         System.out.println();
 
         System.out.println("--------------------");
-        System.out.println("----- Shot!!!!!!");
+        System.out.println("----- Shoot!!!!!!");
         shootEveryBlock();
         System.out.println();
 

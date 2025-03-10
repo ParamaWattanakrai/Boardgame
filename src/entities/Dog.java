@@ -2,15 +2,25 @@ package src.entities;
 
 import src.map.Block;
 import src.utils.Direction;
+import src.utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Dog extends Entity {
     protected boolean actioned = false;
+    private static List<Tuple> biteLocations = new ArrayList<>();
 
     public Dog(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.DOG, blockWidth, blockHeight, entitySize);
+    }
+
+    public static List<Tuple> getBiteLocations() {
+        return biteLocations;
+    }
+    
+    public static void clearBiteLocations() {
+        biteLocations.clear();
     }
 
     public boolean algorithm(boolean canBiteBarricade) {
@@ -21,9 +31,11 @@ public class Dog extends Entity {
         boolean hasBittenBarricade = false;
 
         if (block.getAllAlive().size() > 0) {
+            recordBiteLocation();
             bite(block.getAllAlive().get(0));
             return hasBittenBarricade;
         }
+        
         List<Direction> moveDirectionCandidates = new ArrayList<>();
         int x1 = block.getCoordinate().getA();
         int y1 = block.getCoordinate().getB();
@@ -76,6 +88,7 @@ public class Dog extends Entity {
         }
 
         if (block.getAllAlive().size() > 0) {
+            recordBiteLocation();
             bite(block.getAllAlive().get(0));
         }
         return hasBittenBarricade;
@@ -94,7 +107,17 @@ public class Dog extends Entity {
 
     public void bite(Civilian civilian) {
         civilian.infect();
-        System.out.println("I bit" + civilian);
+        System.out.println("I bite " + civilian);
+    }
+
+    private void recordBiteLocation() {
+        int gridX = block.getCoordinate().getA();
+        int gridY = block.getCoordinate().getB();
+        Tuple location = new Tuple(gridX, gridY);
+        
+        if (!biteLocations.contains(location)) {
+            biteLocations.add(location);
+        }
     }
 
     public void unActioned() {
