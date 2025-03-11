@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import src.entities.Vitality;
 import src.map.Block;
+import src.map.PathType;
 import src.utils.Direction;
 import src.utils.Tuple;
 
@@ -28,12 +29,18 @@ public class ImageDrawer {
                 int y = road.getY();
                 int orientation = block.getOrientation();
 
+                // ตรวจสอบว่า block.getPathType() ไม่เป็น null ก่อนใช้งาน
+                PathType pathType = block.getPathType();
+                if (pathType == null) {
+                    continue; // ข้ามการวาดถนนสำหรับบล็อกที่ไม่มี PathType
+                }
+
                 double rotationAngle = 0;
                 boolean rotate = false;
 
                 Graphics2D g2d = (Graphics2D) g.create();
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-                switch (block.getPathType()) {
+                switch (pathType) {
                     case FOURWAY -> g2d.drawImage(ImageResource.FOURWAY_ROAD.getImage(), x, y, WIDTH, HEIGHT, null);
                     case THREEWAY, CURVED -> {
                         rotate = true;
@@ -53,7 +60,7 @@ public class ImageDrawer {
 
                 if (rotate)
                     g2d.rotate(rotationAngle, x + WIDTH / 2, y + HEIGHT / 2);
-                g2d.drawImage(switch (block.getPathType()) {
+                g2d.drawImage(switch (pathType) {
                     case THREEWAY -> ImageResource.THREEWAY_ROAD.getImage();
                     case CURVED -> ImageResource.CURVED_ROAD.getImage();
                     case STRAIGHT -> ImageResource.STRAIGHT_ROAD.getImage();
