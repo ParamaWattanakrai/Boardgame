@@ -14,12 +14,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.ImageIcon;
 import src.map.Field;
 import src.map.MetaSettings;
 import src.utils.Tuple;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private final HashMap<MainButton, Button> buttons;
+    private boolean isSoundOn = true;
 
     public MainMenu(MainFrame mainFrame) {
         super(mainFrame);
@@ -44,6 +46,8 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
             buttons.put(button, new Button(button.name()));
         }
         buttons.get(MainButton.RULE).setPop(false);
+        buttons.put(MainButton.SOUND, new Button());
+        buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
     }
 
     @Override
@@ -52,6 +56,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         buttons.get(MainButton.RESUME).setBounds(715, 690, 500, 70);
         buttons.get(MainButton.QUIT).setBounds(715, 870, 500, 70);
         buttons.get(MainButton.RULE).setBounds(120, 910, 240, 50);
+        buttons.get(MainButton.SOUND).setBounds(1650, 910, 240, 50);
     }
 
     @Override
@@ -63,6 +68,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
                 case RESUME -> resumeButton();
                 case QUIT -> quitButton();
                 case RULE -> ruleButton();
+                // case SOUND -> soundbotton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -103,4 +109,8 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         super.paintComponent(g);
         g.drawImage(ImageResource.MENU_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
+
+    // private void soundbotton(){
+    //     g.drawImage(ImageResource.SOUND.getImage(), 0, 0, getWidth(), getHeight(), null);
+    // }
 }
