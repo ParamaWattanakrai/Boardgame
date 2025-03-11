@@ -62,7 +62,8 @@ public enum ImageResource {
     
     TOOTH_WOLF("entities/tooth.png"),
 
-    SOUND("sound.png")
+    SOUND("sound.png"),
+    SOUND_OFF("mute.png")
     ;
 
     private final String path;

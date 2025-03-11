@@ -36,5 +36,9 @@ public class SoundPlayer {
             System.out.println("Error playing sound: " + e.getMessage());
         }
     }
+
+    public static void stopAllSounds(String soundFile){
+        
+    }
     
 }

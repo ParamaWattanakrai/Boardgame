@@ -113,6 +113,14 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     }
 
     // private void soundbotton(){
-    //     g.drawImage(ImageResource.SOUND.getImage(), 0, 0, getWidth(), getHeight(), null);
+    //     isSoundOn = !isSoundOn;
+    //     if(isSoundOn){
+    //         buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
+    //         SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
+    //     }
+    //     else{
+    //         buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80))); // ต้องมี enum SOUND_OFF ใน ImageResource
+    //         SoundPlayer.stopAllSounds();
+    //     }
     // }
 }
