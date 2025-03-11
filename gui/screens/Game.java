@@ -172,12 +172,15 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.put(GameButton.Setting, new Button(""));
         buttons.get(GameButton.Setting).setIcon(ImageResource.SETTING_GAME.getScaledIcon(80, 80));
         buttons.put(GameButton.EndButton, new Button("END TURN", 50));
+        buttons.put(GameButton.SoundON,new Button(""));
+        buttons.get(GameButton.SoundON).setIcon(ImageResource.SOUND.getScaledIcon(80, 80));
     }
 
     @Override
     public void setButtonBounds() {
         buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
         buttons.get(GameButton.EndButton).setBounds(1475, 905, 500, 50);
+        buttons.get(GameButton.SoundON).setBounds(1530, 20, 80, 80);
     }
 
     @Override
