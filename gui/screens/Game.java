@@ -149,13 +149,16 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             int medicSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC, Vitality.ALIVE).size();
             int mechanicSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
 
-            boolean allOccupied = Arrays.stream(BlockType.values())
-                    .allMatch(type -> Boolean.TRUE.equals(mainFrame.getField().getOccupationMap().get(type)));
+            boolean allOccupied = 
+                mainFrame.getField().getOccupationMap().get(BlockType.HOSPITAL) == Boolean.TRUE &&
+                mainFrame.getField().getOccupationMap().get(BlockType.POLICESTATION) == Boolean.TRUE &&
+                mainFrame.getField().getOccupationMap().get(BlockType.POWERPLANT) == Boolean.TRUE &&
+                mainFrame.getField().getOccupationMap().get(BlockType.STORE) == Boolean.TRUE;
             boolean isPopulationLow = CivilianSize < 6 || SoldierSize < 1 || medicSize < 1 || mechanicSize < 1;
 
             if (isPopulationLow) {
                 mainFrame.showScreen(GameScreen.GAMEOVER);
-            } else if (mainFrame.getGamaData().getNight() >= 15 && allOccupied) {
+            } else if (mainFrame.getGamaData().getNight() >= 3 && allOccupied) {
                 mainFrame.showScreen(GameScreen.GAMEWIN);
             }
 
