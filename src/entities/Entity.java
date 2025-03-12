@@ -30,7 +30,7 @@ public abstract class Entity {
         assignPixelCoordinate();
     }
 
-    public void assignPixelCoordinate() {
+    protected void assignPixelCoordinate() {
         int loop = 0;
         int posX = new Random().nextInt(blockWidth - entitySize);
         int posY = new Random().nextInt(blockHeight - entitySize);

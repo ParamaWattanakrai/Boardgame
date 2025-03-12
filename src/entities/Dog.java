@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dog extends Entity {
-    protected boolean actioned = false;
+    private boolean actioned = false;
     private static List<Tuple> biteLocations = new ArrayList<>();
 
     public Dog(Block block, int blockWidth, int blockHeight, int entitySize) {
