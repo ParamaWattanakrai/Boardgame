@@ -3,8 +3,6 @@ import src.map.Block;
 import src.map.BlockType;
 
 public class Medic extends Civilian {
-    protected EntityType entityType = EntityType.MEDIC;
-
     public Medic(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.MEDIC, blockWidth, blockHeight, entitySize);
         contact();

@@ -3,7 +3,6 @@ import src.map.Block;
 import src.utils.Direction;
 
 public class Mechanic extends Civilian {
-    protected EntityType entityType = EntityType.MECHANIC;
     public Mechanic(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.MECHANIC, blockWidth, blockHeight, entitySize);
     }
