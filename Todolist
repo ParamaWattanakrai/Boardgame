@@ -1,5 +1,6 @@
 GUI
 - Clean code 
+- Hunger Bar (Field.getHunger() ได้เลย เต็ม 3 พอ 0 ก้ให้ game over)
 
 Logic
 
