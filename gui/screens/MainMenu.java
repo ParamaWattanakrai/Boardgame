@@ -49,6 +49,9 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         buttons.get(MainButton.RULE).setPop(false);
         buttons.put(MainButton.SOUND, new Button());
         buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
+        buttons.put(MainButton.SOUND_OFF, new Button());
+        buttons.get(MainButton.SOUND_OFF).setVisible(false);
+        buttons.get(MainButton.SOUND_OFF).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
     }
 
     @Override
