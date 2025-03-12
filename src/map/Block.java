@@ -318,44 +318,29 @@ public class Block {
     }
 
     public List<Civilian> getAllContactedAlive() {
-        List<Civilian> alive = new ArrayList<>();
-        for (EntityType entityType : entityMap.keySet()) {
-            if (entityType != EntityType.DOG) {
-                for (Entity civilianEntity : entityMap.get(entityType)) {
-                    Civilian civilian = (Civilian) civilianEntity;
-                    if (civilian.getVitality() == Vitality.ALIVE && civilian.isContacted() == true) {
-                        alive.add(civilian);
-                    }
-                }
+        List<Civilian> contactedAlive = new ArrayList<>();
+        for (Civilian civilian : getAllCivilians()) {
+            if (civilian.getVitality() == Vitality.ALIVE && civilian.isContacted() == true) {
+                contactedAlive.add(civilian);
             }
         }
-        return alive;
+        return contactedAlive;
     }
 
     public List<Civilian> getAllAlive() {
         List<Civilian> alive = new ArrayList<>();
-        for (EntityType entityType : entityMap.keySet()) {
-            if (entityType != EntityType.DOG) {
-                for (Entity civilianEntity : entityMap.get(entityType)) {
-                    Civilian civilian = (Civilian) civilianEntity;
-                    if (civilian.getVitality() == Vitality.ALIVE) {
-                        alive.add(civilian);
-                    }
-                }
+        for (Civilian civilian : getAllCivilians()) {
+            if (civilian.getVitality() == Vitality.ALIVE) {
+                alive.add(civilian);
             }
         }
         return alive;
     }
     public List<Civilian> getAllComa() {
         List<Civilian> coma = new ArrayList<>();
-        for (EntityType entityType : entityMap.keySet()) {
-            if (entityType != EntityType.DOG) {
-                for (Entity civilianEntity : entityMap.get(entityType)) {
-                    Civilian civilian = (Civilian) civilianEntity;
-                    if (civilian.getVitality() == Vitality.COMA) {
-                        coma.add(civilian);
-                    }
-                }
+        for (Civilian civilian : getAllCivilians()) {
+            if (civilian.getVitality() == Vitality.COMA) {
+                coma.add(civilian);
             }
         }
         return coma;
@@ -392,12 +377,6 @@ public class Block {
         return pathString;
     }
 
-    // @Override
-    // public String toString() {
-    //     return "Block=" + getCoordinate() + ", Path" + getPathType() + getOrientation() + ", soldier=" + getAllEntityOfType(EntityType.SOLDIER).size() + ", civilian="
-    //             + getAllEntityOfType(EntityType.CIVILIAN).size() + ", medic=" + getAllEntityOfType(EntityType.MEDIC).size() + ", mechanic=" + getAllEntityOfType(EntityType.MECHANIC).size() + ", path=" + getPathType() + ", dog=" + 0
-    //             + ", landmark=" + getBlockType() + ", capture=" + false;
-    // }
     @Override
     public String toString() {
          return "(" + blockType + pathString + getAllCivilians().size() + ")";
