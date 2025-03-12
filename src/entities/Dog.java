@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dog extends Entity {
-    protected boolean actioned = false;
+    private boolean actioned = false;
     private static List<Tuple> biteLocations = new ArrayList<>();
 
     public Dog(Block block, int blockWidth, int blockHeight, int entitySize) {
@@ -26,7 +26,6 @@ public class Dog extends Entity {
     public boolean algorithm(boolean canBiteBarricade) {
         if (actioned) return false;
 
-        System.out.println("ALGORITHM");
         actioned = true;
         boolean hasBittenBarricade = false;
 
@@ -42,9 +41,7 @@ public class Dog extends Entity {
         Block targetBlock = block;
         for (int i = 0; i < block.getField().getFieldWidth(); i++) {
             List<Block> manhattanBlocks = block.getManhattanBlocks(i);
-            if (manhattanBlocks.size() < 1) {
-                break;
-            }
+            if (manhattanBlocks.size() < 1) break;
             for (Block curBlock : manhattanBlocks) {
                 if (curBlock.getAllAlive().size() > 0) {
                     targetBlock = curBlock;
@@ -52,9 +49,7 @@ public class Dog extends Entity {
             }
         }
 
-        if (targetBlock == block) {
-            return hasBittenBarricade;
-        }
+        if (targetBlock == block) return hasBittenBarricade;
 
         int x2 = targetBlock.getCoordinate().getA();
         int y2 = targetBlock.getCoordinate().getB();
@@ -77,7 +72,6 @@ public class Dog extends Entity {
             }
         }
 
-        System.out.println("Dog moving " + moveDirectionCandidates);
         Direction moveDirection = moveDirectionCandidates.get((int) (Math.random() * 2) % (moveDirectionCandidates.size()));
         if (!block.getPath(moveDirection).isBarricaded()) {
             move(moveDirection);
@@ -107,7 +101,6 @@ public class Dog extends Entity {
 
     public void bite(Civilian civilian) {
         civilian.infect();
-        System.out.println("I bite " + civilian);
     }
 
     private void recordBiteLocation() {

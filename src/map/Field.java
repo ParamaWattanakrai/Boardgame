@@ -31,6 +31,8 @@ public class Field {
 
     private HashMap<BlockType, Boolean> occupationMap = new HashMap<>();
 
+    private int hunger = 3;
+
     public Field(MetaSettings metaSettings) {
         this.metaSettings = metaSettings;
 
@@ -336,6 +338,12 @@ public class Field {
                 occupationMap.put(blockType, false);
             }
         }
+
+        if (occupationMap.get(BlockType.STORE) == true) {
+            hunger = 5;
+        } else {
+            hunger--;
+        }
     }
 
     public void spawnDogs(int dogIncoming) {
@@ -551,6 +559,10 @@ public class Field {
 
     public int getTurn() {
         return turn;
+    }
+
+    public int getHunger() {
+        return hunger;
     }
 
     public void printField() {
