@@ -60,7 +60,8 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         buttons.get(MainButton.RESUME).setBounds(715, 690, 500, 70);
         buttons.get(MainButton.QUIT).setBounds(715, 870, 500, 70);
         buttons.get(MainButton.RULE).setBounds(120, 910, 240, 50);
-        buttons.get(MainButton.SOUND).setBounds(1650, 910, 240, 50);
+        buttons.get(MainButton.SOUND).setBounds(1700, 910, 240, 50);
+        buttons.get(MainButton.SOUND_OFF).setBounds(1700, 910, 240, 50);
     }
 
     @Override
@@ -73,6 +74,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
                 case QUIT -> quitButton();
                 case RULE -> ruleButton();
                 case SOUND -> soundbotton();
+                case SOUND_OFF -> soundbotton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -118,12 +120,17 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private void soundbotton(){
         if(isSoundOn){
             isSoundOn=false;
-            buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
-            SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
+            SoundPlayer.stopSound();
+            buttons.get(MainButton.SOUND).setVisible(false);
+            buttons.get(MainButton.SOUND_OFF).setVisible(true);
         }
         else{
-            buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80))); // ต้องมี enum SOUND_OFF ใน ImageResource
-            SoundPlayer.stopSound();
+            isSoundOn=true;
+            SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
+            // buttons.get(MainButton.SOUND_OFF).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
+            // buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
+            buttons.get(MainButton.SOUND).setVisible(true);
+            buttons.get(MainButton.SOUND_OFF).setVisible(false);
         }
     }
 }
