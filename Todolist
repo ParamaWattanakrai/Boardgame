@@ -3,6 +3,7 @@
 GUI
 - Clean code 
 - Hunger Bar (Field.getHunger() ได้เลย เต็ม 5 พอ 0 ก้ให้ game over)
+- Dropped Gun
 
 Logic
 
