@@ -5,7 +5,10 @@ import gui.components.Button;
 import gui.enums.GameScreen;
 import gui.enums.ImageResource;
 import gui.enums.RuleButton;
+import gui.enums.SoundResource;
 import gui.interfaces.ButtonActions;
+import gui.utils.SoundPlayer;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -17,6 +20,7 @@ import javax.swing.ImageIcon;
 public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     private HashMap<RuleButton, Button> buttons;
     private List<Image> images;
+    private List<String> sounds;
     private int imageIndex = 0;
 
     public Rule(MainFrame mainFrame) {
@@ -54,6 +58,21 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         images.add(ImageResource.RULEPAGE8.getImage());
         images.add(ImageResource.RULEPAGE9.getImage());
         images.add(ImageResource.RULEPAGE10.getImage());
+
+        sounds = new ArrayList<>();
+        sounds.add(SoundResource.MISSION.getSound());
+        sounds.add(SoundResource.BASICMECHANICS.getSound());
+        sounds.add(SoundResource.WINCONDITION.getSound());
+        sounds.add(SoundResource.FACILITIES.getSound());
+        sounds.add(SoundResource.ROLE1.getSound());
+        sounds.add(SoundResource.ROLE2.getSound());
+        sounds.add(SoundResource.MOVE.getSound());
+        sounds.add(SoundResource.ARM.getSound());
+        sounds.add(SoundResource.SHOOT.getSound());
+        sounds.add(SoundResource.BUILD.getSound());
+        // sounds.add(SoundResource.HEAL.getSound());
+        // sounds.add(SoundResource.GOODLUCK.getSound());
+
     }
 
     @Override
@@ -82,6 +101,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     private void NextPage() {
         if (imageIndex < images.size() - 1) {
             imageIndex++;
+            SoundPlayer.playSound(sounds.get(imageIndex));
 
             if (imageIndex == images.size() - 1) {
                 buttons.get(RuleButton.NEXTPAGE).setVisible(false);

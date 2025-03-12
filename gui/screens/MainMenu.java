@@ -91,7 +91,10 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().resetPerRoads();
         ((Game) mainFrame.getScreens().get(GameScreen.GAME)).resetText();
         List<Tuple> next = mainFrame.getField().getNextRoundDogCoordinates();
-        next.forEach((dog) -> {((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().getRoad(dog.getA(), dog.getB()).setPreviewDog(true);});
+        next.forEach((dog) -> {
+            ((Game) mainFrame.getScreens().get(GameScreen.GAME)).getMap().getRoad(dog.getA(), dog.getB())
+                    .setPreviewDog(true);
+        });
         mainFrame.showScreen(GameScreen.GAME);
     }
 
@@ -109,6 +112,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
 
     private void ruleButton() {
         mainFrame.showScreen(GameScreen.RULE);
+        SoundPlayer.playSound(SoundResource.MISSION.getSound());
     }
 
     @Override
@@ -117,18 +121,19 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         g.drawImage(ImageResource.MENU_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 
-    private void soundbotton(){
-        if(isSoundOn){
-            isSoundOn=false;
+    private void soundbotton() {
+        if (isSoundOn) {
+            isSoundOn = false;
             SoundPlayer.stopSound();
             buttons.get(MainButton.SOUND).setVisible(false);
             buttons.get(MainButton.SOUND_OFF).setVisible(true);
-        }
-        else{
-            isSoundOn=true;
+        } else {
+            isSoundOn = true;
             SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
-            // buttons.get(MainButton.SOUND_OFF).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
-            // buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
+            // buttons.get(MainButton.SOUND_OFF).setIcon(new
+            // ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
+            // buttons.get(MainButton.SOUND).setIcon(new
+            // ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
             buttons.get(MainButton.SOUND).setVisible(true);
             buttons.get(MainButton.SOUND_OFF).setVisible(false);
         }
