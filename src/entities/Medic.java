@@ -20,7 +20,9 @@ public class Medic extends Civilian {
 
     public void cure() {
         if (validateCure()) {
-            block.getAllComa().get(0).disinfect();
+            for (Civilian civilian : block.getAllComa()) {
+                civilian.disinfect();
+            }
         }
     }
 }
