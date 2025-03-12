@@ -49,6 +49,9 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         buttons.get(MainButton.RULE).setPop(false);
         buttons.put(MainButton.SOUND, new Button());
         buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
+        buttons.put(MainButton.SOUND_OFF,new Button());
+        buttons.get(MainButton.SOUND_OFF).setVisible(false);
+        buttons.get(MainButton.SOUND_OFF).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
     }
 
     @Override
@@ -69,7 +72,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
                 case RESUME -> resumeButton();
                 case QUIT -> quitButton();
                 case RULE -> ruleButton();
-                // case SOUND -> soundbotton();
+                case SOUND -> soundbotton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -112,15 +115,15 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         g.drawImage(ImageResource.MENU_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 
-    // private void soundbotton(){
-    //     isSoundOn = !isSoundOn;
-    //     if(isSoundOn){
-    //         buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
-    //         SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
-    //     }
-    //     else{
-    //         buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80))); // ต้องมี enum SOUND_OFF ใน ImageResource
-    //         SoundPlayer.stopAllSounds();
-    //     }
-    // }
+    private void soundbotton(){
+        if(isSoundOn){
+            isSoundOn=false;
+            buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND.getScaledImage(80, 80)));
+            SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
+        }
+        else{
+            buttons.get(MainButton.SOUND).setIcon(new ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80))); // ต้องมี enum SOUND_OFF ใน ImageResource
+            SoundPlayer.stopSound();
+        }
+    }
 }
