@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
+
+import src.entities.Dog;
 import src.map.Field;
 import src.map.MetaSettings;
 import src.utils.Tuple;
@@ -66,6 +68,7 @@ public class GameOver extends BaseScreen implements ButtonActions<GameEndBtn>{
     }
 
     private void newGameButton() {
+        Dog.clearBiteLocations();
         MetaSettings metaSettings = new MetaSettings(30, 5, 5, 180, 180, 50, 1, 2, 1, 1, 5, 3, 2, 12);
         mainFrame.setField(new Field(metaSettings));
         mainFrame.setGamaData(new GameData());
