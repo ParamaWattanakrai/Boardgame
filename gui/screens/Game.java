@@ -13,6 +13,7 @@ import gui.enums.GameText;
 import gui.enums.ImageResource;
 import gui.interfaces.ButtonActions;
 import gui.interfaces.TextDisplay;
+import gui.utils.SoundPlayer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,6 +40,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     private WorldMap map;
     private Boolean day = true;
     private GameMode mode = GameMode.Default;
+    private boolean isSoundOn = true;
 
     public Game(MainFrame mainFrame) {
         super(mainFrame);
@@ -174,6 +176,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.put(GameButton.EndButton, new Button("END TURN", 50));
         buttons.put(GameButton.SoundON,new Button(""));
         buttons.get(GameButton.SoundON).setIcon(ImageResource.SOUND.getScaledIcon(80, 80));
+        buttons.put(GameButton.SoundOFF,new Button(""));
+        buttons.get(GameButton.SoundOFF).setVisible(false);
+        buttons.get(GameButton.SoundOFF).setIcon(ImageResource.SOUND_OFF.getScaledIcon(80, 80));
     }
 
     @Override
@@ -181,6 +186,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
         buttons.get(GameButton.EndButton).setBounds(1475, 905, 500, 50);
         buttons.get(GameButton.SoundON).setBounds(1530, 20, 80, 80);
+        buttons.get(GameButton.SoundOFF).setBounds(1530, 20, 80, 80);
     }
 
     @Override
@@ -190,6 +196,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             switch (button) {
                 case Setting -> settingButton();
                 case EndButton -> endButton();
+                case SoundON -> soundButton();
+                case SoundOFF -> soundButton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -405,6 +413,21 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     public void resetButton() {
         scrollPanes.get(GameScroll.Entity).removeAllPanel();
         scrollPanes.get(GameScroll.Action).removeAllPanel();
+    }
+    private void soundButton() {
+        if (isSoundOn) {
+            // Turn sound off
+            isSoundOn = false;
+            SoundPlayer.stopSound();
+            buttons.get(GameButton.SoundON).setVisible(false);
+            buttons.get(GameButton.SoundOFF).setVisible(true);
+        } else {
+            // Turn sound on
+            isSoundOn = true;
+            SoundPlayer.loopSound("MainMenu.wav");
+            buttons.get(GameButton.SoundON).setVisible(true);
+            buttons.get(GameButton.SoundOFF).setVisible(false);
+        }
     }
 
     @Override
