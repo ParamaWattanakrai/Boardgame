@@ -53,12 +53,15 @@ public enum ImageResource {
     SHOOT("shoot.png"),
 
     RULEPAGE1("RulePage/Operation.png"),
-    RULEPAGE2("RulePage/Facilities.png"),
-    RULEPAGE3("RulePage/Role1.png"),
-    RULEPAGE4("RulePage/Role2.png"),
-    RULEPAGE5("RulePage/ActionMove.png"),
-    RULEPAGE6("RulePage/ActionShoot.png"),
-    RULEPAGE7("RulePage/WinConditions.png"),
+    RULEPAGE2("RulePage/BasicMechanics.png"),
+    RULEPAGE3("RulePage/WinConditions.png"),
+    RULEPAGE4("RulePage/Facilities.png"),
+    RULEPAGE5("RulePage/Role1.png"),
+    RULEPAGE6("RulePage/Role2.png"),
+    RULEPAGE7("RulePage/ActionMove.png"),
+    RULEPAGE8("RulePage/ActionArm.png"),
+    RULEPAGE9("RulePage/ActionShoot.png"),
+    RULEPAGE10("RulePage/ActionBuild.png"),
     
     TOOTH_WOLF("entities/tooth.png"),
 

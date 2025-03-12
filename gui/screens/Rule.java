@@ -51,6 +51,9 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         images.add(ImageResource.RULEPAGE5.getImage());
         images.add(ImageResource.RULEPAGE6.getImage());
         images.add(ImageResource.RULEPAGE7.getImage());
+        images.add(ImageResource.RULEPAGE8.getImage());
+        images.add(ImageResource.RULEPAGE9.getImage());
+        images.add(ImageResource.RULEPAGE10.getImage());
     }
 
     @Override
