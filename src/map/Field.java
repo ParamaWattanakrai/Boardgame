@@ -144,13 +144,13 @@ public class Field {
         nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
     }
 
-    public void generatePath() {
+    private void generatePath() {
         List<Block> blockCandidates = new ArrayList<>();
         blockCandidates.add(field[0][0]);
         generatePath(blockCandidates);
     }
 
-    public void generatePath(List<Block> blockCandidates) {
+    private void generatePath(List<Block> blockCandidates) {
         if (blockCandidates.isEmpty()) return;
     
         Set<Block> nextBlockCandidateSet = new HashSet<>(blockCandidates);
@@ -240,7 +240,7 @@ public class Field {
         spawnDogs(dogIncoming);
     }
 
-    public void shootEveryBlock() {
+    private void shootEveryBlock() {
         for (Block[] row : field) {
             for (Block block : row) {
                 block.shootDog();
@@ -248,21 +248,16 @@ public class Field {
         }
     }
     
-    public void doCivilianActions() {
+    private void doCivilianActions() {
         for (ActionType actionType : ActionType.values()) {
             if (actionType == ActionType.SHOOT) {
                 continue;
             }
             if (actionMap.get(actionType) != null) {
                 for (ActorActionPair pair : actionMap.get(actionType)) {
-                    System.out.println("- " + pair);
-                    System.out.println("- " +  pair.getCivilian() + "is doing");
                     pair.getRunnable().run();
                 }
-            } else {
-                System.out.println("- null");
             }
-            System.out.println();
         }
         actionMap = new HashMap<>();
         for (Civilian civilian : getAllCivilians()) {
@@ -270,7 +265,7 @@ public class Field {
         }
     }
 
-    public void doDogActions() {
+    private void doDogActions() {
         for (Block[] row : field) {
             for (Block block : row) {
                 List<Dog> dogs = block.getAllDogs();
@@ -285,7 +280,7 @@ public class Field {
         }
     }
 
-    public int death() {
+    private int death() {
         int death = 0;
         List<Civilian> comaCivilian = getAllComa();
         if (comaCivilian == null) {return death;}
@@ -299,7 +294,7 @@ public class Field {
         return death;
     }
 
-    public void updateField() {
+    private void updateField() {
         for (Block[] row : field) {
             for (Block block : row) {
                 List<Dog> dogs = block.getAllDogs();
@@ -327,7 +322,7 @@ public class Field {
         }
     }
 
-    public void spawnDogs(int dogIncoming) {
+    private void spawnDogs(int dogIncoming) {
         for (Tuple coordinate : nextRoundDogCoordinates) {
             new Dog(field[coordinate.getB()][coordinate.getA()], metaSettings.getBlockWidth(), metaSettings.getBlockHeight(), metaSettings.getEntitySize());
         }
@@ -340,7 +335,7 @@ public class Field {
     }
 
 
-    public Tuple getRandomEdgeCoordinate() {
+    private Tuple getRandomEdgeCoordinate() {
         Random rand = new Random();
         int rows = field.length;
         int cols = field[0].length;
@@ -403,11 +398,11 @@ public class Field {
         }
     }
 
-    public void addLandmark(BlockType blockType, Block block) {
+    private void addLandmark(BlockType blockType, Block block) {
         landmarkMap.computeIfAbsent(blockType, _ -> new ArrayList<>()).add(block);
     }
 
-    public void removeLandmark(BlockType blockType, Block block) {
+    private void removeLandmark(BlockType blockType, Block block) {
         landmarkMap.get(blockType).remove(block);
     }
 
@@ -417,7 +412,7 @@ public class Field {
         try {
             return field[blockY + direction.getOffset().getB()][blockX + direction.getOffset().getA()];
         } catch (Exception e) {
-            System.out.println(String.format("There is no further block %sward", direction.toString().toLowerCase()));
+            // System.out.println(String.format("There is no further block %sward", direction.toString().toLowerCase()));
         }
         return block;
     }
