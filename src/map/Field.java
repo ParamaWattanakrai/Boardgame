@@ -16,12 +16,11 @@ public class Field {
     Random rand = new Random();
     MetaSettings metaSettings;
 
-    private int turn = 1;
     private int fieldHeight;
     private int fieldWidth;
 
     private Block[][] field;
-    
+
     private List<Tuple> nextRoundDogCoordinates = new ArrayList<>();
 
     private ArrayList<Tuple> spawnCoords = new ArrayList<>();
@@ -516,10 +515,6 @@ public class Field {
 
     public List<Tuple> getNextRoundDogCoordinates() {
         return nextRoundDogCoordinates;
-    }
-
-    public int getTurn() {
-        return turn;
     }
 
     public void printField() {
