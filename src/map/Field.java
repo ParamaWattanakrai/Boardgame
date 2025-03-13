@@ -402,10 +402,6 @@ public class Field {
         landmarkMap.computeIfAbsent(blockType, _ -> new ArrayList<>()).add(block);
     }
 
-    private void removeLandmark(BlockType blockType, Block block) {
-        landmarkMap.get(blockType).remove(block);
-    }
-
     public Block getNextBlock(Block block, Direction direction) {
         int blockX = block.getCoordinate().getA();
         int blockY = block.getCoordinate().getB();
