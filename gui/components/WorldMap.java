@@ -181,7 +181,7 @@ public class WorldMap extends JPanel {
                                     if (civilian.validateShoot(direction)) {
                                         mainFrame.getField().addAction(ActionType.SHOOT, civilian,
                                                 () -> civilian.shoot());
-                                        civilian.getBlock().getNeighborBlock(direction).addShooter(civilian);
+                                        civilian.setShootAt(civilian.getBlock().getNeighborBlock(direction));
                                     }
                                 }
                                 case BUILD -> {

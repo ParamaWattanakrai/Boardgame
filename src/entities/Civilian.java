@@ -10,6 +10,8 @@ public class Civilian extends Entity {
     protected boolean contacted = false;
     protected boolean armed = false;
 
+    private Block shootAt;
+
     protected ActionType ActionType;
     protected Runnable actionRunnable;
 
@@ -54,6 +56,20 @@ public class Civilian extends Entity {
         System.out.println("trying to shoot from " + block.getCoordinate() + " to " + neighborBlock.getCoordinate());
         return (neighborBlock != block &&
                 neighborBlock.getAllDogs().size() > 0);
+    }
+
+    public void setShootAt(Block block) {
+        shootAt = block;
+        block.addShooter(this);
+    }
+
+    public void nullShootAt() {
+        shootAt.removeShooter(this);
+        shootAt = null;
+    }
+
+    public Block getShootAt() {
+        return shootAt;
     }
 
     public void shoot() {

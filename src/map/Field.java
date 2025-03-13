@@ -3,6 +3,7 @@ package src.map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -25,11 +26,11 @@ public class Field {
 
     private ArrayList<Tuple> spawnCoords = new ArrayList<>();
 
-    private HashMap<BlockType, List<Block>> landmarkMap = new HashMap<>();
+    private Map<BlockType, List<Block>> landmarkMap = new HashMap<>();
 
-    private HashMap<ActionType, List<ActorActionPair>> actionMap = new HashMap<>();
+    private Map<ActionType, Map<Civilian, Runnable>> actionMap = new HashMap<>();
 
-    private HashMap<BlockType, Boolean> occupationMap = new HashMap<>();
+    private Map<BlockType, Boolean> occupationMap = new HashMap<>();
 
     public Field(MetaSettings metaSettings) {
         this.metaSettings = metaSettings;
@@ -222,17 +223,23 @@ public class Field {
             if (actionType == ActionType.SHOOT) {
                 continue;
             }
-            if (actionMap.get(actionType) != null) {
-                for (ActorActionPair pair : actionMap.get(actionType)) {
-                    pair.getRunnable().run();
+            Map<Civilian, Runnable> actorMap = actionMap.get(actionType);
+            if (actorMap != null) {
+                for (Runnable action : actorMap.values()) {
+                    action.run();
                 }
             }
         }
-        actionMap = new HashMap<>();
+        
+        actionMap.clear();
+    
         for (Civilian civilian : getAllCivilians()) {
-            civilian.nullAction();
+            if (civilian != null) {
+                civilian.nullAction();
+            }
         }
     }
+    
 
     private void doDogActions() {
         for (Block[] row : field) {
@@ -347,21 +354,28 @@ public class Field {
         }
     }
 
-    public void addAction(ActionType ActionType, Civilian civilian, Runnable actionRunnable) {
-        civilian.setAction(ActionType, actionRunnable);
-        actionMap.computeIfAbsent(ActionType, _ -> new ArrayList<>()).add(new ActorActionPair(civilian, actionRunnable));
+    public void addAction(ActionType actionType, Civilian civilian, Runnable actionRunnable) {
+        civilian.setAction(actionType, actionRunnable);
+        actionMap.computeIfAbsent(actionType, _ -> new HashMap<>()).put(civilian, actionRunnable);
     }
 
-    public void removeAction(ActionType ActionType, Civilian civilian, Runnable actionRunnable) {
+    public void removeAction(ActionType actionType, Civilian civilian, Runnable actionRunnable) {
         civilian.nullAction();
-        actionMap.get(ActionType).remove(new ActorActionPair(civilian, actionRunnable)); //FAULTY
+        actionMap.get(actionType).remove(civilian);
+        if (actionType == ActionType.SHOOT) {
+            civilian.nullShootAt();
+        }
     }
 
     public void printAction() {
         for (ActionType actionType : actionMap.keySet()) {
             System.out.println(actionType);
-            for (ActorActionPair pair : actionMap.get(actionType)) {
-                System.out.println("- " + pair.getCivilian());
+            
+            Map<Civilian, Runnable> actorMap = actionMap.get(actionType);
+            for (Map.Entry<Civilian, Runnable> entry : actorMap.entrySet()) {
+                Civilian civilian = entry.getKey();
+                Runnable action = entry.getValue();
+                System.out.println(civilian + " is doing " + action);
             }
             System.out.println();
         }
@@ -490,7 +504,7 @@ public class Field {
         return fieldWidth;
     }
 
-    public HashMap<BlockType, Boolean> getOccupationMap() {
+    public Map<BlockType, Boolean> getOccupationMap() {
         return occupationMap;
     }
 
