@@ -46,10 +46,10 @@ public abstract class Entity {
     }
 
     public void teleport(Block toBlock) {
-        block = toBlock;
         block.removeEntity(this);
         toBlock.addEntity(this);
         assignPixelCoordinate();
+        block = toBlock;
     }
 
     public abstract void move(Direction direction);

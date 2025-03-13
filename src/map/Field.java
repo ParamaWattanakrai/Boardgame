@@ -225,25 +225,14 @@ public class Field {
     
 
     public void endTurn(int dogIncoming) {
-        System.out.println("--------------------");
-        System.out.println("----- Action!!");
-        printAction();
-        System.out.println();
+        // printAction();
+        // System.out.println();
 
-        System.out.println("--------------------");
-        System.out.println("----- Shoot!!!!!!");
         shootEveryBlock();
-        System.out.println();
 
-        System.out.println("--------------------");
-        System.out.println("----- Civilian Action!!");
         doCivilianActions();
-        System.out.println();
 
-        System.out.println("--------------------");
-        System.out.println("----- Dog Action!!");
         doDogActions();
-        System.out.println();
 
         death();
 

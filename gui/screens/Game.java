@@ -170,7 +170,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 mainFrame.getField().getOccupationMap().get(BlockType.STORE) == Boolean.TRUE;
             boolean isPopulationLow = CivilianSize < 6 || SoldierSize < 1 || medicSize < 1 || mechanicSize < 1;
 
-            if (isPopulationLow) {
+            if (isPopulationLow || mainFrame.getGamaData().getNight() > 15) {
                 mainFrame.showScreen(GameScreen.GAMEOVER);
             } else if (mainFrame.getGamaData().getNight() >= 3 && allOccupied) {
                 mainFrame.showScreen(GameScreen.GAMEWIN);
