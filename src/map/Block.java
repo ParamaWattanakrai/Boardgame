@@ -2,6 +2,7 @@ package src.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
 import src.entities.*;
@@ -24,7 +25,7 @@ public class Block {
     private String blockTypeString;
     private String pathString;
 
-    private HashMap<EntityType, List<Entity>> entityMap = new HashMap<>();
+    private Map<EntityType, List<Entity>> entityMap = new HashMap<>();
     private List<Civilian> shooters = new ArrayList<>();
 
     private int gunAmount = 0;
@@ -270,7 +271,7 @@ public class Block {
         return coordinate;
     }
 
-    public HashMap<EntityType, List<Entity>> getEntityMap() {
+    public Map<EntityType, List<Entity>> getEntityMap() {
         return entityMap;
     }
 
