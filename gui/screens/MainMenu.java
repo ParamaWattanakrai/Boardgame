@@ -32,6 +32,7 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         this.buttons = new HashMap<>();
         initialize();
     }
+
     public void setGame(Game game) {
         this.game = game;
     }

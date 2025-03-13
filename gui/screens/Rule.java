@@ -57,6 +57,8 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         images.add(ImageResource.RULEPAGE8.getImage());
         images.add(ImageResource.RULEPAGE9.getImage());
         images.add(ImageResource.RULEPAGE10.getImage());
+        images.add(ImageResource.RULEPAGE11.getImage());
+        images.add(ImageResource.RULEPAGE12.getImage());
 
         sounds = new ArrayList<>();
         sounds.add(SoundResource.MISSION.getSound());
@@ -69,8 +71,8 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         sounds.add(SoundResource.ARM.getSound());
         sounds.add(SoundResource.SHOOT.getSound());
         sounds.add(SoundResource.BUILD.getSound());
-        // sounds.add(SoundResource.HEAL.getSound());
-        // sounds.add(SoundResource.GOODLUCK.getSound());
+        sounds.add(SoundResource.HEAL.getSound());
+        sounds.add(SoundResource.GOODLUCK.getSound());
 
     }
 
@@ -102,7 +104,7 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         SoundPlayer.stopSpecificSound("Mission.wav");
         if (imageIndex < images.size() - 1) {
             SoundPlayer.stopSpecificSound(sounds.get(imageIndex));
-            SoundPlayer.playSound(sounds.get(imageIndex+1));
+            SoundPlayer.playSound(sounds.get(imageIndex + 1));
             imageIndex++;
 
             if (imageIndex == images.size() - 1) {

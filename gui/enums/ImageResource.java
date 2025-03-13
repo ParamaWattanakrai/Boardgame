@@ -62,12 +62,13 @@ public enum ImageResource {
     RULEPAGE8("RulePage/ActionArm.png"),
     RULEPAGE9("RulePage/ActionShoot.png"),
     RULEPAGE10("RulePage/ActionBuild.png"),
-    
+    RULEPAGE11("RulePage/ActionHeal.png"),
+    RULEPAGE12("RulePage/Goodluck.png"),
+
     TOOTH_WOLF("entities/tooth.png"),
 
     SOUND("sound.png"),
-    SOUND_OFF("mute.png")
-    ;
+    SOUND_OFF("mute.png");
 
     private final String path;
     private Image image;
