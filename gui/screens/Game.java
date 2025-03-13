@@ -172,7 +172,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
             if (isPopulationLow) {
                 mainFrame.showScreen(GameScreen.GAMEOVER);
-            } else if (mainFrame.getGamaData().getNight() >= 3 && allOccupied) {
+            } else if (mainFrame.getGamaData().getNight() >= 15 && allOccupied) {
                 mainFrame.showScreen(GameScreen.GAMEWIN);
             }
 
