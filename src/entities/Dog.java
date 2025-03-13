@@ -26,7 +26,6 @@ public class Dog extends Entity {
     public boolean algorithm(boolean canBiteBarricade) {
         if (actioned) return false;
 
-        System.out.println("ALGORITHM");
         actioned = true;
         boolean hasBittenBarricade = false;
 
