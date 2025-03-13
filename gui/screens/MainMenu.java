@@ -3,6 +3,7 @@ package gui.screens;
 import gui.MainFrame;
 import gui.components.Button;
 import gui.data.GameData;
+import gui.enums.GameButton;
 import gui.enums.GameScreen;
 import gui.enums.ImageResource;
 import gui.enums.MainButton;
@@ -22,12 +23,17 @@ import src.utils.Tuple;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private final HashMap<MainButton, Button> buttons;
+    private Game game;
     private boolean isSoundOn = true;
 
-    public MainMenu(MainFrame mainFrame) {
+    public MainMenu(MainFrame mainFrame, Game game) {
         super(mainFrame);
+        this.game = game;
         this.buttons = new HashMap<>();
         initialize();
+    }
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -121,21 +127,27 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
         g.drawImage(ImageResource.MENU_BACKGROUND.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 
-    private void soundbotton() {
+    public void soundbotton() {
         if (isSoundOn) {
             isSoundOn = false;
-            SoundPlayer.stopSound();
+            SoundPlayer.stopSound(); // หยุดเสียงก่อนเสมอเมื่อปิดเสียง
             buttons.get(MainButton.SOUND).setVisible(false);
             buttons.get(MainButton.SOUND_OFF).setVisible(true);
+            if (game != null) { // อัปเดตสถานะและ UI ใน Game screen ด้วย
+                game.setSoundOn(false); // เพิ่ม method setSoundOn ใน Game.java (ตามคำแนะนำด้านล่าง)
+                game.getButtons().get(GameButton.SoundON).setVisible(false);
+                game.getButtons().get(GameButton.SoundOFF).setVisible(true);
+            }
         } else {
             isSoundOn = true;
-            SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
-            // buttons.get(MainButton.SOUND_OFF).setIcon(new
-            // ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
-            // buttons.get(MainButton.SOUND).setIcon(new
-            // ImageIcon(ImageResource.SOUND_OFF.getScaledImage(80, 80)));
+            SoundPlayer.loopSound(SoundResource.MainMenu.getSound()); // เล่นเสียงเมื่อเปิดเสียง
             buttons.get(MainButton.SOUND).setVisible(true);
             buttons.get(MainButton.SOUND_OFF).setVisible(false);
+            if (game != null) { // อัปเดตสถานะและ UI ใน Game screen ด้วย
+                game.setSoundOn(true);  // เพิ่ม method setSoundOn ใน Game.java (ตามคำแนะนำด้านล่าง)
+                game.getButtons().get(GameButton.SoundON).setVisible(true);
+                game.getButtons().get(GameButton.SoundOFF).setVisible(false);
+            }
         }
-    }
+}
 }

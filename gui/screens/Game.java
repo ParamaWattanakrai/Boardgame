@@ -13,12 +13,10 @@ import gui.enums.GameText;
 import gui.enums.ImageResource;
 import gui.interfaces.ButtonActions;
 import gui.interfaces.TextDisplay;
-import gui.utils.SoundPlayer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -40,11 +38,27 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     private WorldMap map;
     private Boolean day = true;
     private GameMode mode = GameMode.Default;
+    private MainMenu mainMenu;
     private boolean isSoundOn = true;
 
-    public Game(MainFrame mainFrame) {
+    public Game(MainFrame mainFrame, MainMenu mainMenu) {
         super(mainFrame);
+        this.mainMenu = mainMenu;
         initialize();
+    }
+    public boolean isSoundOn() {
+        return isSoundOn;
+    }
+
+    public void setSoundOn(boolean soundOn) {
+        isSoundOn = soundOn;
+    }
+
+    public HashMap<GameButton, Button> getButtons() {
+        return buttons;
+    }
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
     }
 
     @Override
@@ -216,7 +230,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         mainFrame.getField().getNextRoundDogCoordinates()
                 .forEach((dog) -> map.getRoad(dog.getA(), dog.getB()).setPreviewDog(true));
         scrollPanes.values().forEach((action) -> action.removeAllPanel());
-        // SoundPlayer.playSound(SoundResource.NEXTTURN.getSound());
 
         map.setSelect(null);
         map.resetActionRoads();
@@ -417,20 +430,19 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         scrollPanes.get(GameScroll.Entity).removeAllPanel();
         scrollPanes.get(GameScroll.Action).removeAllPanel();
     }
-    private void soundButton() {
+    public void soundButton() {
         if (isSoundOn) {
             // Turn sound off
             isSoundOn = false;
-            SoundPlayer.stopSound();
             buttons.get(GameButton.SoundON).setVisible(false);
             buttons.get(GameButton.SoundOFF).setVisible(true);
         } else {
             // Turn sound on
             isSoundOn = true;
-            SoundPlayer.loopSound("MainMenu.wav");
             buttons.get(GameButton.SoundON).setVisible(true);
             buttons.get(GameButton.SoundOFF).setVisible(false);
         }
+        mainMenu.soundbotton();
     }
 
     @Override

@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
     private final String TITLE = "Out Bark";
     private final HashMap<GameScreen, BaseScreen> screens;
     private JPanel mainPanel;
+    
 
     public MainFrame() {
         this(null, new GameData());
@@ -46,14 +47,18 @@ public class MainFrame extends JFrame {
     }
 
     private void createScreen() {
-        screens.put(GameScreen.MAIN_MENU, new MainMenu(this));
-        screens.put(GameScreen.GAME, new Game(this));
+        MainMenu mainMenu = new MainMenu(this, null);
+        Game game = new Game(this, null);
+      
+        mainMenu.setGame(game);
+        game.setMainMenu(mainMenu);
+      
+        screens.put(GameScreen.MAIN_MENU, mainMenu);
+        screens.put(GameScreen.GAME, game);
         screens.put(GameScreen.RULE, new Rule(this));
         screens.put(GameScreen.GAMEOVER, new GameOver(this));
         screens.put(GameScreen.GAMEWIN, new GameWin(this));
-
-    }
-
+       }
     private void addScreen() {
         screens.forEach((screen, panel) -> mainPanel.add(panel, screen.name()));
         add(mainPanel);
