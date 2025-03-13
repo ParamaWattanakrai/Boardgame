@@ -6,14 +6,14 @@ import src.utils.Direction;
 public class Civilian extends Entity {
     protected double hitRate = 0.75;
     protected Vitality vitality = Vitality.ALIVE;
+    
     protected int comaTime = 0;
     protected boolean contacted = false;
     protected boolean armed = false;
 
-    private Block shootAt;
-
     protected ActionType ActionType;
     protected Runnable actionRunnable;
+    protected Block shootAt;
 
     public Civilian(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.CIVILIAN, blockWidth, blockHeight, entitySize);
@@ -34,7 +34,7 @@ public class Civilian extends Entity {
                 block.getPath(direction).doesExist() &&
                 neighborBlock.getPath(direction.getOpposite()).doesExist());
     }
-
+ 
     @Override
     public void move(Direction direction) {
         if (validateMove(direction)) {
@@ -49,11 +49,9 @@ public class Civilian extends Entity {
 
     public boolean validateShoot(Direction direction) {
         if (!isArmed() && vitality != Vitality.ALIVE) {
-            System.out.println("not armed or not alive bro");
             return false;
         }
         Block neighborBlock = block.getNeighborBlock(direction);
-        System.out.println("trying to shoot from " + block.getCoordinate() + " to " + neighborBlock.getCoordinate());
         return (neighborBlock != block &&
                 neighborBlock.getAllDogs().size() > 0);
     }
