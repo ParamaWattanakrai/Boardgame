@@ -6,11 +6,11 @@ import java.util.*;
 import javax.sound.sampled.*;
 
 public class SoundPlayer {
-    private static List<Clip> activeClips = new ArrayList<>();
+    private static HashMap<String, Clip> activeClips = new HashMap<>();
 
     public static void playSound(String soundFile) {
         try {
-            File file = new File("gui/assets/sfx/" + soundFile); 
+            File file = new File("gui/assets/sfx/" + soundFile);
             if (!file.exists()) {
                 System.out.println("Error: File not found -> " + file.getAbsolutePath());
                 return;
@@ -19,7 +19,7 @@ public class SoundPlayer {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-            activeClips.add(clip);
+            activeClips.put(soundFile, clip); // Store clip with soundFile as key
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.out.println("Error playing sound: " + e.getMessage());
         }
@@ -27,7 +27,7 @@ public class SoundPlayer {
 
     public static void loopSound(String soundFile) {
         try {
-            File file = new File("gui/assets/sfx/" + soundFile); 
+            File file = new File("gui/assets/sfx/" + soundFile);
             if (!file.exists()) {
                 System.out.println("Error: File not found -> " + file.getAbsolutePath());
                 return;
@@ -36,17 +36,32 @@ public class SoundPlayer {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-            activeClips.add(clip);
+            activeClips.put(soundFile, clip); // Store clip with soundFile as key
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.out.println("Error playing sound: " + e.getMessage());
         }
     }
-    public static void stopSound(){
-        for(Clip clip : activeClips){
-            if(clip != null && clip.isRunning()){
+    public static void stopSound() {
+        // Iterate through the values (Clips) in the HashMap
+        for (Clip clip : activeClips.values()) {
+            if (clip != null && clip.isRunning()) {
                 clip.stop();
+                clip.close(); // Close the clip to release resources
             }
         }
-        activeClips.clear();
+        activeClips.clear(); // Clear the HashMap as all sounds are stopped
+    }
+    public static void stopSpecificSound(String soundFile) {
+        if (activeClips.containsKey(soundFile)) {
+            Clip clip = activeClips.get(soundFile);
+            if (clip.isRunning()) {
+                clip.stop();
+            }
+            clip.close();
+            activeClips.remove(soundFile);
+            System.out.println("Stopped specific sound: " + soundFile);
+        } else {
+            System.out.println("Sound not currently playing: " + soundFile);
+        }
     }
 }

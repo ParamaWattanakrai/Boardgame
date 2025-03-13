@@ -8,7 +8,6 @@ import gui.enums.RuleButton;
 import gui.enums.SoundResource;
 import gui.interfaces.ButtonActions;
 import gui.utils.SoundPlayer;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -95,13 +94,16 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
     }
 
     private void backButton() {
+        SoundPlayer.stopSpecificSound(sounds.get(imageIndex));
         mainFrame.showScreen(GameScreen.MAIN_MENU);
     }
 
     private void NextPage() {
+        SoundPlayer.stopSpecificSound("Mission.wav");
         if (imageIndex < images.size() - 1) {
+            SoundPlayer.stopSpecificSound(sounds.get(imageIndex));
+            SoundPlayer.playSound(sounds.get(imageIndex+1));
             imageIndex++;
-            SoundPlayer.playSound(sounds.get(imageIndex));
 
             if (imageIndex == images.size() - 1) {
                 buttons.get(RuleButton.NEXTPAGE).setVisible(false);
@@ -114,7 +116,9 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
 
     private void BackPage() {
         if (imageIndex > 0) {
+            SoundPlayer.stopSpecificSound(sounds.get(imageIndex));
             imageIndex--;
+            SoundPlayer.playSound(sounds.get(imageIndex));
             if (imageIndex == 0) {
                 buttons.get(RuleButton.BACKPAGE).setVisible(false);
             }

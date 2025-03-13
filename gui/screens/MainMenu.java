@@ -130,21 +130,21 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     public void soundbotton() {
         if (isSoundOn) {
             isSoundOn = false;
-            SoundPlayer.stopSound(); // หยุดเสียงก่อนเสมอเมื่อปิดเสียง
+            SoundPlayer.stopSound();
             buttons.get(MainButton.SOUND).setVisible(false);
             buttons.get(MainButton.SOUND_OFF).setVisible(true);
-            if (game != null) { // อัปเดตสถานะและ UI ใน Game screen ด้วย
-                game.setSoundOn(false); // เพิ่ม method setSoundOn ใน Game.java (ตามคำแนะนำด้านล่าง)
+            if (game != null) {
+                game.setSoundOn(false);
                 game.getButtons().get(GameButton.SoundON).setVisible(false);
                 game.getButtons().get(GameButton.SoundOFF).setVisible(true);
             }
         } else {
             isSoundOn = true;
-            SoundPlayer.loopSound(SoundResource.MainMenu.getSound()); // เล่นเสียงเมื่อเปิดเสียง
+            SoundPlayer.loopSound(SoundResource.MainMenu.getSound());
             buttons.get(MainButton.SOUND).setVisible(true);
             buttons.get(MainButton.SOUND_OFF).setVisible(false);
-            if (game != null) { // อัปเดตสถานะและ UI ใน Game screen ด้วย
-                game.setSoundOn(true);  // เพิ่ม method setSoundOn ใน Game.java (ตามคำแนะนำด้านล่าง)
+            if (game != null) {
+                game.setSoundOn(true);
                 game.getButtons().get(GameButton.SoundON).setVisible(true);
                 game.getButtons().get(GameButton.SoundOFF).setVisible(false);
             }
