@@ -4,16 +4,16 @@ import src.map.Block;
 import src.utils.Direction;
 
 public class Civilian extends Entity {
-    private double hitRate = 0.75;
+    protected double hitRate = 0.75;
     protected Vitality vitality = Vitality.ALIVE;
     
-    private int comaTime = 0;
-    private boolean contacted = false;
-    private boolean armed = false;
+    protected int comaTime = 0;
+    protected boolean contacted = false;
+    protected boolean armed = false;
 
-    private ActionType ActionType;
-    private Runnable actionRunnable;
-    private Block shootAt;
+    protected ActionType ActionType;
+    protected Runnable actionRunnable;
+    protected Block shootAt;
 
     public Civilian(Block block, int blockWidth, int blockHeight, int entitySize) {
         super(block, EntityType.CIVILIAN, blockWidth, blockHeight, entitySize);
