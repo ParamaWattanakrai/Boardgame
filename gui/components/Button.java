@@ -51,7 +51,7 @@ public class Button extends JButton {
                 if (pop) {
                     setFont(font.deriveFont(fontSize + 5));
                 }
-                SoundPlayer.playSound(SoundResource.Select.getSound());
+                SoundPlayer.playSound(SoundResource.SELECT.getSound());
             }
 
             @Override
@@ -64,7 +64,7 @@ public class Button extends JButton {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                SoundPlayer.playSound(SoundResource.Press.getSound());
+                SoundPlayer.playSound(SoundResource.PRESS.getSound());
             }
         });
     }

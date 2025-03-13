@@ -1,10 +1,10 @@
 package gui.enums;
 
 public enum SoundResource {
-    Press("Press.wav"),
-    Incorrect("Incorrect.wav"),
-    MainMenu("MainMenu.wav"),
-    Select("Select.wav"),
+    PRESS("Press.wav"),
+    INCORRECT("Incorrect.wav"),
+    MAINMENU("MainMenu.wav"),
+    SELECT("Select.wav"),
     NEXTTURN("nextturn.wav"),
 
     // rule sound
