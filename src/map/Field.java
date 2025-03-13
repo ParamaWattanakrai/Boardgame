@@ -54,50 +54,10 @@ public class Field {
             addLandmark(BlockType.SPAWN, field[coordinate.getB()][coordinate.getA()]);
         }
 
-        int remainingHospital = metaSettings.getHospitalNum();
-        int remainingStore = metaSettings.getStoreNum();
-        int remainingPoliceStation = metaSettings.getPoliceStationNum();
-        int remainingPowerPlant = metaSettings.getPowerPlantNum();
-
-        while (remainingHospital > 0) {
-            int randX = rand.nextInt(fieldWidth);
-            int randY = rand.nextInt(fieldHeight);
-            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
-                field[randY][randX].setBlockType(BlockType.HOSPITAL);
-                addLandmark(BlockType.HOSPITAL, field[randY][randX]);
-                remainingHospital--;
-            }
-        }
-        while (remainingStore > 0) {
-            int randX = rand.nextInt(fieldWidth);
-            int randY = rand.nextInt(fieldHeight);
-            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
-                field[randY][randX].setBlockType(BlockType.STORE);
-                addLandmark(BlockType.STORE, field[randY][randX]);
-                remainingStore--;
-            }
-        }
-        while (remainingPoliceStation > 0) {
-            int randX = rand.nextInt(fieldWidth);
-            int randY = rand.nextInt(fieldHeight);
-            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
-                field[randY][randX].setBlockType(BlockType.POLICESTATION);
-                addLandmark(BlockType.POLICESTATION, field[randY][randX]);
-                for (int i = 0; i < 6; i++) {
-                    field[randY][randX].addGunAmount();
-                }
-                remainingPoliceStation--;
-            }
-        }
-        while (remainingPowerPlant > 0) {
-            int randX = rand.nextInt(fieldWidth);
-            int randY = rand.nextInt(fieldHeight);
-            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
-                field[randY][randX].setBlockType(BlockType.POWERPLANT);
-                addLandmark(BlockType.POWERPLANT, field[randY][randX]);
-                remainingPowerPlant--;
-            }
-        }
+        generateLandmark(BlockType.HOSPITAL, metaSettings.getHospitalNum());
+        generateLandmark(BlockType.STORE, metaSettings.getStoreNum());
+        generateLandmark(BlockType.POLICESTATION, metaSettings.getPoliceStationNum());
+        generateLandmark(BlockType.POWERPLANT, metaSettings.getPowerPlantNum());
 
         int soldierNum = metaSettings.getSoldierNum();
         int medicNum = metaSettings.getMedicNum();
@@ -144,13 +104,25 @@ public class Field {
         nextRoundDogCoordinates.add(getRandomEdgeCoordinate());
     }
 
+    private void generateLandmark(BlockType blockType, int count) {
+        while (count > 0) {
+            int randX = rand.nextInt(fieldWidth);
+            int randY = rand.nextInt(fieldHeight);
+            if (field[randY][randX].getBlockType() == BlockType.DEFAULT) {
+                field[randY][randX].setBlockType(blockType);
+                addLandmark(blockType, field[randY][randX]);
+                count--;
+            }
+        }
+    }
+
     private void generatePath() {
         List<Block> blockCandidates = new ArrayList<>();
         blockCandidates.add(field[0][0]);
         generatePath(blockCandidates);
     }
 
-    private void generatePath(List<Block> blockCandidates) {
+     private void generatePath(List<Block> blockCandidates) {
         if (blockCandidates.isEmpty()) return;
     
         Set<Block> nextBlockCandidateSet = new HashSet<>(blockCandidates);
@@ -225,9 +197,6 @@ public class Field {
     
 
     public void endTurn(int dogIncoming) {
-        // printAction();
-        // System.out.println();
-
         shootEveryBlock();
 
         doCivilianActions();
