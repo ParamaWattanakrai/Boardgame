@@ -60,6 +60,12 @@ public class Field {
         generateLandmark(BlockType.POLICESTATION, metaSettings.getPoliceStationNum());
         generateLandmark(BlockType.POWERPLANT, metaSettings.getPowerPlantNum());
 
+        for (Block block : landmarkMap.get(BlockType.POLICESTATION)) {
+            for (int i = 0; i < 5; i++) {
+                block.addGunAmount();
+            }
+        }
+
         int soldierNum = metaSettings.getSoldierNum();
         int medicNum = metaSettings.getMedicNum();
         int mechanicNum = metaSettings.getMechanicNum();

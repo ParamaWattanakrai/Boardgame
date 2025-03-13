@@ -76,7 +76,6 @@ public class Dog extends Entity {
             }
         }
 
-        System.out.println("Dog moving " + moveDirectionCandidates);
         Direction moveDirection = moveDirectionCandidates.get((int) (Math.random() * 2) % (moveDirectionCandidates.size()));
         if (!block.getPath(moveDirection).isBarricaded()) {
             move(moveDirection);

@@ -80,6 +80,7 @@ public class Civilian extends Entity {
         if (!armed && (block.getGunAmount() - block.getGunToBeLooted() > 0)) {
             return true;
         }
+        System.out.println(!armed+", "+block.getGunAmount()+"-"+block.getGunToBeLooted());
         return false;
     }
 
