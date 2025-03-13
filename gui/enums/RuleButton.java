@@ -1,5 +1,5 @@
 package gui.enums;
 
-public enum RuleButton {
+public enum RuleButton{
     BACK, NEXTPAGE, BACKPAGE
 }
