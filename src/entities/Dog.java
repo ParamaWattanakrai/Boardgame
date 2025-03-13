@@ -105,7 +105,6 @@ public class Dog extends Entity {
 
     public void bite(Civilian civilian) {
         civilian.infect();
-        System.out.println("I bite " + civilian);
     }
 
     private void recordBiteLocation() {

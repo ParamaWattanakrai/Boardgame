@@ -13,15 +13,15 @@ import src.entities.*;
 import src.utils.*;
 
 public class Field {
+    Random rand = new Random();
     MetaSettings metaSettings;
 
-    int turn = 1;
-
-    Random rand = new Random();
-    int fieldHeight;
-    int fieldWidth;
+    private int turn = 1;
+    private int fieldHeight;
+    private int fieldWidth;
 
     private Block[][] field;
+    
     private List<Tuple> nextRoundDogCoordinates = new ArrayList<>();
 
     private ArrayList<Tuple> spawnCoords = new ArrayList<>();
