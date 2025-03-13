@@ -17,7 +17,7 @@ import src.map.Field;
 
 public class MainFrame extends JFrame {
     private Field field; private GameData gamaData;
-    private final String TITLE = "Out Bark";
+    private final String TITLE = "Outbark";
     private final HashMap<GameScreen, BaseScreen> screens;
     private JPanel mainPanel;
     
