@@ -27,6 +27,12 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         initialize();
     }
 
+    public void resetIndex() {
+        imageIndex = 0;
+        System.out.println("resetIndex() called, imageIndex reset to " + imageIndex);
+
+    }
+
     @Override
     protected void initializeUI() {
         setLayout(null);

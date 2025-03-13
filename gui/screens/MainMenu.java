@@ -7,6 +7,7 @@ import gui.enums.GameButton;
 import gui.enums.GameScreen;
 import gui.enums.ImageResource;
 import gui.enums.MainButton;
+import gui.enums.RuleButton;
 import gui.enums.SoundResource;
 import gui.interfaces.ButtonActions;
 import gui.utils.SoundPlayer;
@@ -20,6 +21,7 @@ import src.entities.Dog;
 import src.map.Field;
 import src.map.MetaSettings;
 import src.utils.Tuple;
+import gui.screens.Rule;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private final HashMap<MainButton, Button> buttons;
@@ -118,7 +120,9 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     }
 
     private void ruleButton() {
+        ((Rule) mainFrame.getScreens().get(GameScreen.RULE)).resetIndex();
         mainFrame.showScreen(GameScreen.RULE);
+
         SoundPlayer.playSound(SoundResource.MISSION.getSound());
     }
 
