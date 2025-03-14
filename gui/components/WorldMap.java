@@ -311,7 +311,6 @@ public class WorldMap extends JPanel {
         }
 
         private void checkDogBiteLocation() {
-            Tuple location = new Tuple(gridX, gridY);
             dogBite = Dog.getBiteLocations().stream().anyMatch(loc -> loc.getA() == gridX && loc.getB() == gridY);
         }
 
