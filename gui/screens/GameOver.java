@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import src.entities.Dog;
+import src.enums.Tuple;
 import src.map.Field;
 import src.map.MetaSettings;
-import src.utils.Tuple;
 
 public class GameOver extends BaseScreen implements ButtonActions<GameEndBtn>{
     private HashMap<GameEndBtn, Button> buttons;

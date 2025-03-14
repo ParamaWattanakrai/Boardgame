@@ -17,9 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.ImageIcon;
 import src.entities.Dog;
+import src.enums.Tuple;
 import src.map.Field;
 import src.map.MetaSettings;
-import src.utils.Tuple;
 
 public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     private final HashMap<MainButton, Button> buttons;

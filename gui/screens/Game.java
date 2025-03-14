@@ -21,15 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import src.entities.ActionType;
-import src.entities.Civilian;
-import src.entities.EntityType;
-import src.entities.Mechanic;
-import src.entities.Medic;
-import src.entities.Vitality;
-import src.map.BlockType;
-import src.utils.Direction;
-import src.utils.Tuple;
+import src.entities.*;
+import src.enums.*;
 
 public class Game extends BaseScreen implements ButtonActions<GameButton>, TextDisplay<GameText> {
     private HashMap<GameText, TextArea> textPanels;

@@ -1,6 +1,7 @@
 package src.entities;
+import src.enums.Direction;
+import src.enums.EntityType;
 import src.map.Block;
-import src.utils.Direction;
 
 public class Mechanic extends Civilian {
     public Mechanic(Block block, int blockWidth, int blockHeight, int entitySize) {

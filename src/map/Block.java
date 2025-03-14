@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
 import src.entities.*;
-import src.utils.*;
+import src.enums.*;
 
 public class Block {
     private Field field;

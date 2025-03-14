@@ -1,8 +1,9 @@
 package src.entities;
 
+import src.enums.Direction;
+import src.enums.EntityType;
+import src.enums.Tuple;
 import src.map.Block;
-import src.utils.Direction;
-import src.utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;

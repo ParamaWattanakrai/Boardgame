@@ -1,4 +1,4 @@
-package src.utils;
+package src.enums;
 
 public class Tuple {
     private int a;

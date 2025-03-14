@@ -1,6 +1,7 @@
 package src.entities;
+import src.enums.BlockType;
+import src.enums.EntityType;
 import src.map.Block;
-import src.map.BlockType;
 
 public class Medic extends Civilian {
     public Medic(Block block, int blockWidth, int blockHeight, int entitySize) {

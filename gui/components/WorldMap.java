@@ -15,11 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import src.entities.ActionType;
+import src.enums.ActionType;
 import src.entities.Civilian;
 import src.entities.Mechanic;
-import src.utils.Direction;
-import src.utils.Tuple;
+import src.enums.Direction;
+import src.enums.Tuple;
 import src.entities.Dog;
 
 public class WorldMap extends JPanel {

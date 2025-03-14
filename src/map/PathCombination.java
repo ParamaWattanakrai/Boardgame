@@ -5,7 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import src.utils.Direction;
+import src.enums.Direction;
+import src.enums.PathType;
 
 public class PathCombination {
     private PathType pathType;

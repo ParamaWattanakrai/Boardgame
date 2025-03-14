@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.Set;
 
 import src.entities.*;
-import src.utils.*;
+import src.enums.*;
 
 public class Field {
     Random rand = new Random();

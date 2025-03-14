@@ -1,7 +1,9 @@
 package src.entities;
 
+import src.enums.Direction;
+import src.enums.EntityType;
+import src.enums.ActionType;
 import src.map.Block;
-import src.utils.Direction;
 
 public class Civilian extends Entity {
     protected double hitRate = 0.75;

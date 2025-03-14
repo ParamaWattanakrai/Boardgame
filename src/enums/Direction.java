@@ -1,4 +1,4 @@
-package src.utils;
+package src.enums;
 
 public enum Direction {
     NORTH {

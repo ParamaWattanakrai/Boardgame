@@ -9,9 +9,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import src.entities.Vitality;
+import src.enums.Direction;
+import src.enums.Tuple;
 import src.map.Block;
-import src.utils.Direction;
-import src.utils.Tuple;
 
 public class ImageDrawer {
     private final int ENTITY_SIZE = 50;

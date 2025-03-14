@@ -1,9 +1,11 @@
 package src.entities;
 
 import java.util.Random;
+
+import src.enums.Direction;
+import src.enums.EntityType;
+import src.enums.Tuple;
 import src.map.Block;
-import src.utils.Direction;
-import src.utils.Tuple;
 
 public abstract class Entity {
     protected EntityType entityType;

@@ -1,5 +1,6 @@
 package src.entities;
 
+import src.enums.EntityType;
 import src.map.*;
 
 public class Soldier extends Civilian {
