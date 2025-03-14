@@ -123,7 +123,7 @@ public class WorldMap extends JPanel {
         drawer.drawBarricade(g, this, mainFrame);
         drawer.drawLandmark(g, this, mainFrame);
         drawer.drawPopulation(g, this, mainFrame);
-        drawer.drawDog(g, this, mainFrame);        
+        drawer.drawDog(g, this, mainFrame);
     }
 
     public class Road extends JPanel {
@@ -153,7 +153,7 @@ public class WorldMap extends JPanel {
             addMouseListener(new java.awt.event.MouseListener() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent e) {
-                    if (game.getMode() == GameMode.Action && map.getSelect() != null && map.getAction() != null) {
+                    if (game.getMode() == GameMode.ACTION && map.getSelect() != null && map.getAction() != null) {
                         if (nearBlock(gridX, gridY)) {
                             game.resetButton();
                             int startX = map.getSelect().getGridX();
@@ -197,7 +197,7 @@ public class WorldMap extends JPanel {
 
                         resetActionRoads();
                         map.setSelect(null);
-                        game.setMode(GameMode.Default);
+                        game.setMode(GameMode.DEFAULT);
 
                     } else {
                         game.repaint();
@@ -243,7 +243,7 @@ public class WorldMap extends JPanel {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g.create();
             checkDogBiteLocation();
-            
+
             if (map.getSelect() == this) {
                 g2d.setColor(new Color(0, 255, 0, 50));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -270,13 +270,13 @@ public class WorldMap extends JPanel {
             if (dogBite) {
                 if (!isFading) {
                     isFading = true;
-            
+
                     if (fadeTimer != null && fadeTimer.isRunning()) {
                         fadeTimer.stop();
                     }
-                    
+
                     fadeAlpha = 255;
-            
+
                     fadeTimer = new Timer(50, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -294,16 +294,16 @@ public class WorldMap extends JPanel {
                     fadeTimer.setRepeats(true);
                     fadeTimer.start();
                 }
-            
+
                 g2d.setColor(new Color(255, 0, 0, fadeAlpha));
                 g2d.fillRect(0, 0, getWidth(), getHeight());
                 g2d.drawImage(ImageResource.TOOTH_WOLF.getImage(), 0, 0, getHeight(), getHeight(), null);
             }
-            
+
             if (a >= 80) {
-                num = -1;  
+                num = -1;
             } else if (a <= 10) {
-                num = 1; 
+                num = 1;
             }
 
             a += num;
@@ -346,11 +346,11 @@ public class WorldMap extends JPanel {
             this.previewDog = previewDog;
         }
 
-        public boolean isDogBite(){
+        public boolean isDogBite() {
             return dogBite;
         }
 
-        public void setDogBite(boolean dogBite){
+        public void setDogBite(boolean dogBite) {
             this.dogBite = dogBite;
         }
     }

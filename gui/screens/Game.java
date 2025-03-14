@@ -30,7 +30,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     private HashMap<GameScroll, ScrollPane> scrollPanes;
     private WorldMap map;
     private Boolean day = true;
-    private GameMode mode = GameMode.Default;
+    private GameMode mode = GameMode.DEFAULT;
     private MainMenu mainMenu;
     private boolean isSoundOn = true;
 
@@ -84,38 +84,38 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     public void createTextPanel() {
         textPanels = new HashMap<>();
 
-        textPanels.put(GameText.DatNightTitle, new TextArea("Day", 60f));
-        textPanels.put(GameText.StatTitle, new TextArea("Stat", 60f));
-        textPanels.put(GameText.TaskTitle, new TextArea("Task", 60f));
-        textPanels.put(GameText.DataTitle, new TextArea("Data", 60f));
-        textPanels.put(GameText.SelectTitle, new TextArea("Select", 50f));
-        textPanels.put(GameText.Action, new TextArea("Action", 50f));
+        textPanels.put(GameText.DATNIGHTTITLE, new TextArea("Day", 60f));
+        textPanels.put(GameText.STATTITLE, new TextArea("Stat", 60f));
+        textPanels.put(GameText.TASKTITLE, new TextArea("Task", 60f));
+        textPanels.put(GameText.DATATITLE, new TextArea("Data", 60f));
+        textPanels.put(GameText.SELECTTITLE, new TextArea("Select", 50f));
+        textPanels.put(GameText.ACTION, new TextArea("Action", 50f));
 
-        textPanels.put(GameText.DatNight, new TextArea(60f));
-        textPanels.put(GameText.Stat, new TextArea(30f));
-        textPanels.put(GameText.Task, new TextArea(27f));
-        textPanels.put(GameText.Data, new TextArea(20f));
+        textPanels.put(GameText.DATNIGHT, new TextArea(60f));
+        textPanels.put(GameText.STAT, new TextArea(30f));
+        textPanels.put(GameText.TASK, new TextArea(27f));
+        textPanels.put(GameText.DATA, new TextArea(20f));
         resetText();
     }
 
     @Override
     public void setTextPanelBounds() {
-        textPanels.get(GameText.DatNightTitle).setBounds(60, 25, 220, 200);
-        textPanels.get(GameText.DatNight).setBounds(60, 95, 220, 200);
+        textPanels.get(GameText.DATNIGHTTITLE).setBounds(60, 25, 220, 200);
+        textPanels.get(GameText.DATNIGHT).setBounds(60, 95, 220, 200);
 
-        textPanels.get(GameText.StatTitle).setBounds(60, 220, 220, 200);
-        textPanels.get(GameText.Stat).setBounds(60, 305, 220, 200);
+        textPanels.get(GameText.STATTITLE).setBounds(60, 220, 220, 200);
+        textPanels.get(GameText.STAT).setBounds(60, 305, 220, 200);
 
-        textPanels.get(GameText.TaskTitle).setBounds(60, 650, 220, 200);
-        textPanels.get(GameText.Task).setBounds(60, 740, 250, 200);
+        textPanels.get(GameText.TASKTITLE).setBounds(60, 650, 220, 200);
+        textPanels.get(GameText.TASK).setBounds(60, 740, 250, 200);
 
-        textPanels.get(GameText.DataTitle).setBounds(1600, 380, 220, 500);
-        textPanels.get(GameText.DataTitle).setVisible(false);
-        textPanels.get(GameText.Data).setBounds(1600, 470, 220, 500);
-        textPanels.get(GameText.Data).setVisible(false);
+        textPanels.get(GameText.DATATITLE).setBounds(1600, 380, 220, 500);
+        textPanels.get(GameText.DATATITLE).setVisible(false);
+        textPanels.get(GameText.DATA).setBounds(1600, 470, 220, 500);
+        textPanels.get(GameText.DATA).setVisible(false);
 
-        textPanels.get(GameText.SelectTitle).setBounds(1630, 360, 250, 70);
-        textPanels.get(GameText.Action).setBounds(1630, 675, 250, 70);
+        textPanels.get(GameText.SELECTTITLE).setBounds(1630, 360, 250, 70);
+        textPanels.get(GameText.ACTION).setBounds(1630, 675, 250, 70);
     }
 
     @Override
@@ -139,15 +139,15 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             if (mainFrame.getField().getOccupationMap().get(BlockType.STORE))
                 STORE = "\n";
 
-            updateText(GameText.Task, HOSPITAL + STORE + POWERPLANT + POLICESTATION);
+            updateText(GameText.TASK, HOSPITAL + STORE + POWERPLANT + POLICESTATION);
             if (day) {
-                updateText(GameText.DatNightTitle, "Day");
-                updateText(GameText.DatNight, mainFrame.getGamaData().getNight() + "/15");
+                updateText(GameText.DATNIGHTTITLE, "Day");
+                updateText(GameText.DATNIGHT, mainFrame.getGamaData().getNight() + "/15");
                 mainFrame.getGamaData().setDay(mainFrame.getGamaData().getDay() + 1);
                 day = false;
             } else {
-                updateText(GameText.DatNightTitle, "Night");
-                updateText(GameText.DatNight, mainFrame.getGamaData().getNight() + "/15");
+                updateText(GameText.DATNIGHTTITLE, "Night");
+                updateText(GameText.DATNIGHT, mainFrame.getGamaData().getNight() + "/15");
                 mainFrame.getGamaData().setNight(mainFrame.getGamaData().getNight() + 1);
                 day = true;
             }
@@ -172,9 +172,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
             String str = "Dog: " + dogSize + "\nCivilian: " + CivilianSize + "\nSoldier: " + SoldierSize + "\nMedic: "
                     + medicSize + "\nMechanic: " + mechanicSize;
-            updateText(GameText.Stat, str);
+            updateText(GameText.STAT, str);
         } else {
-            updateText(GameText.Stat, "Noting here");
+            updateText(GameText.STAT, "Noting here");
         }
     }
 
@@ -182,22 +182,22 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     @Override
     public void createButton() {
         buttons = new HashMap<>();
-        buttons.put(GameButton.Setting, new Button(""));
-        buttons.get(GameButton.Setting).setIcon(ImageResource.SETTING_GAME.getScaledIcon(80, 80));
-        buttons.put(GameButton.EndButton, new Button("END TURN", 50));
-        buttons.put(GameButton.SoundON, new Button(""));
-        buttons.get(GameButton.SoundON).setIcon(ImageResource.SOUND.getScaledIcon(80, 80));
-        buttons.put(GameButton.SoundOFF, new Button(""));
-        buttons.get(GameButton.SoundOFF).setVisible(false);
-        buttons.get(GameButton.SoundOFF).setIcon(ImageResource.SOUND_OFF.getScaledIcon(80, 80));
+        buttons.put(GameButton.SETTING, new Button(""));
+        buttons.get(GameButton.SETTING).setIcon(ImageResource.SETTING_GAME.getScaledIcon(80, 80));
+        buttons.put(GameButton.ENDBUTTON, new Button("END TURN", 50));
+        buttons.put(GameButton.SOUNDON, new Button(""));
+        buttons.get(GameButton.SOUNDON).setIcon(ImageResource.SOUND.getScaledIcon(80, 80));
+        buttons.put(GameButton.SOUNDOFF, new Button(""));
+        buttons.get(GameButton.SOUNDOFF).setVisible(false);
+        buttons.get(GameButton.SOUNDOFF).setIcon(ImageResource.SOUND_OFF.getScaledIcon(80, 80));
     }
 
     @Override
     public void setButtonBounds() {
-        buttons.get(GameButton.Setting).setBounds(1820, 20, 80, 80);
-        buttons.get(GameButton.EndButton).setBounds(1475, 905, 500, 50);
-        buttons.get(GameButton.SoundON).setBounds(1530, 20, 80, 80);
-        buttons.get(GameButton.SoundOFF).setBounds(1530, 20, 80, 80);
+        buttons.get(GameButton.SETTING).setBounds(1820, 20, 80, 80);
+        buttons.get(GameButton.ENDBUTTON).setBounds(1475, 905, 500, 50);
+        buttons.get(GameButton.SOUNDON).setBounds(1530, 20, 80, 80);
+        buttons.get(GameButton.SOUNDOFF).setBounds(1530, 20, 80, 80);
     }
 
     @Override
@@ -205,10 +205,10 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         ActionListener actionListener = (ActionEvent e) -> {
             System.out.println(e.getActionCommand());
             switch (button) {
-                case Setting -> settingButton();
-                case EndButton -> endButton();
-                case SoundON -> soundButton();
-                case SoundOFF -> soundButton();
+                case SETTING -> settingButton();
+                case ENDBUTTON -> endButton();
+                case SOUNDON -> soundButton();
+                case SOUNDOFF -> soundButton();
             }
         };
         buttons.get(button).addActionListener(actionListener);
@@ -387,7 +387,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             map.setAlive(alive);
             map.repaintAllRoads();
             scrollPanes.get(GameScroll.ENTITY).removeAllPanel();
-            setMode(GameMode.Action);
+            setMode(GameMode.ACTION);
         } else {
             loadEntityButton(map.getSelect().getGridX(), map.getSelect().getGridY());
             loadInActionButton();
@@ -429,13 +429,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         if (isSoundOn) {
             // Turn sound off
             isSoundOn = false;
-            buttons.get(GameButton.SoundON).setVisible(false);
-            buttons.get(GameButton.SoundOFF).setVisible(true);
+            buttons.get(GameButton.SOUNDON).setVisible(false);
+            buttons.get(GameButton.SOUNDOFF).setVisible(true);
         } else {
             // Turn sound on
             isSoundOn = true;
-            buttons.get(GameButton.SoundON).setVisible(true);
-            buttons.get(GameButton.SoundOFF).setVisible(false);
+            buttons.get(GameButton.SOUNDON).setVisible(true);
+            buttons.get(GameButton.SOUNDOFF).setVisible(false);
         }
         mainMenu.soundbotton();
     }

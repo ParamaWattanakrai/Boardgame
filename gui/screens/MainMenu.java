@@ -138,8 +138,8 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
             buttons.get(MainButton.SOUND_OFF).setVisible(true);
             if (game != null) {
                 game.setSoundOn(false);
-                game.getButtons().get(GameButton.SoundON).setVisible(false);
-                game.getButtons().get(GameButton.SoundOFF).setVisible(true);
+                game.getButtons().get(GameButton.SOUNDON).setVisible(false);
+                game.getButtons().get(GameButton.SOUNDOFF).setVisible(true);
             }
         } else {
             isSoundOn = true;
@@ -148,8 +148,8 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
             buttons.get(MainButton.SOUND_OFF).setVisible(false);
             if (game != null) {
                 game.setSoundOn(true);
-                game.getButtons().get(GameButton.SoundON).setVisible(true);
-                game.getButtons().get(GameButton.SoundOFF).setVisible(false);
+                game.getButtons().get(GameButton.SOUNDON).setVisible(true);
+                game.getButtons().get(GameButton.SOUNDOFF).setVisible(false);
             }
         }
     }

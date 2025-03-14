@@ -1,6 +1,5 @@
 package gui.enums;
 
-public enum GameText{
-    DatNightTitle, Stat, Task, Data, DatNight, StatTitle, TaskTitle, DataTitle, SelectTitle, Action;
+public enum GameText {
+    DATNIGHTTITLE, STAT, TASK, DATA, DATNIGHT, STATTITLE, TASKTITLE, DATATITLE, SELECTTITLE, ACTION;
 }
-
