@@ -46,6 +46,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         this.mainMenu = mainMenu;
         initialize();
     }
+
     public boolean isSoundOn() {
         return isSoundOn;
     }
@@ -57,6 +58,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     public HashMap<GameButton, Button> getButtons() {
         return buttons;
     }
+
     public void setMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
     }
@@ -163,11 +165,10 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             int medicSize = mainFrame.getField().getAllEntityOfType(EntityType.MEDIC, Vitality.ALIVE).size();
             int mechanicSize = mainFrame.getField().getAllEntityOfType(EntityType.MECHANIC, Vitality.ALIVE).size();
 
-            boolean allOccupied = 
-                mainFrame.getField().getOccupationMap().get(BlockType.HOSPITAL) == Boolean.TRUE &&
-                mainFrame.getField().getOccupationMap().get(BlockType.POLICESTATION) == Boolean.TRUE &&
-                mainFrame.getField().getOccupationMap().get(BlockType.POWERPLANT) == Boolean.TRUE &&
-                mainFrame.getField().getOccupationMap().get(BlockType.STORE) == Boolean.TRUE;
+            boolean allOccupied = mainFrame.getField().getOccupationMap().get(BlockType.HOSPITAL) == Boolean.TRUE &&
+                    mainFrame.getField().getOccupationMap().get(BlockType.POLICESTATION) == Boolean.TRUE &&
+                    mainFrame.getField().getOccupationMap().get(BlockType.POWERPLANT) == Boolean.TRUE &&
+                    mainFrame.getField().getOccupationMap().get(BlockType.STORE) == Boolean.TRUE;
             boolean isPopulationLow = CivilianSize < 6 || SoldierSize < 1 || medicSize < 1 || mechanicSize < 1;
 
             if (isPopulationLow || mainFrame.getGamaData().getNight() > 15) {
@@ -191,9 +192,9 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         buttons.put(GameButton.Setting, new Button(""));
         buttons.get(GameButton.Setting).setIcon(ImageResource.SETTING_GAME.getScaledIcon(80, 80));
         buttons.put(GameButton.EndButton, new Button("END TURN", 50));
-        buttons.put(GameButton.SoundON,new Button(""));
+        buttons.put(GameButton.SoundON, new Button(""));
         buttons.get(GameButton.SoundON).setIcon(ImageResource.SOUND.getScaledIcon(80, 80));
-        buttons.put(GameButton.SoundOFF,new Button(""));
+        buttons.put(GameButton.SoundOFF, new Button(""));
         buttons.get(GameButton.SoundOFF).setVisible(false);
         buttons.get(GameButton.SoundOFF).setIcon(ImageResource.SOUND_OFF.getScaledIcon(80, 80));
     }
@@ -247,8 +248,8 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     public void setScrollPaneBounds() {
-        scrollPanes.get(GameScroll.Entity).setBounds(1580, 440, 300, 150);
-        scrollPanes.get(GameScroll.Action).setBounds(1580, 740, 300, 100);
+        scrollPanes.get(GameScroll.ENTITY).setBounds(1580, 440, 300, 150);
+        scrollPanes.get(GameScroll.ACTION).setBounds(1580, 740, 300, 100);
     }
 
     // -------- Map --------//
@@ -262,7 +263,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     // -------- Scroll Entity --------//
     public void loadEntityButton(int x, int y) {
-        scrollPanes.get(GameScroll.Entity).removeAllPanel();
+        scrollPanes.get(GameScroll.ENTITY).removeAllPanel();
         List<Civilian> allAlive = mainFrame.getField().getBlock(new Tuple(x, y)).getAllAlive();
 
         allAlive.forEach((alive) -> {
@@ -270,16 +271,16 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                 Button btn = new Button(alive.getEntityType().name(), 30);
                 btn.setAlignmentX(Component.CENTER_ALIGNMENT);
                 btn.addActionListener(_ -> loadActionButton(alive));
-                scrollPanes.get(GameScroll.Entity).getPanel().add(btn);
+                scrollPanes.get(GameScroll.ENTITY).getPanel().add(btn);
             }
         });
 
-        scrollPanes.get(GameScroll.Entity).getPanel().revalidate();
-        scrollPanes.get(GameScroll.Entity).getPanel().repaint();
+        scrollPanes.get(GameScroll.ENTITY).getPanel().revalidate();
+        scrollPanes.get(GameScroll.ENTITY).getPanel().repaint();
     }
 
     private void loadActionButton(Civilian alive) {
-        scrollPanes.get(GameScroll.Entity).removeAllPanel();
+        scrollPanes.get(GameScroll.ENTITY).removeAllPanel();
         List<ActionType> actions = new ArrayList<>();
 
         if (checkValidateAction(ActionType.SHOOT, alive) && alive.isArmed()) {
@@ -318,11 +319,11 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             Button btn = new Button(action.name(), 30);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
             btn.addActionListener(_ -> actionButton(action, alive));
-            scrollPanes.get(GameScroll.Entity).getPanel().add(btn);
+            scrollPanes.get(GameScroll.ENTITY).getPanel().add(btn);
         });
 
-        scrollPanes.get(GameScroll.Entity).getPanel().revalidate();
-        scrollPanes.get(GameScroll.Entity).getPanel().repaint();
+        scrollPanes.get(GameScroll.ENTITY).getPanel().revalidate();
+        scrollPanes.get(GameScroll.ENTITY).getPanel().repaint();
     }
 
     private boolean checkValidateAction(ActionType action, Civilian alive) {
@@ -345,7 +346,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     private void actionButton(ActionType action, Civilian alive) {
-        scrollPanes.get(GameScroll.Entity).removeAllPanel();
+        scrollPanes.get(GameScroll.ENTITY).removeAllPanel();
         BiConsumer<Function<Direction, Boolean>, ActionType> validateAction = (validate, actionType) -> {
             int newX;
             int newY;
@@ -392,7 +393,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
             map.setAction(action);
             map.setAlive(alive);
             map.repaintAllRoads();
-            scrollPanes.get(GameScroll.Entity).removeAllPanel();
+            scrollPanes.get(GameScroll.ENTITY).removeAllPanel();
             setMode(GameMode.Action);
         } else {
             loadEntityButton(map.getSelect().getGridX(), map.getSelect().getGridY());
@@ -402,7 +403,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     // -------- Scroll Action --------//
     public void loadInActionButton() {
-        scrollPanes.get(GameScroll.Action).removeAllPanel();
+        scrollPanes.get(GameScroll.ACTION).removeAllPanel();
         List<Civilian> allAlive = mainFrame.getField().getAllCivilians();
 
         if (allAlive != null) {
@@ -411,13 +412,13 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
                     Button btn = new Button(alive.getEntityType().name(), 30);
                     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
                     btn.addActionListener(_ -> inActionButton(alive));
-                    scrollPanes.get(GameScroll.Action).getPanel().add(btn);
+                    scrollPanes.get(GameScroll.ACTION).getPanel().add(btn);
                 }
             });
         }
 
-        scrollPanes.get(GameScroll.Action).getPanel().revalidate();
-        scrollPanes.get(GameScroll.Action).getPanel().repaint();
+        scrollPanes.get(GameScroll.ACTION).getPanel().revalidate();
+        scrollPanes.get(GameScroll.ACTION).getPanel().repaint();
     }
 
     private void inActionButton(Civilian civilian) {
@@ -427,9 +428,10 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
     }
 
     public void resetButton() {
-        scrollPanes.get(GameScroll.Entity).removeAllPanel();
-        scrollPanes.get(GameScroll.Action).removeAllPanel();
+        scrollPanes.get(GameScroll.ENTITY).removeAllPanel();
+        scrollPanes.get(GameScroll.ACTION).removeAllPanel();
     }
+
     public void soundButton() {
         if (isSoundOn) {
             // Turn sound off
