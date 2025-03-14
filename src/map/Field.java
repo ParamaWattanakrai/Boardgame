@@ -345,13 +345,17 @@ public class Field {
         if (block.getBlockType() == BlockType.POWERPLANT) {
             if (block.getAllEntityOfType(EntityType.MECHANIC).size() > 0) {
                 block.occupy();
-                return;
+            } else {
+                block.unOccupy();
             }
+            return;
         } else if (block.getBlockType() == BlockType.HOSPITAL) {
             if (block.getAllEntityOfType(EntityType.MEDIC).size() > 0) {
                 block.occupy();
-                return;
+            } else {
+                block.unOccupy();
             }
+            return;
         } else if (block.getAllContactedAlive().size() > 0) {
             block.occupy();
         } else {
