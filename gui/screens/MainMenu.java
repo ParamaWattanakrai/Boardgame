@@ -7,6 +7,7 @@ import gui.enums.GameButton;
 import gui.enums.GameScreen;
 import gui.enums.ImageResource;
 import gui.enums.MainButton;
+import gui.enums.RuleButton;
 import gui.enums.SoundResource;
 import gui.interfaces.ButtonActions;
 import gui.utils.SoundPlayer;
@@ -118,9 +119,12 @@ public class MainMenu extends BaseScreen implements ButtonActions<MainButton> {
     }
 
     private void ruleButton() {
-        ((Rule) mainFrame.getScreens().get(GameScreen.RULE)).resetIndex();
+        Rule ruleScreen = (Rule) mainFrame.getScreens().get(GameScreen.RULE);
+        ruleScreen.resetIndex();
         mainFrame.showScreen(GameScreen.RULE);
-
+        ruleScreen.getButtons().get(RuleButton.BACKPAGE).setVisible(false);;
+        ruleScreen.getButtons().get(RuleButton.NEXTPAGE).setVisible(true);
+        
         SoundPlayer.playSound(SoundResource.MISSION.getSound());
     }
 

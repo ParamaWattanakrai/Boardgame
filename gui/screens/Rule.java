@@ -33,6 +33,10 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
 
     }
 
+    public HashMap<RuleButton, Button> getButtons() {
+        return buttons;
+    }
+
     @Override
     protected void initializeUI() {
         setLayout(null);
@@ -49,7 +53,6 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
         buttons.put(RuleButton.BACK, new Button(""));
         buttons.put(RuleButton.NEXTPAGE, new Button("NEXT"));
         buttons.put(RuleButton.BACKPAGE, new Button("BACK"));
-        buttons.get(RuleButton.BACKPAGE).setVisible(false);
         buttons.get(RuleButton.BACK).setIcon(new ImageIcon(ImageResource.SETTING_RULE.getScaledImage(80, 80)));
 
         images = new ArrayList<>();
@@ -135,6 +138,8 @@ public class Rule extends BaseScreen implements ButtonActions<RuleButton> {
             repaint();
         }
     }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {
