@@ -194,7 +194,7 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     @Override
     public void setButtonBounds() {
-        buttons.get(GameButton.SETTING).setBounds(1820, 19, 80, 80);
+        buttons.get(GameButton.SETTING).setBounds(1820, 20, 80, 80);
         buttons.get(GameButton.ENDBUTTON).setBounds(1475, 905, 500, 50);
         buttons.get(GameButton.SOUNDON).setBounds(1530, 20, 80, 80);
         buttons.get(GameButton.SOUNDOFF).setBounds(1530, 20, 80, 80);
