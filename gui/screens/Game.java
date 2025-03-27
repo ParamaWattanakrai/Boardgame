@@ -394,7 +394,6 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
         }
     }
 
-    // -------- Scroll Action --------//
     public void loadInActionButton() {
         scrollPanes.get(GameScroll.ACTION).removeAllPanel();
         List<Civilian> allAlive = mainFrame.getField().getAllCivilians();
@@ -427,12 +426,10 @@ public class Game extends BaseScreen implements ButtonActions<GameButton>, TextD
 
     public void soundButton() {
         if (isSoundOn) {
-            // Turn sound off
             isSoundOn = false;
             buttons.get(GameButton.SOUNDON).setVisible(false);
             buttons.get(GameButton.SOUNDOFF).setVisible(true);
         } else {
-            // Turn sound on
             isSoundOn = true;
             buttons.get(GameButton.SOUNDON).setVisible(true);
             buttons.get(GameButton.SOUNDOFF).setVisible(false);
